@@ -76,10 +76,13 @@ export default function OnboardingWizard() {
     setSaving(false);
   };
 
-  const goNext = async (stepData = {}) => {
+  const goNext = async (stepData = {}, afterSaveCallback = null) => {
     const updates = { ...stepData, current_step: currentStep + 1 };
     updateProfile(updates);
-    await saveToDb(updates);
+    const savedId = await saveToDb(updates);
+    if (afterSaveCallback) {
+      await afterSaveCallback(savedId || profileId);
+    }
   };
 
   const goBack = () => {
