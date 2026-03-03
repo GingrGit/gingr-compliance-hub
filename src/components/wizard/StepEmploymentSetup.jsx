@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
-import { CheckCircle2, Loader2 } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { CheckCircle2 } from "lucide-react";
 
 const DOCUSEAL_SLUG = "TpXUVLRqaSx2Z1";
 
