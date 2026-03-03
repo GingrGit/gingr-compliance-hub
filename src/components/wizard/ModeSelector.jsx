@@ -50,6 +50,14 @@ export default function ModeSelector({ onSelect }) {
       <p className="text-xs text-gray-400 mt-8 text-center max-w-sm">
         Du kannst den Modus jederzeit wechseln. Alle Daten werden automatisch gespeichert.
       </p>
+
+      <a
+        href={createPageUrl("AdminDashboard")}
+        className="mt-6 flex items-center gap-1.5 text-xs text-gray-400 hover:text-purple-600 transition-colors"
+      >
+        <ShieldCheck className="w-3.5 h-3.5" />
+        Admin-Dashboard
+      </a>
     </div>
   );
 }
