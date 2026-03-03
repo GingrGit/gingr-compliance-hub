@@ -1,5 +1,6 @@
 import React from "react";
-import { User, Users } from "lucide-react";
+import { User, Users, ShieldCheck } from "lucide-react";
+import { createPageUrl } from "@/utils";
 
 export default function ModeSelector({ onSelect }) {
   return (
