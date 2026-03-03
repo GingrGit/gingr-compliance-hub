@@ -21,7 +21,7 @@ export default function WizardLayout({ steps, currentStep, mode, onModeChange, s
             )}
             <Badge
               variant="outline"
-              className={`cursor-pointer text-xs ${mode === "guided" ? "bg-amber-100 border-amber-300 text-amber-700" : "bg-rose-50 border-rose-200 text-rose-600"}`}
+              className={`cursor-pointer text-xs ${mode === "guided" ? "bg-yellow-100 border-yellow-400 text-yellow-700" : "bg-purple-100 border-purple-300 text-purple-700"}`}
               onClick={() => onModeChange(mode === "self" ? "guided" : "self")}
             >
               {mode === "guided" ? "👤 Geführter Modus" : "🧍 Selbst-Modus"}
