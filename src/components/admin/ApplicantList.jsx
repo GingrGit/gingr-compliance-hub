@@ -1,6 +1,6 @@
 import React from "react";
 import { Search } from "lucide-react";
-import StatusBadge from "@/components/admin/StatusBadge";
+import StatusBadge from "@/components/admin/StatusBadge.jsx";
 
 const MODEL_LABELS = {
   employee_unlimited: "Angestellt (unbefristet)",
