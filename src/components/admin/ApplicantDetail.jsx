@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import DocumentRow from "@/components/admin/DocumentRow.jsx";
 import InfoGrid from "@/components/admin/InfoGrid.jsx";
-import { CheckCircle2, XCircle, MessageSquare, ChevronDown, ChevronUp, User, Briefcase, FileText, Clock, Upload, Send, Loader2, Plus, Trash2 } from "lucide-react";
+import { CheckCircle2, XCircle, MessageSquare, ChevronDown, ChevronUp, User, Briefcase, FileText, Clock, Upload, Send, Loader2, Plus, Trash2, ExternalLink } from "lucide-react";
+import { createPageUrl } from "@/utils";
 
 const MODEL_LABELS = {
   employee_unlimited: "Angestellt (unbefristet)",
