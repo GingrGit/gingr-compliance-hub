@@ -6,8 +6,8 @@ export default function StepWelcome({ onNext, mode }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4">
-          <ShieldCheck className="w-8 h-8 text-rose-500" />
+        <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-4">
+          <ShieldCheck className="w-8 h-8 text-purple-600" />
         </div>
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
           {mode === "guided" ? "Willkommen zum geführten Onboarding" : "Willkommen bei gingr"}
