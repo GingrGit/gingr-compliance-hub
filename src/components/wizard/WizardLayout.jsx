@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge";
 
 export default function WizardLayout({ steps, currentStep, mode, onModeChange, saving, children }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-amber-50 to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50">
       {/* Top Header */}
-      <div className="bg-white border-b border-rose-100 shadow-sm sticky top-0 z-30">
+      <div className="bg-white border-b border-purple-100 shadow-sm sticky top-0 z-30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-2xl font-bold text-rose-500">gingr</span>
+            <span className="text-2xl font-bold text-purple-700">gingr</span>
             <span className="text-gray-400">·</span>
             <span className="text-sm text-gray-500 font-medium">Legal Onboarding</span>
           </div>
