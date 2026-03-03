@@ -14,22 +14,7 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
   const [payrollConsent, setPayrollConsent] = useState(false);
   const formRef = useRef(null);
 
-  const templateId = TEMPLATE_IDS[profile.work_model] || TEMPLATE_IDS.employee_unlimited;
   const contractType = profile.work_model === "employee_90days" ? "Kurzarbeitsvertrag (max. 90 Tage)" : "Unbefristeter Arbeitsvertrag";
-
-  useEffect(() => {
-    if (!templateId) return;
-    setLoadingSlug(true);
-    base44.functions.invoke("createDocusealSubmission", {
-      template_id: templateId,
-      email: profile.escort_email || "",
-      name: `${profile.first_name || ""} ${profile.last_name || ""}`.trim(),
-    }).then((res) => {
-      setDocuslug(res.data?.slug);
-    }).catch((err) => {
-      setDocuError("Vertrag konnte nicht geladen werden.");
-    }).finally(() => setLoadingSlug(false));
-  }, [templateId]);
 
   // Inject DocuSeal script once
   useEffect(() => {
