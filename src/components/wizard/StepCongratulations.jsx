@@ -88,6 +88,12 @@ export default function StepCongratulations({ profile, onSubmit, saving }) {
           <CheckCircle2 className="w-4 h-4 text-green-500" />
           <span className="text-sm font-medium text-green-700">Status: Eingereicht — wird geprüft</span>
         </div>
+        {profile.phone && (
+          <div className="inline-flex items-center justify-center gap-2 bg-purple-50 border border-purple-100 rounded-xl px-4 py-2">
+            <Mail className="w-4 h-4 text-purple-500" />
+            <span className="text-sm text-purple-700">Dashboard-Link wird per SMS gesendet</span>
+          </div>
+        )}
       </div>
     </div>
   );
