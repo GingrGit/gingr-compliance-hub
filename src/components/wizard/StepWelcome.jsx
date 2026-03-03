@@ -44,7 +44,7 @@ export default function StepWelcome({ onNext, mode }) {
 
       <Button
         onClick={() => onNext({})}
-        className="w-full bg-rose-500 hover:bg-rose-600 text-white rounded-xl py-6 text-base font-semibold"
+        className="w-full bg-purple-700 hover:bg-purple-800 text-white rounded-xl py-6 text-base font-semibold"
       >
         Jetzt starten →
       </Button>
