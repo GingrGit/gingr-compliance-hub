@@ -49,11 +49,13 @@
  */
 import AdminDashboard from './pages/AdminDashboard';
 import OnboardingWizard from './pages/OnboardingWizard';
+import Magic from './pages/Magic';
 
 
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
     "OnboardingWizard": OnboardingWizard,
+    "Magic": Magic,
 }
 
 export const pagesConfig = {
