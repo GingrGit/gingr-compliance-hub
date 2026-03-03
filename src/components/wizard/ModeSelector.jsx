@@ -60,6 +60,73 @@ export default function ModeSelector({ onSelect }) {
         <ShieldCheck className="w-3.5 h-3.5" />
         Admin-Dashboard
       </a>
+
+      {/* Guided Mode Modal */}
+      {showGuidedInfo && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-7 relative">
+            <button
+              onClick={() => setShowGuidedInfo(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-yellow-100 flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-yellow-600" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-gray-800">Termin buchen</h2>
+                <p className="text-sm text-gray-500">Onboarding mit gingr-Begleitung</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-600 mb-5">
+              Bitte halte folgende Dokumente bereit, bevor du deinen Termin buchst:
+            </p>
+
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-purple-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <FileText className="w-4 h-4 text-purple-500" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">Ausweis / Pass</p>
+                  <p className="text-xs text-gray-500">Reisepass oder Personalausweis (gültig)</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CreditCard className="w-4 h-4 text-blue-500" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">Aufenthaltsbewilligung</p>
+                  <p className="text-xs text-gray-500">Für Nicht-Schweizer: Permit B, C, L oder ähnliches</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Briefcase className="w-4 h-4 text-green-500" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">Selbständige: Gewerbenachweis</p>
+                  <p className="text-xs text-gray-500">UID-Nummer und Handelsregisterauszug oder ähnliches</p>
+                </div>
+              </li>
+            </ul>
+
+            <a
+              href="https://calendly.com/ps-gingr/gingr-legal-onboarding"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-xl py-3 transition-colors"
+            >
+              Jetzt Termin buchen →
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
