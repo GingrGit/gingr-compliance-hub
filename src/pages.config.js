@@ -47,8 +47,14 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import OnboardingWizard from './pages/OnboardingWizard';
 
-export const pagesConfig = {
-	Pages: {}
+
+export const PAGES = {
+    "OnboardingWizard": OnboardingWizard,
 }
 
+export const pagesConfig = {
+    mainPage: "OnboardingWizard",
+    Pages: PAGES,
+};
