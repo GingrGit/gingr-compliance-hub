@@ -1,0 +1,79 @@
+import React, { useState } from "react";
+import StepCard from "./StepCard";
+import InfoAccordion from "./InfoAccordion";
+import DocumentUpload from "./DocumentUpload";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving }) {
+  const [data, setData] = useState({
+    business_name: profile.business_name || "",
+    uid_number: profile.uid_number || "",
+    business_proof_url: profile.business_proof_url || "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const set = (k) => (e) => setData((p) => ({ ...p, [k]: typeof e === "string" ? e : e.target.value }));
+
+  const validate = () => {
+    const e = {};
+    if (!data.business_name) e.business_name = "Pflichtfeld";
+    if (!data.uid_number) e.uid_number = "Pflichtfeld";
+    if (!data.business_proof_url) e.business_proof_url = "Bitte lade einen Nachweis hoch";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  return (
+    <StepCard
+      title="Geschäftsdetails (Selbständig)"
+      subtitle="Wir benötigen einen Nachweis deiner selbständigen Tätigkeit."
+      onNext={() => { if (validate()) onNext(data); }}
+      onBack={onBack}
+      onSaveAndExit={onSaveAndExit}
+      saving={saving}
+    >
+      <InfoAccordion title="Was wird akzeptiert als Nachweis?">
+        Akzeptiert werden: UID-Registerauszug (uid.admin.ch), Handelsregistereintrag, oder offizielle Bestätigung der Selbständigkeit. Das Dokument darf nicht älter als 6 Monate sein.
+      </InfoAccordion>
+
+      <div className="space-y-4">
+        <div>
+          <Label className="text-sm font-medium text-gray-700">Name des Unternehmens / Einzelfirma *</Label>
+          <Input
+            value={data.business_name}
+            onChange={set("business_name")}
+            className={`mt-1 ${errors.business_name ? "border-red-400" : ""}`}
+            placeholder="z.B. Maria Müller"
+          />
+          {errors.business_name && <p className="text-xs text-red-500 mt-1">{errors.business_name}</p>}
+        </div>
+
+        <div>
+          <Label className="text-sm font-medium text-gray-700">UID-Nummer *</Label>
+          <Input
+            value={data.uid_number}
+            onChange={set("uid_number")}
+            className={`mt-1 ${errors.uid_number ? "border-red-400" : ""}`}
+            placeholder="CHE-123.456.789"
+          />
+          {errors.uid_number && <p className="text-xs text-red-500 mt-1">{errors.uid_number}</p>}
+          <p className="text-xs text-gray-400 mt-1">
+            Deine UID findest du auf{" "}
+            <a href="https://www.uid.admin.ch" target="_blank" rel="noopener noreferrer" className="text-rose-500 hover:underline">
+              uid.admin.ch
+            </a>
+          </p>
+        </div>
+
+        <DocumentUpload
+          label="Nachweis der Selbständigkeit *"
+          value={data.business_proof_url}
+          onChange={(url) => setData((p) => ({ ...p, business_proof_url: url }))}
+          hint="UID-Registerauszug, Handelsregistereintrag oder Bestätigung"
+        />
+        {errors.business_proof_url && <p className="text-xs text-red-500">{errors.business_proof_url}</p>}
+      </div>
+    </StepCard>
+  );
+}
