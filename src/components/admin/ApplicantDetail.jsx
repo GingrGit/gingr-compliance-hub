@@ -252,6 +252,108 @@ export default function ApplicantDetail({ profile, onRefresh, onUpdate }) {
         </div>
       </div>
 
+      {/* Document Upload Section */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+        <button
+          onClick={() => setDocsOpen(!docsOpen)}
+          className="flex items-center justify-between w-full group"
+        >
+          <div className="flex items-center gap-2">
+            <Upload className="w-4 h-4 text-gray-400" />
+            <h3 className="text-sm font-semibold text-gray-700">Dokumente hochladen</h3>
+            {documents.length > 0 && <span className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">{documents.length}</span>}
+          </div>
+          {docsOpen ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+        </button>
+
+        {docsOpen && (
+          <div className="mt-4 space-y-4">
+            {/* Existing docs */}
+            {documents.length > 0 && (
+              <div className="space-y-2">
+                {documents.map(doc => (
+                  <div key={doc.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                    <FileText className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-800 truncate">{doc.label}</p>
+                      <p className="text-xs text-gray-400">{doc.type}{doc.period ? ` · ${doc.period}` : ""}</p>
+                    </div>
+                    <a href={doc.file_url} target="_blank" rel="noopener noreferrer" className="text-xs text-purple-600 hover:underline">Öffnen</a>
+                    <button onClick={() => deleteDocument(doc.id)} className="text-red-400 hover:text-red-600">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Upload new doc */}
+            <div className="border border-dashed border-purple-200 rounded-xl p-4 space-y-3 bg-purple-50/30">
+              <p className="text-xs font-semibold text-gray-600">Neues Dokument hochladen</p>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="text"
+                  placeholder="Bezeichnung (z.B. Lohnabrechnung März)"
+                  value={newDoc.label}
+                  onChange={e => setNewDoc(p => ({ ...p, label: e.target.value }))}
+                  className="col-span-2 text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+                <select
+                  value={newDoc.type}
+                  onChange={e => setNewDoc(p => ({ ...p, type: e.target.value }))}
+                  className="text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300 bg-white"
+                >
+                  <option value="payslip">Lohnausweis</option>
+                  <option value="monthly_statement">Monatsabrechnung</option>
+                  <option value="vat_statement">MwSt.-Abrechnung</option>
+                  <option value="contract">Vertrag</option>
+                  <option value="other">Sonstiges</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Periode (z.B. 2025-03)"
+                  value={newDoc.period}
+                  onChange={e => setNewDoc(p => ({ ...p, period: e.target.value }))}
+                  className="text-xs border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+              </div>
+              <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                onChange={e => setNewDoc(p => ({ ...p, file: e.target.files[0] }))}
+                className="text-xs text-gray-500 w-full"
+              />
+              <button
+                onClick={uploadDocument}
+                disabled={!newDoc.file || !newDoc.label || uploadingDoc}
+                className="flex items-center gap-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-40 text-white text-xs font-medium rounded-lg px-4 py-2 transition-colors"
+              >
+                {uploadingDoc ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
+                Hochladen & zuweisen
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Send Dashboard Link */}
+      {profile.phone && (
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold text-gray-700">Dashboard-Link senden</p>
+            <p className="text-xs text-gray-400 mt-0.5">Sendet den persönlichen Dashboard-Link per SMS an {profile.phone}</p>
+          </div>
+          <button
+            onClick={sendDashboardLink}
+            disabled={sendingLink}
+            className="flex-shrink-0 flex items-center gap-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-50 text-white text-xs font-medium rounded-xl px-4 py-2 transition-colors"
+          >
+            {sendingLink ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+            SMS senden
+          </button>
+        </div>
+      )}
+
       {/* Notes */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
         <button
