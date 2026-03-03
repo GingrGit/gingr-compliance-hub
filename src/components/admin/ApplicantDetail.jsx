@@ -21,11 +21,30 @@ export default function ApplicantDetail({ profile, onRefresh, onUpdate }) {
   const [notes, setNotes] = useState(profile.notes || "");
   const [saving, setSaving] = useState(false);
   const [notesOpen, setNotesOpen] = useState(false);
+  const [documents, setDocuments] = useState([]);
+  const [docsOpen, setDocsOpen] = useState(false);
+  const [uploadingDoc, setUploadingDoc] = useState(false);
+  const [newDoc, setNewDoc] = useState({ label: "", type: "payslip", period: "", file: null });
+  const [sendingLink, setSendingLink] = useState(false);
+
+  useEffect(() => {
+    base44.entities.EscortDocument.filter({ profile_id: profile.id }, "-created_date", 50).then(setDocuments).catch(() => {});
+  }, [profile.id]);
 
   const updateStatus = async (status) => {
     setSaving(true);
     const updated = await base44.entities.OnboardingProfile.update(profile.id, { status });
     onUpdate(updated);
+    // When approving, send dashboard link via SMS
+    if (status === "approved" && profile.phone) {
+      try {
+        await base44.functions.invoke("sendDashboardLink", {
+          profile_id: profile.id,
+          phone: profile.phone,
+          app_url: window.location.origin,
+        });
+      } catch (_) {}
+    }
     setSaving(false);
   };
 
