@@ -6,12 +6,8 @@ import { CheckCircle2 } from "lucide-react";
 const DOCUSEAL_SLUG = "TpXUVLRqaSx2Z1";
 
 export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAndExit, saving }) {
-  const [docuslug, setDocuslug] = useState(null);
-  const [loadingSlug, setLoadingSlug] = useState(false);
-  const [docuError, setDocuError] = useState(null);
   const [contractSigned, setContractSigned] = useState(profile.contract_signed || false);
   const [payrollConsent, setPayrollConsent] = useState(false);
-  const formRef = useRef(null);
 
   const contractType = profile.work_model === "employee_90days" ? "Kurzarbeitsvertrag (max. 90 Tage)" : "Unbefristeter Arbeitsvertrag";
 
