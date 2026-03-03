@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import StepCard from "./StepCard";
-import InfoAccordion from "./InfoAccordion";
+import StepCard from "@/components/wizard/StepCard";
+import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2 } from "lucide-react";
 
 const models = [

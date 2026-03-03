@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import StepCard from "./StepCard";
-import InfoAccordion from "./InfoAccordion";
-import DocumentUpload from "./DocumentUpload";
+import StepCard from "@/components/wizard/StepCard";
+import InfoAccordion from "@/components/wizard/InfoAccordion";
+import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import StepCard from "./StepCard";
+import StepCard from "@/components/wizard/StepCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import InfoAccordion from "./InfoAccordion";
+import InfoAccordion from "@/components/wizard/InfoAccordion";
 
 const CITIZENSHIP_GROUPS = [
   { value: "CH", label: "🇨🇭 Schweizerin" },
