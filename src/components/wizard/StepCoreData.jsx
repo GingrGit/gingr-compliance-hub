@@ -11,7 +11,7 @@ const CITIZENSHIP_GROUPS = [
   { value: "NON_EU", label: "🌍 Drittstaaten (Non-EU)" },
 ];
 
-export default function StepCoreData({ profile, onNext, onBack, onSaveAndExit, saving }) {
+export default function StepCoreData({ profile, profileId, onNext, onBack, onSaveAndExit, saving }) {
   const [data, setData] = useState({
     first_name: profile.first_name || "",
     last_name: profile.last_name || "",
@@ -29,17 +29,37 @@ export default function StepCoreData({ profile, onNext, onBack, onSaveAndExit, s
   const validate = () => {
     const e = {};
     required.forEach((k) => { if (!data[k]) e[k] = "Pflichtfeld"; });
+    if (!data.phone) e.phone = "Pflichtfeld (für Magic Link)";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
   const set = (k) => (e) => setData((p) => ({ ...p, [k]: e.target.value }));
 
+  const handleNext = async () => {
+    if (!validate()) return;
+    // Send magic link SMS after saving (profileId comes from parent after save)
+    await onNext(data, async (savedProfileId) => {
+      if (data.phone && savedProfileId) {
+        try {
+          const appUrl = window.location.origin;
+          await base44.functions.invoke('sendMagicLink', {
+            profile_id: savedProfileId,
+            phone: data.phone,
+            app_url: appUrl
+          });
+        } catch (_) {
+          // Fire and forget – don't block the wizard
+        }
+      }
+    });
+  };
+
   return (
     <StepCard
       title="Deine persönlichen Daten"
       subtitle="Diese Angaben werden für deinen Vertrag benötigt."
-      onNext={() => { if (validate()) onNext(data); }}
+      onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
