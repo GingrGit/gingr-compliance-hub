@@ -3,9 +3,9 @@ import { User, Users } from "lucide-react";
 
 export default function ModeSelector({ onSelect }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-amber-50 to-orange-50 flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50 flex flex-col items-center justify-center px-4">
       <div className="text-center mb-10">
-        <span className="text-4xl font-bold text-rose-500">gingr</span>
+        <span className="text-4xl font-bold text-purple-700">gingr</span>
         <h1 className="text-2xl font-bold text-gray-800 mt-4">Legal Onboarding</h1>
         <p className="text-gray-500 mt-2 max-w-sm">
           Wie möchtest du das Onboarding starten?
