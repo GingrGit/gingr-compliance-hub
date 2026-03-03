@@ -25,8 +25,8 @@ export default function StepWelcome({ onNext, mode }) {
           { icon: ShieldCheck, title: "100% sicher", desc: "Verschlüsselte Daten" },
           { icon: HeartHandshake, title: "Jederzeit pausieren", desc: "Autosave aktiv" },
         ].map(({ icon: Icon, title, desc }) => (
-          <div key={title} className="bg-rose-50 rounded-xl p-4 text-center">
-            <Icon className="w-5 h-5 text-rose-400 mx-auto mb-2" />
+          <div key={title} className="bg-purple-50 rounded-xl p-4 text-center">
+            <Icon className="w-5 h-5 text-purple-500 mx-auto mb-2" />
             <p className="text-sm font-semibold text-gray-800">{title}</p>
             <p className="text-xs text-gray-500">{desc}</p>
           </div>
