@@ -132,6 +132,17 @@ export default function OnboardingWizard() {
     } catch (_) {}
   };
 
+  if (loadingProfile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-purple-300 border-t-purple-600 rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-gray-500 text-sm">Daten werden geladen…</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!mode) {
     return <ModeSelector onSelect={setMode} />;
   }
