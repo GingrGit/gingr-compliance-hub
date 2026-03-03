@@ -62,6 +62,41 @@ export default function ApplicantDetail({ profile, onRefresh, onUpdate }) {
     setSaving(false);
   };
 
+  const uploadDocument = async () => {
+    if (!newDoc.file || !newDoc.label) return;
+    setUploadingDoc(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file: newDoc.file });
+    await base44.entities.EscortDocument.create({
+      profile_id: profile.id,
+      type: newDoc.type,
+      label: newDoc.label,
+      period: newDoc.period,
+      file_url,
+      uploaded_by_admin: true,
+    });
+    const updated = await base44.entities.EscortDocument.filter({ profile_id: profile.id }, "-created_date", 50);
+    setDocuments(updated);
+    setNewDoc({ label: "", type: "payslip", period: "", file: null });
+    setUploadingDoc(false);
+  };
+
+  const deleteDocument = async (docId) => {
+    await base44.entities.EscortDocument.delete(docId);
+    setDocuments(prev => prev.filter(d => d.id !== docId));
+  };
+
+  const sendDashboardLink = async () => {
+    if (!profile.phone) return;
+    setSendingLink(true);
+    await base44.functions.invoke("sendDashboardLink", {
+      profile_id: profile.id,
+      phone: profile.phone,
+      app_url: window.location.origin,
+    });
+    setSendingLink(false);
+    alert("Dashboard-Link wurde per SMS gesendet!");
+  };
+
   const name = profile.first_name && profile.last_name
     ? `${profile.first_name} ${profile.last_name}`
     : profile.escort_email || "Unbekannt";
