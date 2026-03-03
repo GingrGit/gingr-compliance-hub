@@ -67,13 +67,16 @@ export default function OnboardingWizard() {
   const saveToDb = async (data) => {
     setSaving(true);
     const payload = { ...profile, ...data, current_step: profile.current_step };
+    let savedId = profileId;
     if (profileId) {
       await base44.entities.OnboardingProfile.update(profileId, payload);
     } else {
       const created = await base44.entities.OnboardingProfile.create(payload);
+      savedId = created.id;
       setProfileId(created.id);
     }
     setSaving(false);
+    return savedId;
   };
 
   const goNext = async (stepData = {}, afterSaveCallback = null) => {
