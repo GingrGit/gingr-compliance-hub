@@ -13,9 +13,9 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
 
   // Inject DocuSeal script once
   useEffect(() => {
-    if (document.querySelector('script[src="https://cdn.docuseal.com/js/form.js"]')) return;
+    if (document.querySelector('script[src="https://cdn.docuseal.eu/js/form.js"]')) return;
     const script = document.createElement("script");
-    script.src = "https://cdn.docuseal.com/js/form.js";
+    script.src = "https://cdn.docuseal.eu/js/form.js";
     script.async = true;
     document.head.appendChild(script);
   }, []);
