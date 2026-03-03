@@ -3,6 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
+import { base44 } from "@/api/base44Client";
 
 const CITIZENSHIP_GROUPS = [
   { value: "CH", label: "🇨🇭 Schweizerin" },
