@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import ApplicantList from "@/components/admin/ApplicantList";
-import ApplicantDetail from "@/components/admin/ApplicantDetail";
+import ApplicantList from "@/components/admin/ApplicantList.jsx";
+import ApplicantDetail from "@/components/admin/ApplicantDetail.jsx";
 
 export default function AdminDashboard() {
   const [profiles, setProfiles] = useState([]);
