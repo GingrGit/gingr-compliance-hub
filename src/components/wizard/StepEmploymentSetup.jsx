@@ -56,30 +56,12 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
         <div className="bg-gray-50 px-4 py-3">
           <p className="text-sm font-medium text-gray-700">Digitale Signatur via DocuSeal</p>
         </div>
-        <div className="bg-white min-h-40" ref={formRef}>
-          {!templateId ? (
-            <div className="flex items-center justify-center p-8 text-center">
-              <div>
-                <p className="text-sm text-amber-600 font-medium">⚠️ Kein Template konfiguriert</p>
-                <p className="text-xs text-gray-400 mt-1">Bitte DocuSeal Template-ID in der App hinterlegen.</p>
-              </div>
-            </div>
-          ) : loadingSlug ? (
-            <div className="flex items-center justify-center p-8 gap-2">
-              <Loader2 className="w-5 h-5 text-rose-400 animate-spin" />
-              <p className="text-sm text-gray-500">Vertrag wird geladen…</p>
-            </div>
-          ) : docuError ? (
-            <div className="p-6 text-center">
-              <p className="text-sm text-red-500">{docuError}</p>
-            </div>
-          ) : docuslug ? (
-            <docuseal-form
-              data-src={`https://docuseal.com/s/${docuslug}`}
-              style={{ display: "block", minHeight: "400px" }}
-              onCompleted={() => setContractSigned(true)}
-            />
-          ) : null}
+        <div className="bg-white">
+          <docuseal-form
+            data-src={`https://docuseal.eu/d/${DOCUSEAL_SLUG}`}
+            data-email={profile.escort_email || ""}
+            style={{ display: "block", minHeight: "400px" }}
+          />
         </div>
       </div>
 
