@@ -14,7 +14,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
     partner_in_household: profile.partner_in_household || "",
     partner_income_ch: profile.partner_income_ch || "",
     has_children: profile.has_children || "",
-    children_count: profile.children_count || "",
+    children_count: profile.children_count || 0,
     children_in_household: profile.children_in_household || "",
     receives_child_allowance: profile.receives_child_allowance || "",
   });
