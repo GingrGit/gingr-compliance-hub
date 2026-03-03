@@ -1,22 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
-import { CheckCircle2, ExternalLink } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
+import { base44 } from "@/api/base44Client";
+
+// Replace with your actual DocuSeal template IDs
+const TEMPLATE_IDS = {
+  employee_90days: null,   // Set your template ID for 90-day contract
+  employee_unlimited: null, // Set your template ID for unlimited contract
+};
 
 export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAndExit, saving }) {
-  const [agreed, setAgreed] = useState(profile.contract_signed || false);
+  const [docuslug, setDocuslug] = useState(null);
+  const [loadingSlug, setLoadingSlug] = useState(false);
+  const [docuError, setDocuError] = useState(null);
+  const [contractSigned, setContractSigned] = useState(profile.contract_signed || false);
   const [payrollConsent, setPayrollConsent] = useState(false);
+  const formRef = useRef(null);
 
+  const templateId = TEMPLATE_IDS[profile.work_model] || TEMPLATE_IDS.employee_unlimited;
   const contractType = profile.work_model === "employee_90days" ? "Kurzarbeitsvertrag (max. 90 Tage)" : "Unbefristeter Arbeitsvertrag";
+
+  useEffect(() => {
+    if (!templateId) return;
+    setLoadingSlug(true);
+    base44.functions.invoke("createDocusealSubmission", {
+      template_id: templateId,
+      email: profile.escort_email || "",
+      name: `${profile.first_name || ""} ${profile.last_name || ""}`.trim(),
+    }).then((res) => {
+      setDocuslug(res.data?.slug);
+    }).catch((err) => {
+      setDocuError("Vertrag konnte nicht geladen werden.");
+    }).finally(() => setLoadingSlug(false));
+  }, [templateId]);
+
+  // Inject DocuSeal script once
+  useEffect(() => {
+    if (document.querySelector('script[src="https://cdn.docuseal.com/js/form.js"]')) return;
+    const script = document.createElement("script");
+    script.src = "https://cdn.docuseal.com/js/form.js";
+    script.async = true;
+    document.head.appendChild(script);
+  }, []);
+
+  // Listen for DocuSeal completion event
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.detail?.status === "completed" || e.type === "docuseal:completed") {
+        setContractSigned(true);
+      }
+    };
+    window.addEventListener("docuseal:completed", handler);
+    return () => window.removeEventListener("docuseal:completed", handler);
+  }, []);
 
   return (
     <StepCard
       title="Arbeitsvertrag & Einwilligungen"
       subtitle="Bitte lies und unterzeichne deinen Vertrag, um das Onboarding abzuschliessen."
-      onNext={() => onNext({ contract_signed: agreed, contract_signed_at: new Date().toISOString() })}
+      onNext={() => onNext({ contract_signed: contractSigned, contract_signed_at: new Date().toISOString() })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!agreed || !payrollConsent}
+      nextDisabled={!contractSigned || !payrollConsent}
       nextLabel="Abschliessen & Einreichen"
       saving={saving}
     >
@@ -29,54 +75,56 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
         Der Vertrag regelt deine Arbeitsbedingungen, die Lohnzahlung, die Dienstleistungsgebühr von gingr sowie deine Rechte und Pflichten. Du erhältst nach der Unterzeichnung eine Kopie per E-Mail.
       </InfoAccordion>
 
-      {/* DocuSeal Integration */}
+      {/* DocuSeal Embed */}
       <div className="border border-gray-200 rounded-xl overflow-hidden">
-        <div className="bg-gray-50 px-4 py-3 flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-700">Digitale Signatur</p>
-          <a
-            href="https://www.docuseal.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-rose-500 flex items-center gap-1 hover:underline"
-          >
-            DocuSeal <ExternalLink className="w-3 h-3" />
-          </a>
+        <div className="bg-gray-50 px-4 py-3">
+          <p className="text-sm font-medium text-gray-700">Digitale Signatur via DocuSeal</p>
         </div>
-        <div className="p-4 bg-white min-h-32 flex items-center justify-center">
-          <div className="text-center">
-            <p className="text-sm text-gray-500 mb-3">Vertragsdokument wird geladen…</p>
-            <p className="text-xs text-gray-400">
-              In der finalen Integration wird hier das DocuSeal-Signiertool eingebettet.
-            </p>
-          </div>
+        <div className="bg-white min-h-40" ref={formRef}>
+          {!templateId ? (
+            <div className="flex items-center justify-center p-8 text-center">
+              <div>
+                <p className="text-sm text-amber-600 font-medium">⚠️ Kein Template konfiguriert</p>
+                <p className="text-xs text-gray-400 mt-1">Bitte DocuSeal Template-ID in der App hinterlegen.</p>
+              </div>
+            </div>
+          ) : loadingSlug ? (
+            <div className="flex items-center justify-center p-8 gap-2">
+              <Loader2 className="w-5 h-5 text-rose-400 animate-spin" />
+              <p className="text-sm text-gray-500">Vertrag wird geladen…</p>
+            </div>
+          ) : docuError ? (
+            <div className="p-6 text-center">
+              <p className="text-sm text-red-500">{docuError}</p>
+            </div>
+          ) : docuslug ? (
+            <docuseal-form
+              data-src={`https://docuseal.com/s/${docuslug}`}
+              style={{ display: "block", minHeight: "400px" }}
+              onCompleted={() => setContractSigned(true)}
+            />
+          ) : null}
         </div>
       </div>
 
-      <div className="space-y-3">
-        <label className="flex items-start gap-3 cursor-pointer group">
-          <div
-            onClick={() => setAgreed(!agreed)}
-            className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${agreed ? "bg-rose-500 border-rose-500" : "border-gray-300 group-hover:border-rose-300"}`}
-          >
-            {agreed && <CheckCircle2 className="w-3 h-3 text-white" />}
-          </div>
-          <p className="text-sm text-gray-700">
-            Ich habe den Arbeitsvertrag gelesen und stimme den Bedingungen zu. Ich bestätige, dass alle meine Angaben korrekt und wahrheitsgemäss sind.
-          </p>
-        </label>
+      {contractSigned && (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl p-3">
+          <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+          <p className="text-sm text-green-700 font-medium">Vertrag erfolgreich unterzeichnet!</p>
+        </div>
+      )}
 
-        <label className="flex items-start gap-3 cursor-pointer group">
-          <div
-            onClick={() => setPayrollConsent(!payrollConsent)}
-            className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${payrollConsent ? "bg-rose-500 border-rose-500" : "border-gray-300 group-hover:border-rose-300"}`}
-          >
-            {payrollConsent && <CheckCircle2 className="w-3 h-3 text-white" />}
-          </div>
-          <p className="text-sm text-gray-700">
-            Ich bin einverstanden, dass gingr.ch meine Lohndaten für die Lohnabrechnung und Sozialversicherung verarbeitet.
-          </p>
-        </label>
-      </div>
+      <label className="flex items-start gap-3 cursor-pointer group">
+        <div
+          onClick={() => setPayrollConsent(!payrollConsent)}
+          className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${payrollConsent ? "bg-rose-500 border-rose-500" : "border-gray-300 group-hover:border-rose-300"}`}
+        >
+          {payrollConsent && <CheckCircle2 className="w-3 h-3 text-white" />}
+        </div>
+        <p className="text-sm text-gray-700">
+          Ich bin einverstanden, dass gingr.ch meine Lohndaten für die Lohnabrechnung und Sozialversicherung verarbeitet.
+        </p>
+      </label>
 
       <div className="bg-amber-50 border border-amber-100 rounded-xl p-3">
         <p className="text-xs text-amber-700">
