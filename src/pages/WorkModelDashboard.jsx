@@ -31,17 +31,11 @@ export default function WorkModelDashboard() {
     }
 
     Promise.all([
-      base44.entities.OnboardingProfile.filter({ id: profileId }),
+      base44.entities.OnboardingProfile.list("-created_date", 200),
       base44.entities.EscortDocument.filter({ profile_id: profileId }, "-created_date", 50),
-    ]).then(([profiles, docs]) => {
-      if (profiles && profiles.length > 0) {
-        const p = profiles[0];
-        setProfile(p);
-        // Show welcome screen if status is not "approved" yet
-        if (p.status === "submitted" || p.status === "draft") {
-          setShowWelcome(false); // They're in review — show the dashboard with pending states
-        }
-      }
+    ]).then(([allProfiles, docs]) => {
+      const p = (allProfiles || []).find(x => x.id === profileId);
+      if (p) setProfile(p);
       setDocuments(docs || []);
       setLoading(false);
     }).catch(() => setLoading(false));
