@@ -39,13 +39,11 @@ export default function WizardLayout({ steps, currentStep, mode, onModeChange, s
                 <React.Fragment key={step.id}>
                   <div className="flex items-center gap-1 flex-shrink-0">
                     {done ? (
-                      <CheckCircle2 className="w-4 h-4 text-rose-400" />
+                      <CheckCircle2 className="w-4 h-4 text-purple-500" />
                     ) : (
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-rose-400 bg-rose-400" : "border-gray-300"}`}>
-                        {active && <div className="w-2 h-2 rounded-full bg-white" />}
-                      </div>
-                    )}
-                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-rose-500" : done ? "text-gray-400" : "text-gray-300"}`}>
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-purple-600 bg-purple-600" : "border-gray-300"}`}>
+...
+                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-purple-700" : done ? "text-gray-400" : "text-gray-300"}`}>
                       {step.label}
                     </span>
                   </div>
