@@ -337,23 +337,31 @@ export default function ApplicantDetail({ profile, onRefresh, onUpdate }) {
         )}
       </div>
 
-      {/* Send Dashboard Link */}
-      {profile.phone && (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-sm font-semibold text-gray-700">Dashboard-Link senden</p>
-            <p className="text-xs text-gray-400 mt-0.5">Sendet den persönlichen Dashboard-Link per SMS an {profile.phone}</p>
-          </div>
-          <button
-            onClick={sendDashboardLink}
-            disabled={sendingLink}
-            className="flex-shrink-0 flex items-center gap-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-50 text-white text-xs font-medium rounded-xl px-4 py-2 transition-colors"
+      {/* Dashboard Actions */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
+        <p className="text-sm font-semibold text-gray-700">Dashboard</p>
+        <div className="flex flex-wrap gap-2">
+          <a
+            href={`${createPageUrl("WorkModelDashboard")}?profile_id=${profile.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-purple-700 hover:bg-purple-800 text-white text-xs font-medium rounded-xl px-4 py-2 transition-colors"
           >
-            {sendingLink ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-            SMS senden
-          </button>
+            <ExternalLink className="w-3.5 h-3.5" />
+            Dashboard öffnen (Admin-Vorschau)
+          </a>
+          {profile.phone && (
+            <button
+              onClick={sendDashboardLink}
+              disabled={sendingLink}
+              className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 text-gray-700 text-xs font-medium rounded-xl px-4 py-2 transition-colors"
+            >
+              {sendingLink ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+              SMS-Link senden ({profile.phone})
+            </button>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Notes */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
