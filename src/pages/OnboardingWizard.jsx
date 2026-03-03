@@ -29,6 +29,7 @@ export default function OnboardingWizard() {
   const [profileId, setProfileId] = useState(null);
   const [showAbandonModal, setShowAbandonModal] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
   const isSwiss = profile.citizenship_group === "CH";
   const isSelfEmployed = profile.work_model === "self_employed";
