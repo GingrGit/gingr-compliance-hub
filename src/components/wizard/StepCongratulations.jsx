@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Clock, Mail, ArrowRight, LayoutDashboard } from "lucide-react";
 import { createPageUrl } from "@/utils";
+import { base44 } from "@/api/base44Client";
 
 const MODEL_LABELS = {
   employee_unlimited: "Angestellte (unbefristet)",
