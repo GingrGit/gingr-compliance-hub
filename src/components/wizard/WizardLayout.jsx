@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckCircle2, Circle, Save } from "lucide-react";
+import { CheckCircle2, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function WizardLayout({ steps, currentStep, mode, onModeChange, saving, children }) {
@@ -42,13 +42,15 @@ export default function WizardLayout({ steps, currentStep, mode, onModeChange, s
                       <CheckCircle2 className="w-4 h-4 text-purple-500" />
                     ) : (
                       <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-purple-600 bg-purple-600" : "border-gray-300"}`}>
-...
+                        {active && <div className="w-2 h-2 rounded-full bg-white" />}
+                      </div>
+                    )}
                     <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-purple-700" : done ? "text-gray-400" : "text-gray-300"}`}>
                       {step.label}
                     </span>
                   </div>
                   {idx < steps.length - 1 && (
-                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-rose-300" : "bg-gray-200"}`} />
+                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-purple-300" : "bg-gray-200"}`} />
                   )}
                 </React.Fragment>
               );
@@ -77,9 +79,9 @@ export default function WizardLayout({ steps, currentStep, mode, onModeChange, s
 
 function GuidancePanel({ mode }) {
   return (
-    <div className="bg-white rounded-2xl border border-rose-100 shadow-sm p-5 sticky top-28">
+    <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-5 sticky top-28">
       <div className="flex items-center gap-2 mb-3">
-        <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
           <span className="text-lg">{mode === "guided" ? "👤" : "💡"}</span>
         </div>
         <div>
@@ -93,9 +95,9 @@ function GuidancePanel({ mode }) {
           ? "Du begleitest die Escort durch das Onboarding. Alle Eingaben werden automatisch gespeichert. Geh in deinem eigenen Tempo vor."
           : "Alle deine Daten werden sicher gespeichert. Du kannst jederzeit unterbrechen und später weitermachen."}
       </p>
-      <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100">
-        <p className="text-xs font-medium text-amber-700">🔒 Datenschutz</p>
-        <p className="text-xs text-amber-600 mt-1">Deine Angaben sind vertraulich und werden nur für rechtliche Zwecke verwendet.</p>
+      <div className="mt-4 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+        <p className="text-xs font-medium text-yellow-700">🔒 Datenschutz</p>
+        <p className="text-xs text-yellow-600 mt-1">Deine Angaben sind vertraulich und werden nur für rechtliche Zwecke verwendet.</p>
       </div>
     </div>
   );
