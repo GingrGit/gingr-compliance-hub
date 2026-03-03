@@ -51,6 +51,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import OnboardingWizard from './pages/OnboardingWizard';
 import Magic from './pages/Magic';
 import WorkModelDashboard from './pages/WorkModelDashboard';
+import MagicDashboard from './pages/MagicDashboard';
 
 
 export const PAGES = {
@@ -58,6 +59,7 @@ export const PAGES = {
     "OnboardingWizard": OnboardingWizard,
     "Magic": Magic,
     "WorkModelDashboard": WorkModelDashboard,
+    "MagicDashboard": MagicDashboard,
 }
 
 export const pagesConfig = {
