@@ -9,12 +9,25 @@ const MODEL_LABELS = {
   self_employed: "Selbständig",
 };
 
-export default function StepCongratulations({ profile, onSubmit }) {
+export default function StepCongratulations({ profile, onSubmit, saving }) {
   const [submitted, setSubmitted] = React.useState(false);
+  const [sendingSms, setSendingSms] = React.useState(false);
 
   const handleSubmit = async () => {
     await onSubmit();
     setSubmitted(true);
+    // Send dashboard link via SMS after submission
+    if (profile.phone) {
+      setSendingSms(true);
+      try {
+        await base44.functions.invoke("sendDashboardLink", {
+          profile_id: profile.id,
+          phone: profile.phone,
+          app_url: window.location.origin,
+        });
+      } catch (_) {}
+      setSendingSms(false);
+    }
   };
 
   if (!submitted) {
