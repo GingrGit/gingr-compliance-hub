@@ -122,7 +122,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
           <div className="p-4 bg-gray-50 rounded-xl space-y-3">
             <div>
               <Label className="text-xs text-gray-600">Anzahl Kinder</Label>
-              <Input type="number" value={d.children_count} onChange={set("children_count")} className="mt-1 w-24" placeholder="1" />
+              <Input type="number" value={d.children_count} onChange={(e) => setD((p) => ({ ...p, children_count: parseInt(e.target.value) || 0 }))} className="mt-1 w-24" placeholder="1" />
             </div>
             <div>
               <Label className="text-xs text-gray-600">Kinder im selben Haushalt?</Label>
