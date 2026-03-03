@@ -4,11 +4,7 @@ import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
-// Replace with your actual DocuSeal template IDs
-const TEMPLATE_IDS = {
-  employee_90days: null,   // Set your template ID for 90-day contract
-  employee_unlimited: null, // Set your template ID for unlimited contract
-};
+const DOCUSEAL_SLUG = "TpXUVLRqaSx2Z1";
 
 export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const [docuslug, setDocuslug] = useState(null);
