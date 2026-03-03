@@ -48,18 +48,18 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AdminDashboard from './pages/AdminDashboard';
-import OnboardingWizard from './pages/OnboardingWizard';
 import Magic from './pages/Magic';
-import WorkModelDashboard from './pages/WorkModelDashboard';
 import MagicDashboard from './pages/MagicDashboard';
+import OnboardingWizard from './pages/OnboardingWizard';
+import WorkModelDashboard from './pages/WorkModelDashboard';
 
 
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
-    "OnboardingWizard": OnboardingWizard,
     "Magic": Magic,
-    "WorkModelDashboard": WorkModelDashboard,
     "MagicDashboard": MagicDashboard,
+    "OnboardingWizard": OnboardingWizard,
+    "WorkModelDashboard": WorkModelDashboard,
 }
 
 export const pagesConfig = {

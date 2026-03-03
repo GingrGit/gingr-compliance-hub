@@ -56,12 +56,20 @@ export default function WorkModelDashboard() {
   }
 
   if (!profile) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasProfileId = urlParams.get("profile_id");
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50 px-4">
         <div className="bg-white rounded-2xl shadow-lg p-10 max-w-sm w-full text-center">
           <Lock className="w-10 h-10 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-lg font-bold text-gray-700 mb-2">Kein Zugang</h2>
-          <p className="text-gray-400 text-sm">Bitte verwende den Link aus deiner SMS um dein Dashboard zu öffnen.</p>
+          <h2 className="text-lg font-bold text-gray-700 mb-2">
+            {hasProfileId ? "Profil nicht gefunden" : "Kein Zugang"}
+          </h2>
+          <p className="text-gray-400 text-sm">
+            {hasProfileId
+              ? `Kein Profil mit ID "${hasProfileId}" gefunden.`
+              : "Bitte verwende den Link aus deiner SMS um dein Dashboard zu öffnen."}
+          </p>
         </div>
       </div>
     );
