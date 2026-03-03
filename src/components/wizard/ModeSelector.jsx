@@ -31,7 +31,7 @@ export default function ModeSelector({ onSelect }) {
         </button>
 
         <button
-          onClick={() => onSelect("guided")}
+          onClick={() => setShowGuidedInfo(true)}
           className="group bg-white rounded-2xl border-2 border-yellow-200 hover:border-yellow-400 p-7 text-left shadow-sm hover:shadow-md transition-all"
         >
           <div className="w-12 h-12 rounded-xl bg-yellow-100 group-hover:bg-yellow-200 flex items-center justify-center mb-4 transition-colors">
@@ -42,7 +42,7 @@ export default function ModeSelector({ onSelect }) {
             Ein Teammitglied von gingr begleitet dich persönlich durch das Onboarding.
           </p>
           <span className="inline-block mt-4 text-sm font-semibold text-yellow-600 group-hover:translate-x-1 transition-transform">
-            Starten →
+            Termin buchen →
           </span>
         </button>
       </div>
