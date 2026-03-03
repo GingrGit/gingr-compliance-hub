@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import WizardLayout from "../components/wizard/WizardLayout";
-import ModeSelector from "../components/wizard/ModeSelector";
-import StepWelcome from "../components/wizard/StepWelcome";
-import StepWorkModel from "../components/wizard/StepWorkModel";
-import StepCoreData from "../components/wizard/StepCoreData";
-import StepResidency from "../components/wizard/StepResidency";
-import StepEligibility from "../components/wizard/StepEligibility";
-import StepEarnings from "../components/wizard/StepEarnings";
-import StepSourceTax from "../components/wizard/StepSourceTax";
-import StepEmploymentSetup from "../components/wizard/StepEmploymentSetup";
-import StepSelfEmployed from "../components/wizard/StepSelfEmployed";
-import StepSelfEmployedAgreement from "../components/wizard/StepSelfEmployedAgreement";
-import StepCongratulations from "../components/wizard/StepCongratulations";
-import AbandonModal from "../components/wizard/AbandonModal";
+import WizardLayout from "@/components/wizard/WizardLayout";
+import ModeSelector from "@/components/wizard/ModeSelector";
+import StepWelcome from "@/components/wizard/StepWelcome";
+import StepWorkModel from "@/components/wizard/StepWorkModel";
+import StepCoreData from "@/components/wizard/StepCoreData";
+import StepResidency from "@/components/wizard/StepResidency";
+import StepEligibility from "@/components/wizard/StepEligibility";
+import StepEarnings from "@/components/wizard/StepEarnings";
+import StepSourceTax from "@/components/wizard/StepSourceTax";
+import StepEmploymentSetup from "@/components/wizard/StepEmploymentSetup";
+import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
+import StepSelfEmployedAgreement from "@/components/wizard/StepSelfEmployedAgreement";
+import StepCongratulations from "@/components/wizard/StepCongratulations";
+import AbandonModal from "@/components/wizard/AbandonModal";
 
 export default function OnboardingWizard() {
   const [mode, setMode] = useState(null); // "self" | "guided"
