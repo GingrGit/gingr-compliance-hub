@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import StatusBadge from "@/components/admin/StatusBadge";
-import DocumentRow from "@/components/admin/DocumentRow";
-import InfoGrid from "@/components/admin/InfoGrid";
+import StatusBadge from "@/components/admin/StatusBadge.jsx";
+import DocumentRow from "@/components/admin/DocumentRow.jsx";
+import InfoGrid from "@/components/admin/InfoGrid.jsx";
 import { CheckCircle2, XCircle, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 
 const MODEL_LABELS = {
