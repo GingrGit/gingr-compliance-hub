@@ -1,8 +1,10 @@
-import React from "react";
-import { User, Users, ShieldCheck } from "lucide-react";
+import React, { useState } from "react";
+import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
 export default function ModeSelector({ onSelect }) {
+  const [showGuidedInfo, setShowGuidedInfo] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50 flex flex-col items-center justify-center px-4">
       <div className="text-center mb-10">
