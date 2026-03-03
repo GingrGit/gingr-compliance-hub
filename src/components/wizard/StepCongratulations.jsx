@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Clock, Mail, ArrowRight } from "lucide-react";
+import { CheckCircle2, Clock, Mail, ArrowRight, LayoutDashboard } from "lucide-react";
+import { createPageUrl } from "@/utils";
 
 const MODEL_LABELS = {
   employee_unlimited: "Angestellte (unbefristet)",
