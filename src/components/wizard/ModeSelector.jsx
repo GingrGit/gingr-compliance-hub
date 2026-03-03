@@ -15,32 +15,32 @@ export default function ModeSelector({ onSelect }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-xl">
         <button
           onClick={() => onSelect("self")}
-          className="group bg-white rounded-2xl border-2 border-rose-100 hover:border-rose-400 p-7 text-left shadow-sm hover:shadow-md transition-all"
+          className="group bg-white rounded-2xl border-2 border-purple-100 hover:border-purple-500 p-7 text-left shadow-sm hover:shadow-md transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-rose-100 group-hover:bg-rose-200 flex items-center justify-center mb-4 transition-colors">
-            <User className="w-6 h-6 text-rose-500" />
+          <div className="w-12 h-12 rounded-xl bg-purple-100 group-hover:bg-purple-200 flex items-center justify-center mb-4 transition-colors">
+            <User className="w-6 h-6 text-purple-600" />
           </div>
           <h3 className="text-lg font-bold text-gray-800 mb-1">Ich mache es selbst</h3>
           <p className="text-sm text-gray-500">
             Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.
           </p>
-          <span className="inline-block mt-4 text-sm font-semibold text-rose-500 group-hover:translate-x-1 transition-transform">
+          <span className="inline-block mt-4 text-sm font-semibold text-purple-600 group-hover:translate-x-1 transition-transform">
             Starten →
           </span>
         </button>
 
         <button
           onClick={() => onSelect("guided")}
-          className="group bg-white rounded-2xl border-2 border-amber-100 hover:border-amber-400 p-7 text-left shadow-sm hover:shadow-md transition-all"
+          className="group bg-white rounded-2xl border-2 border-yellow-200 hover:border-yellow-400 p-7 text-left shadow-sm hover:shadow-md transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-amber-100 group-hover:bg-amber-200 flex items-center justify-center mb-4 transition-colors">
-            <Users className="w-6 h-6 text-amber-500" />
+          <div className="w-12 h-12 rounded-xl bg-yellow-100 group-hover:bg-yellow-200 flex items-center justify-center mb-4 transition-colors">
+            <Users className="w-6 h-6 text-yellow-600" />
           </div>
           <h3 className="text-lg font-bold text-gray-800 mb-1">Mit gingr-Mitarbeiter</h3>
           <p className="text-sm text-gray-500">
             Ein Teammitglied von gingr begleitet dich persönlich durch das Onboarding.
           </p>
-          <span className="inline-block mt-4 text-sm font-semibold text-amber-500 group-hover:translate-x-1 transition-transform">
+          <span className="inline-block mt-4 text-sm font-semibold text-yellow-600 group-hover:translate-x-1 transition-transform">
             Starten →
           </span>
         </button>
