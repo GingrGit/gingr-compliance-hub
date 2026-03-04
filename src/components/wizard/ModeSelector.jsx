@@ -6,7 +6,7 @@ export default function ModeSelector({ onSelect }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50 flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-[#F0F0F0] flex flex-col items-center justify-center px-4">
       <div className="text-center mb-10">
         <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/73e94775a_GingrLogo4x.png" alt="gingr" className="h-12 object-contain mx-auto" />
         <h1 className="text-2xl font-bold text-gray-800 mt-4">Legal Onboarding</h1>

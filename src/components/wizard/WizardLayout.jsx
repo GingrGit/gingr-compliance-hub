@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function WizardLayout({ steps, currentStep, onStepClick, mode, onModeChange, saving, children }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50">
+    <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
       <div className="bg-white border-b border-purple-100 shadow-sm sticky top-0 z-30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
