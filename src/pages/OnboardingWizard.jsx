@@ -4,7 +4,7 @@ import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
 import StepWorkModel from "@/components/wizard/StepWorkModel";
-import StepCoreData from "@/components/wizard/StepCoreData";
+import StepCoreData from "@/components/wizard/StepCoreData.jsx";
 import StepResidency from "@/components/wizard/StepResidency";
 import StepEligibility from "@/components/wizard/StepEligibility";
 import StepEarnings from "@/components/wizard/StepEarnings";
@@ -12,7 +12,7 @@ import StepSourceTax from "@/components/wizard/StepSourceTax";
 import StepEmploymentSetup from "@/components/wizard/StepEmploymentSetup";
 import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
 import StepSelfEmployedAgreement from "@/components/wizard/StepSelfEmployedAgreement";
-import StepCongratulations from "@/components/wizard/StepCongratulations";
+import StepCongratulations from "@/components/wizard/StepCongratulations.jsx";
 import AbandonModal from "@/components/wizard/AbandonModal";
 
 export default function OnboardingWizard() {
