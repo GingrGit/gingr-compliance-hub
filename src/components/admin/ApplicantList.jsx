@@ -61,7 +61,7 @@ export default function ApplicantList({
             onClick={() => onStatusFilter(value)}
             className={`text-xs px-2.5 py-1 rounded-full whitespace-nowrap transition-colors font-medium ${
               statusFilter === value
-                ? "bg-purple-700 text-white shadow-sm"
+                ? "bg-[#6B0064] text-white shadow-sm"
                 : "bg-gray-100 text-gray-500 hover:bg-gray-200"
             }`}
           >
@@ -94,7 +94,7 @@ export default function ApplicantList({
                   key={p.id}
                   className={`relative group flex items-stretch transition-all ${
                     isSelected
-                      ? "bg-purple-50 border-r-[3px] border-purple-600"
+                      ? "bg-pink-50 border-r-[3px] border-[#F49FFC]"
                       : "hover:bg-gray-50 border-r-[3px] border-transparent"
                   }`}
                 >
@@ -103,7 +103,7 @@ export default function ApplicantList({
                     className="flex-1 text-left px-4 py-3.5"
                   >
                     <div className="flex items-start justify-between gap-2 mb-1">
-                      <p className={`text-sm font-semibold truncate ${isSelected ? "text-purple-900" : "text-gray-900"}`}>
+                      <p className={`text-sm font-semibold truncate ${isSelected ? "text-[#6B0064]" : "text-gray-900"}`}>
                         {name}
                       </p>
                       <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${cfg.color}`}>
@@ -112,7 +112,7 @@ export default function ApplicantList({
                     </div>
                     <p className="text-xs text-gray-400 truncate">{p.escort_email || "—"}</p>
                     {p.work_model && (
-                      <p className="text-xs text-purple-400 mt-0.5 font-medium">{MODEL_LABELS[p.work_model] || p.work_model}</p>
+                      <p className="text-xs text-[#F49FFC] mt-0.5 font-medium">{MODEL_LABELS[p.work_model] || p.work_model}</p>
                     )}
                   </button>
                   <button
