@@ -9,7 +9,7 @@ export default function ActionCard({ icon: Icon, iconBg, iconColor, title, descr
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="w-full text-left bg-white rounded-2xl border border-gray-100 shadow-sm p-7 flex flex-col gap-5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2"
+      className="w-full text-left bg-white rounded-2xl border border-gray-100 shadow-sm p-7 flex flex-col gap-5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F49FFC] focus-visible:ring-offset-2"
     >
       {/* Icon */}
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
@@ -24,7 +24,7 @@ export default function ActionCard({ icon: Icon, iconBg, iconColor, title, descr
 
       {/* CTA Button */}
       <div
-        className="inline-flex items-center justify-center w-full px-5 py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-sm font-semibold transition-colors"
+        className="inline-flex items-center justify-center w-full px-5 py-3 rounded-xl bg-[#F49FFC] hover:bg-[#e080f0] text-white text-sm font-semibold transition-colors"
       >
         {buttonLabel}
       </div>
