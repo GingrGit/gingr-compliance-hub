@@ -56,14 +56,27 @@ Deno.serve(async (req) => {
       results.sms = smsResponse.ok ? 'sent' : 'failed';
     }
 
-    // Send Email via Base44 if email provided
+    // Send Email via Resend if email provided
     if (email) {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        to: email,
-        subject: 'Dein persönlicher gingr-Dashboard-Link',
-        body: `Hallo!\n\nHier ist dein persönlicher Link zu deinem gingr-Dashboard:\n\n${dashboardUrl}\n\nDu kannst diesen Link jederzeit verwenden, um deinen Status und deine Dokumente einzusehen.\n\nBei Fragen stehen wir dir gerne zur Verfügung.\n\nDein gingr-Team`
+      const resendKey = Deno.env.get('RESEND_API_KEY');
+      const emailResponse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'gingr <onboarding@gingr.ch>',
+          to: [email],
+          subject: 'Dein persönlicher gingr-Dashboard-Link',
+          text: `Hallo!\n\nHier ist dein persönlicher Link zu deinem gingr-Dashboard:\n\n${dashboardUrl}\n\nDu kannst diesen Link jederzeit verwenden, um deinen Status und deine Dokumente einzusehen.\n\nBei Fragen stehen wir dir gerne zur Verfügung.\n\nDein gingr-Team`
+        })
       });
-      results.email = 'sent';
+      results.email = emailResponse.ok ? 'sent' : 'failed';
+      if (!emailResponse.ok) {
+        const err = await emailResponse.json();
+        results.email_error = err;
+      }
     }
 
     return Response.json({ success: true, results });
