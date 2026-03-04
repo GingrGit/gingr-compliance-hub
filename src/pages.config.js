@@ -51,7 +51,6 @@ import AdminDashboard from './pages/AdminDashboard';
 import Magic from './pages/Magic';
 import MagicDashboard from './pages/MagicDashboard';
 import OnboardingWizard from './pages/OnboardingWizard';
-import WorkModelDashboard from './pages/WorkModelDashboard';
 import Home from './pages/Home';
 import MagicLinkLogin from './pages/MagicLinkLogin';
 
@@ -61,7 +60,6 @@ export const PAGES = {
     "Magic": Magic,
     "MagicDashboard": MagicDashboard,
     "OnboardingWizard": OnboardingWizard,
-    "WorkModelDashboard": WorkModelDashboard,
     "Home": Home,
     "MagicLinkLogin": MagicLinkLogin,
 }
