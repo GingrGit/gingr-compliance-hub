@@ -18,16 +18,16 @@ export default function ModeSelector({ onSelect }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-xl">
         <button
           onClick={() => onSelect("self")}
-          className="group bg-white rounded-2xl border-2 border-purple-100 hover:border-purple-500 p-7 text-left shadow-sm hover:shadow-md transition-all"
+          className="group bg-white rounded-2xl border-2 border-pink-100 hover:border-[#F49FFC] p-7 text-left shadow-sm hover:shadow-md transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-purple-100 group-hover:bg-purple-200 flex items-center justify-center mb-4 transition-colors">
-            <User className="w-6 h-6 text-purple-600" />
+          <div className="w-12 h-12 rounded-xl bg-pink-100 group-hover:bg-pink-200 flex items-center justify-center mb-4 transition-colors">
+            <User className="w-6 h-6 text-[#F49FFC]" />
           </div>
           <h3 className="text-lg font-bold text-gray-800 mb-1">Ich mache es selbst</h3>
           <p className="text-sm text-gray-500">
             Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.
           </p>
-          <span className="inline-block mt-4 text-sm font-semibold text-purple-600 group-hover:translate-x-1 transition-transform">
+          <span className="inline-block mt-4 text-sm font-semibold text-[#6B0064] group-hover:translate-x-1 transition-transform">
             Starten →
           </span>
         </button>
@@ -55,7 +55,7 @@ export default function ModeSelector({ onSelect }) {
 
       <a
         href={createPageUrl("AdminDashboard")}
-        className="mt-6 flex items-center gap-1.5 text-xs text-gray-400 hover:text-purple-600 transition-colors"
+        className="mt-6 flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#6B0064] transition-colors"
       >
         <ShieldCheck className="w-3.5 h-3.5" />
         Admin-Dashboard
