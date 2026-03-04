@@ -186,6 +186,7 @@ export default function OnboardingWizard() {
       <WizardLayout
         steps={steps}
         currentStep={currentStep}
+        onStepClick={goToStep}
         mode={mode}
         onModeChange={setMode}
         saving={saving}
