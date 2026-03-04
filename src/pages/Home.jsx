@@ -36,7 +36,7 @@ export default function Home() {
             title="Access My Documents"
             description="Log in to view your contracts, status, and uploaded documents."
             buttonLabel="Log In"
-            onClick={() => window.location.href = createPageUrl("Magic")}
+            onClick={() => window.location.href = createPageUrl("MagicLinkLogin")}
           />
         </div>
       </main>
