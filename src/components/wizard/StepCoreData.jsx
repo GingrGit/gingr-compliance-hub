@@ -43,12 +43,13 @@ export default function StepCoreData({ profile, profileId, onNext, onBack, onSav
     if (!validate()) return;
     // Send magic link SMS after saving (profileId comes from parent after save)
     await onNext(data, async (savedProfileId) => {
-      if (data.phone && savedProfileId) {
+      if (savedProfileId) {
         try {
           const appUrl = window.location.origin;
           await base44.functions.invoke('sendMagicLink', {
             profile_id: savedProfileId,
-            phone: data.phone,
+            phone: data.phone || null,
+            email: data.escort_email || null,
             app_url: appUrl
           });
         } catch (_) {
