@@ -20,6 +20,7 @@ export default function StepCoreData({ profile, profileId, onNext, onBack, onSav
     city: profile.city || "",
     postal_code: profile.postal_code || "",
     phone: profile.phone || "",
+    escort_email: profile.escort_email || "",
     citizenship_group: profile.citizenship_group || "",
   });
   const [errors, setErrors] = useState({});
@@ -29,7 +30,9 @@ export default function StepCoreData({ profile, profileId, onNext, onBack, onSav
   const validate = () => {
     const e = {};
     required.forEach((k) => { if (!data[k]) e[k] = "Pflichtfeld"; });
-    if (!data.phone) e.phone = "Pflichtfeld (für Magic Link)";
+    if (!data.phone) e.phone = "Pflichtfeld";
+    if (!data.escort_email) e.escort_email = "Pflichtfeld";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.escort_email)) e.escort_email = "Ungültige E-Mail-Adresse";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
