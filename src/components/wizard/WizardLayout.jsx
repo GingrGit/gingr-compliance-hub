@@ -9,7 +9,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, on
       <div className="bg-white border-b border-purple-100 shadow-sm sticky top-0 z-30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-2xl font-bold text-purple-700">gingr</span>
+            <span className="text-2xl font-bold text-[#6B0064]">gingr</span>
             <span className="text-gray-400">·</span>
             <span className="text-sm text-gray-500 font-medium">Legal Onboarding</span>
           </div>
@@ -21,7 +21,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, on
             )}
             <Badge
               variant="outline"
-              className={`cursor-pointer text-xs ${mode === "guided" ? "bg-yellow-100 border-yellow-400 text-yellow-700" : "bg-purple-100 border-purple-300 text-purple-700"}`}
+              className={`cursor-pointer text-xs ${mode === "guided" ? "bg-yellow-100 border-yellow-400 text-yellow-700" : "bg-pink-100 border-pink-300 text-[#6B0064]"}`}
               onClick={() => onModeChange(mode === "self" ? "guided" : "self")}
             >
               {mode === "guided" ? "👤 Geführter Modus" : "🧍 Selbst-Modus"}
@@ -43,18 +43,18 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, on
                     onClick={() => clickable && onStepClick(idx)}
                   >
                     {done ? (
-                      <CheckCircle2 className={`w-4 h-4 ${clickable ? "text-purple-400 group-hover:text-purple-600" : "text-purple-500"}`} />
+                      <CheckCircle2 className={`w-4 h-4 ${clickable ? "text-[#F49FFC] group-hover:text-[#6B0064]" : "text-[#F49FFC]"}`} />
                     ) : (
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-purple-600 bg-purple-600" : "border-gray-300"}`}>
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-[#F49FFC] bg-[#F49FFC]" : "border-gray-300"}`}>
                         {active && <div className="w-2 h-2 rounded-full bg-white" />}
                       </div>
                     )}
-                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-purple-700" : done ? (clickable ? "text-gray-500 group-hover:text-purple-600 underline-offset-2 group-hover:underline" : "text-gray-400") : "text-gray-300"}`}>
+                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-[#6B0064]" : done ? (clickable ? "text-gray-500 group-hover:text-[#6B0064] underline-offset-2 group-hover:underline" : "text-gray-400") : "text-gray-300"}`}>
                       {step.label}
                     </span>
                   </div>
                   {idx < steps.length - 1 && (
-                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-purple-300" : "bg-gray-200"}`} />
+                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-[#F49FFC]" : "bg-gray-200"}`} />
                   )}
                 </React.Fragment>
               );
