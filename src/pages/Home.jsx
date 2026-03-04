@@ -22,8 +22,8 @@ export default function Home() {
         <div className="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ActionCard
             icon={ShieldCheck}
-            iconBg="bg-purple-100"
-            iconColor="text-purple-700"
+            iconBg="bg-pink-100"
+            iconColor="text-[#F49FFC]"
             title="Start Legal Onboarding"
             description="Complete your compliance steps to unlock secure booking and your legal setup."
             buttonLabel="Start Onboarding"
@@ -31,8 +31,8 @@ export default function Home() {
           />
           <ActionCard
             icon={FolderLock}
-            iconBg="bg-violet-100"
-            iconColor="text-violet-700"
+            iconBg="bg-pink-50"
+            iconColor="text-[#6B0064]"
             title="Access My Documents"
             description="Log in to view your contracts, status, and uploaded documents."
             buttonLabel="Log In"
@@ -47,7 +47,7 @@ export default function Home() {
         <span>·</span>
         <a
           href="mailto:support@gingr.ch"
-          className="hover:text-purple-600 transition-colors"
+          className="hover:text-[#6B0064] transition-colors"
         >
           Need help?
         </a>
