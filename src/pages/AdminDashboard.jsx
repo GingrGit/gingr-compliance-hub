@@ -77,6 +77,11 @@ export default function AdminDashboard() {
             onSearch={setSearch}
             statusFilter={statusFilter}
             onStatusFilter={setStatusFilter}
+            onDelete={async (id) => {
+              await base44.entities.OnboardingProfile.delete(id);
+              setProfiles((prev) => prev.filter((p) => p.id !== id));
+              if (selectedId === id) setSelectedId(null);
+            }}
           />
         </aside>
 

@@ -48,20 +48,20 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import AdminDashboard from './pages/AdminDashboard';
+import Home from './pages/Home';
 import Magic from './pages/Magic';
 import MagicDashboard from './pages/MagicDashboard';
-import OnboardingWizard from './pages/OnboardingWizard';
-import Home from './pages/Home';
 import MagicLinkLogin from './pages/MagicLinkLogin';
+import OnboardingWizard from './pages/OnboardingWizard';
 
 
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
+    "Home": Home,
     "Magic": Magic,
     "MagicDashboard": MagicDashboard,
-    "OnboardingWizard": OnboardingWizard,
-    "Home": Home,
     "MagicLinkLogin": MagicLinkLogin,
+    "OnboardingWizard": OnboardingWizard,
 }
 
 export const pagesConfig = {
