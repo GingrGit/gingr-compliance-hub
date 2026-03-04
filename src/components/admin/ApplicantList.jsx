@@ -90,28 +90,41 @@ export default function ApplicantList({
               const isSelected = selectedId === p.id;
 
               return (
-                <button
+                <div
                   key={p.id}
-                  onClick={() => onSelect(p.id)}
-                  className={`w-full text-left px-4 py-3.5 transition-all ${
+                  className={`relative group flex items-stretch transition-all ${
                     isSelected
                       ? "bg-purple-50 border-r-[3px] border-purple-600"
                       : "hover:bg-gray-50 border-r-[3px] border-transparent"
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <p className={`text-sm font-semibold truncate ${isSelected ? "text-purple-900" : "text-gray-900"}`}>
-                      {name}
-                    </p>
-                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${cfg.color}`}>
-                      {cfg.label}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-400 truncate">{p.escort_email || "—"}</p>
-                  {p.work_model && (
-                    <p className="text-xs text-purple-400 mt-0.5 font-medium">{MODEL_LABELS[p.work_model] || p.work_model}</p>
-                  )}
-                </button>
+                  <button
+                    onClick={() => onSelect(p.id)}
+                    className="flex-1 text-left px-4 py-3.5"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <p className={`text-sm font-semibold truncate ${isSelected ? "text-purple-900" : "text-gray-900"}`}>
+                        {name}
+                      </p>
+                      <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${cfg.color}`}>
+                        {cfg.label}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-400 truncate">{p.escort_email || "—"}</p>
+                    {p.work_model && (
+                      <p className="text-xs text-purple-400 mt-0.5 font-medium">{MODEL_LABELS[p.work_model] || p.work_model}</p>
+                    )}
+                  </button>
+                  <button
+                    onClick={(e) => handleDelete(e, p.id)}
+                    className={`opacity-0 group-hover:opacity-100 flex items-center px-2 transition-all ${
+                      confirmId === p.id ? "opacity-100 text-red-600" : "text-gray-300 hover:text-red-500"
+                    }`}
+                    title={confirmId === p.id ? "Nochmal klicken zum Bestätigen" : "Eintrag löschen"}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               );
             })}
           </div>
