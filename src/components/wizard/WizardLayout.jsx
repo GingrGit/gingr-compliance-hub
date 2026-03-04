@@ -35,17 +35,21 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, on
             {steps.map((step, idx) => {
               const done = idx < currentStep;
               const active = idx === currentStep;
+              const clickable = done && onStepClick;
               return (
                 <React.Fragment key={step.id}>
-                  <div className="flex items-center gap-1 flex-shrink-0">
+                  <div
+                    className={`flex items-center gap-1 flex-shrink-0 ${clickable ? "cursor-pointer group" : ""}`}
+                    onClick={() => clickable && onStepClick(idx)}
+                  >
                     {done ? (
-                      <CheckCircle2 className="w-4 h-4 text-purple-500" />
+                      <CheckCircle2 className={`w-4 h-4 ${clickable ? "text-purple-400 group-hover:text-purple-600" : "text-purple-500"}`} />
                     ) : (
                       <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-purple-600 bg-purple-600" : "border-gray-300"}`}>
                         {active && <div className="w-2 h-2 rounded-full bg-white" />}
                       </div>
                     )}
-                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-purple-700" : done ? "text-gray-400" : "text-gray-300"}`}>
+                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-purple-700" : done ? (clickable ? "text-gray-500 group-hover:text-purple-600 underline-offset-2 group-hover:underline" : "text-gray-400") : "text-gray-300"}`}>
                       {step.label}
                     </span>
                   </div>

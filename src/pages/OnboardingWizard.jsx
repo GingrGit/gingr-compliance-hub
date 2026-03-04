@@ -111,6 +111,12 @@ export default function OnboardingWizard() {
     updateProfile({ current_step: Math.max(0, currentStep - 1) });
   };
 
+  const goToStep = (idx) => {
+    if (idx >= 0 && idx < currentStep) {
+      updateProfile({ current_step: idx });
+    }
+  };
+
   const handleSaveAndExit = async () => {
     await saveToDb({});
     setShowAbandonModal(true);
