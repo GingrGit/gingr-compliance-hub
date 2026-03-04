@@ -12,7 +12,7 @@ import StepSourceTax from "@/components/wizard/StepSourceTax";
 import StepEmploymentSetup from "@/components/wizard/StepEmploymentSetup";
 import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
 import StepSelfEmployedAgreement from "@/components/wizard/StepSelfEmployedAgreement";
-import StepCongratulations from "@/components/wizard/StepCongratulations.jsx";
+import StepCongratulations from "@/components/wizard/StepCongratulations";
 
 import AbandonModal from "@/components/wizard/AbandonModal";
 
