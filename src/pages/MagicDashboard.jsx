@@ -20,7 +20,7 @@ export default function MagicDashboard() {
       if (data?.success && data?.profile_id) {
         setStatus("success");
         setTimeout(() => {
-          window.location.href = createPageUrl("WorkModelDashboard") + `?token=${token}`;
+          window.location.href = createPageUrl("WorkModelDashboard") + `?token=${encodeURIComponent(token)}`;
         }, 1200);
       } else if (data?.error === "Token expired") {
         setStatus("expired");
