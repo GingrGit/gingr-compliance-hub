@@ -2,7 +2,7 @@ import React from "react";
 import { CheckCircle2, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export default function WizardLayout({ steps, currentStep, mode, onModeChange, saving, children }) {
+export default function WizardLayout({ steps, currentStep, onStepClick, mode, onModeChange, saving, children }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50">
       {/* Top Header */}
