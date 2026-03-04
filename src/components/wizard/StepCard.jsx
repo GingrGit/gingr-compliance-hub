@@ -37,7 +37,7 @@ export default function StepCard({
         <Button
           onClick={onNext}
           disabled={nextDisabled || saving}
-          className="bg-purple-700 hover:bg-purple-800 text-white rounded-xl px-6"
+          className="bg-[#F49FFC] hover:bg-[#e080f0] text-white rounded-xl px-6"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
           {nextLabel}

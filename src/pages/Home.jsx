@@ -6,7 +6,7 @@ import { createPageUrl } from "@/utils";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
+    <div className="min-h-screen flex flex-col bg-[#F0F0F0]">
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-20">
         <motion.div
