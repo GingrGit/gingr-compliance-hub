@@ -24,8 +24,20 @@ const FILTERS = [
 
 export default function ApplicantList({
   profiles, loading, selectedId, onSelect,
-  search, onSearch, statusFilter, onStatusFilter,
+  search, onSearch, statusFilter, onStatusFilter, onDelete,
 }) {
+  const [confirmId, setConfirmId] = useState(null);
+
+  const handleDelete = (e, id) => {
+    e.stopPropagation();
+    if (confirmId === id) {
+      onDelete(id);
+      setConfirmId(null);
+    } else {
+      setConfirmId(id);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Search */}
