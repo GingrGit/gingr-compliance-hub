@@ -26,8 +26,8 @@ Deno.serve(async (req) => {
       used: false
     });
 
-    // Dashboard link points to /magic-dashboard page
-    const dashboardUrl = `${app_url}/magic-dashboard?token=${token}`;
+    // Base44 routes pages with capital first letter
+    const dashboardUrl = `${app_url}/MagicDashboard?token=${token}`;
 
     const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
     const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');

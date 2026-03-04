@@ -26,7 +26,8 @@ Deno.serve(async (req) => {
       used: false
     });
 
-    const dashboardUrl = `${app_url}/magic-dashboard?token=${token}`;
+    // Base44 routes pages with capital first letter
+    const dashboardUrl = `${app_url}/MagicDashboard?token=${token}`;
 
     const results = {};
 
