@@ -9,54 +9,64 @@ function generateToken() {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const { profile_id, phone, app_url } = await req.json();
+    const { profile_id, phone, email, app_url } = await req.json();
 
-    if (!profile_id || !phone) {
-      return Response.json({ error: 'profile_id and phone are required' }, { status: 400 });
+    if (!profile_id) {
+      return Response.json({ error: 'profile_id is required' }, { status: 400 });
     }
 
     const token = generateToken();
-    const expires_at = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days
+    const expires_at = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(); // 1 year
 
-    // Save magic link token
     await base44.asServiceRole.entities.MagicLink.create({
       token,
       profile_id,
-      phone,
+      phone: phone || '',
       expires_at,
       used: false
     });
 
-    const magicUrl = `${app_url}/magic?token=${token}`;
+    const dashboardUrl = `${app_url}/magic-dashboard?token=${token}`;
 
-    // Send SMS via Twilio
-    const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
-    const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
-    const fromNumber = Deno.env.get('TWILIO_PHONE_NUMBER');
+    const results = {};
 
-    const credentials = btoa(`${accountSid}:${authToken}`);
-    const smsResponse = await fetch(
-      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Basic ${credentials}`,
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          From: fromNumber,
-          To: phone,
-          Body: `Hallo! Hier ist dein persönlicher gingr-Onboarding-Link. Klicke hier, um jederzeit weiterzumachen: ${magicUrl}`
-        })
-      }
-    );
+    // Send SMS via Twilio if phone provided
+    if (phone) {
+      const accountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
+      const authToken = Deno.env.get('TWILIO_AUTH_TOKEN');
+      const fromNumber = Deno.env.get('TWILIO_PHONE_NUMBER');
 
-    if (!smsResponse.ok) {
-      const err = await smsResponse.json();
-      return Response.json({ error: 'SMS failed', details: err }, { status: 500 });
+      const credentials = btoa(`${accountSid}:${authToken}`);
+      const smsResponse = await fetch(
+        `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Basic ${credentials}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({
+            From: fromNumber,
+            To: phone,
+            Body: `Dein gingr-Dashboard-Link: ${dashboardUrl}`
+          })
+        }
+      );
+
+      results.sms = smsResponse.ok ? 'sent' : 'failed';
     }
 
-    return Response.json({ success: true });
+    // Send Email via Base44 if email provided
+    if (email) {
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        to: email,
+        subject: 'Dein persönlicher gingr-Dashboard-Link',
+        body: `Hallo!\n\nHier ist dein persönlicher Link zu deinem gingr-Dashboard:\n\n${dashboardUrl}\n\nDu kannst diesen Link jederzeit verwenden, um deinen Status und deine Dokumente einzusehen.\n\nBei Fragen stehen wir dir gerne zur Verfügung.\n\nDein gingr-Team`
+      });
+      results.email = 'sent';
+    }
+
+    return Response.json({ success: true, results });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
