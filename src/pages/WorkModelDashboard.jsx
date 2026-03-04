@@ -19,26 +19,39 @@ export default function WorkModelDashboard() {
   const [profile, setProfile] = useState(null);
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [tokenError, setTokenError] = useState(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const profileId = urlParams.get("profile_id");
+    const token = urlParams.get("token");
+    const profileId = urlParams.get("profile_id"); // fallback for admin/dev access
 
-    if (!profileId) {
+    if (token) {
+      // Magic link access — verify token and get data via backend
+      base44.functions.invoke("verifyMagicLink", { token }).then((res) => {
+        const data = res.data;
+        if (data?.success && data?.profile) {
+          setProfile(data.profile);
+          setDocuments(data.documents || []);
+        } else {
+          setTokenError(data?.error === "Token expired" ? "expired" : "invalid");
+        }
+        setLoading(false);
+      }).catch(() => { setTokenError("invalid"); setLoading(false); });
+    } else if (profileId) {
+      // Admin/dev access — direct DB read (requires login)
+      Promise.all([
+        base44.entities.OnboardingProfile.list("-created_date", 200),
+        base44.entities.EscortDocument.filter({ profile_id: profileId }, "-created_date", 50),
+      ]).then(([allProfiles, docs]) => {
+        const p = (allProfiles || []).find(x => x.id === profileId);
+        if (p) setProfile(p);
+        setDocuments(docs || []);
+        setLoading(false);
+      }).catch(() => setLoading(false));
+    } else {
       setLoading(false);
-      return;
     }
-
-    Promise.all([
-      base44.entities.OnboardingProfile.list("-created_date", 200),
-      base44.entities.EscortDocument.filter({ profile_id: profileId }, "-created_date", 50),
-    ]).then(([allProfiles, docs]) => {
-      const p = (allProfiles || []).find(x => x.id === profileId);
-      if (p) setProfile(p);
-      setDocuments(docs || []);
-      setLoading(false);
-    }).catch(() => setLoading(false));
   }, []);
 
   if (loading) {
