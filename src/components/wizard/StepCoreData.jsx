@@ -92,7 +92,11 @@ export default function StepCoreData({ profile, profileId, onNext, onBack, onSav
           <Label className="text-sm font-medium text-gray-700">Telefon *</Label>
           <Input value={data.phone} onChange={set("phone")} className={`mt-1 ${errors.phone ? "border-red-400" : ""}`} placeholder="+41 79 ..." />
           {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
-          <p className="text-xs text-gray-400 mt-1">Du erhältst einen Link per SMS, um den Wizard fortzusetzen.</p>
+        </div>
+        <div>
+          <Label className="text-sm font-medium text-gray-700">E-Mail *</Label>
+          <Input type="email" value={data.escort_email} onChange={set("escort_email")} className={`mt-1 ${errors.escort_email ? "border-red-400" : ""}`} placeholder="deine@email.com" />
+          {errors.escort_email && <p className="text-xs text-red-500 mt-1">{errors.escort_email}</p>}
         </div>
         <div className="sm:col-span-2">
           <Label className="text-sm font-medium text-gray-700">Adresse</Label>
