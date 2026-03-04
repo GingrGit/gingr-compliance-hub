@@ -53,6 +53,7 @@ import MagicDashboard from './pages/MagicDashboard';
 import OnboardingWizard from './pages/OnboardingWizard';
 import WorkModelDashboard from './pages/WorkModelDashboard';
 import Home from './pages/Home';
+import MagicLinkLogin from './pages/MagicLinkLogin';
 
 
 export const PAGES = {
@@ -62,6 +63,7 @@ export const PAGES = {
     "OnboardingWizard": OnboardingWizard,
     "WorkModelDashboard": WorkModelDashboard,
     "Home": Home,
+    "MagicLinkLogin": MagicLinkLogin,
 }
 
 export const pagesConfig = {
