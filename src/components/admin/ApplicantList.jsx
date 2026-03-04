@@ -1,5 +1,5 @@
-import React from "react";
-import { Search, Clock, AlertTriangle, CheckCircle2, FileEdit } from "lucide-react";
+import React, { useState } from "react";
+import { Search, Trash2 } from "lucide-react";
 
 const MODEL_LABELS = {
   employee_unlimited: "Unbefristet",
