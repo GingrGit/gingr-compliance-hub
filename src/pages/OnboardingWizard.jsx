@@ -4,7 +4,7 @@ import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
 import StepWorkModel from "@/components/wizard/StepWorkModel";
-import StepCoreData from "@/components/wizard/StepCoreData.jsx";
+import StepCoreData from "@/components/wizard/StepCoreData";
 import StepResidency from "@/components/wizard/StepResidency";
 import StepEligibility from "@/components/wizard/StepEligibility";
 import StepEarnings from "@/components/wizard/StepEarnings";
