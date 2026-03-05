@@ -2,30 +2,40 @@ import React from "react";
 import { CheckCircle2, Save } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export default function WizardLayout({ steps, currentStep, onStepClick, mode, onModeChange, saving, children }) {
+export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children }) {
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
       <div className="bg-white border-b border-pink-100 shadow-sm sticky top-0 z-30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl font-bold text-[#6B0064]">gingr</span>
-            <span className="text-gray-400">·</span>
-            <span className="text-sm text-gray-500 font-medium">Legal Onboarding</span>
+          {/* Logo centered */}
+          <div className="flex-1 flex justify-center">
+            <div className="flex flex-col items-center">
+              <img
+                src="https://gingr.ch/wp-content/uploads/2023/03/gingr-logo.png"
+                alt="Gingr"
+                className="h-8 object-contain"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                  e.target.nextSibling.style.display = "block";
+                }}
+              />
+              <span className="text-2xl font-bold text-[#6B0064] hidden">gingr</span>
+              <span className="text-xs text-gray-400 font-medium">Legal Onboarding</span>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
+          {/* Save indicator right */}
+          <div className="w-24 flex justify-end">
             {saving && (
               <span className="text-xs text-gray-400 flex items-center gap-1">
                 <Save className="w-3 h-3" /> Speichert…
               </span>
             )}
-            <Badge
-              variant="outline"
-              className={`cursor-pointer text-xs ${mode === "guided" ? "bg-pink-100 border-pink-300 text-[#6B0064]" : "bg-pink-100 border-pink-300 text-[#6B0064]"}`}
-              onClick={() => onModeChange(mode === "self" ? "guided" : "self")}
-            >
-              {mode === "guided" ? "👤 Geführter Modus" : "🧍 Selbst-Modus"}
-            </Badge>
+            {!saving && (
+              <span className="text-xs text-gray-300 flex items-center gap-1">
+                {mode === "guided" ? "👤 Geführt" : "🧍 Selbst"}
+              </span>
+            )}
           </div>
         </div>
 
@@ -43,18 +53,18 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, on
                     onClick={() => clickable && onStepClick(idx)}
                   >
                     {done ? (
-                      <CheckCircle2 className={`w-4 h-4 ${clickable ? "text-[#F49FFC] group-hover:text-[#6B0064]" : "text-[#F49FFC]"}`} />
+                      <CheckCircle2 className="w-4 h-4 text-[#00CC44]" />
                     ) : (
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-[#F49FFC] bg-[#F49FFC]" : "border-gray-300"}`}>
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-[#FF3CAC] bg-[#FF3CAC]" : "border-gray-300"}`}>
                         {active && <div className="w-2 h-2 rounded-full bg-white" />}
                       </div>
                     )}
-                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-[#6B0064]" : done ? (clickable ? "text-gray-500 group-hover:text-[#6B0064] underline-offset-2 group-hover:underline" : "text-gray-400") : "text-gray-300"}`}>
+                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-[#6B0064]" : done ? "text-[#00AA33]" : "text-gray-300"}`}>
                       {step.label}
                     </span>
                   </div>
                   {idx < steps.length - 1 && (
-                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-[#F49FFC]" : "bg-gray-200"}`} />
+                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-[#00CC44]" : "bg-gray-200"}`} />
                   )}
                 </React.Fragment>
               );
