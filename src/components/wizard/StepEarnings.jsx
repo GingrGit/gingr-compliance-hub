@@ -75,7 +75,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
               key={opt.v}
               type="button"
               onClick={() => setSourceTax(opt.v)}
-              className={`rounded-xl border-2 p-3 text-sm text-center transition-all ${sourceTax === opt.v ? "border-rose-400 bg-rose-50 text-rose-700" : "border-gray-200 text-gray-600 hover:border-rose-200"}`}
+              className={`rounded-xl border-2 p-3 text-sm text-center transition-all ${sourceTax === opt.v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}
             >
               <p className="font-semibold">{opt.l}</p>
               <p className="text-xs mt-0.5 text-gray-500">{opt.d}</p>
