@@ -51,8 +51,8 @@ export default function StepWorkModel({ profile, onNext, onBack, onSaveAndExit, 
             onClick={() => setSelected(m.id)}
             className={`w-full text-left rounded-xl border-2 p-4 transition-all ${
               selected === m.id
-                ? "border-rose-400 bg-rose-50"
-                : "border-gray-200 hover:border-rose-200 bg-white"
+                ? "border-[#FF3CAC] bg-pink-50"
+                : "border-gray-200 hover:border-pink-300 bg-white"
             }`}
           >
             <div className="flex items-start gap-3">
