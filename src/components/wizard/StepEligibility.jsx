@@ -84,8 +84,8 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
               !opt.available
                 ? "border-gray-100 bg-gray-50 opacity-60 cursor-not-allowed"
                 : selected === opt.id
-                ? "border-rose-400 bg-rose-50"
-                : "border-gray-200 hover:border-rose-200"
+                ? "border-[#FF3CAC] bg-pink-50"
+                : "border-gray-200 hover:border-pink-300"
             }`}
           >
             <div className="flex items-start justify-between gap-2">
