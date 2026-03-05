@@ -32,7 +32,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
         Wir verwenden diese Informationen nur zur Berechnung deines Lohns und der Sozialversicherungsbeiträge. Sie sind unverbindlich und können später angepasst werden.
       </InfoAccordion>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label className="text-sm font-medium text-gray-700">Stundensatz (CHF)</Label>
           <Input
