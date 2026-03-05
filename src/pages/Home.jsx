@@ -23,7 +23,7 @@ export default function Home() {
           <ActionCard
             icon={ShieldCheck}
             iconBg="bg-pink-100"
-            iconColor="text-[#F49FFC]"
+            iconColor="text-[#FF3CAC]"
             title="Start Legal Onboarding"
             description="Complete your compliance steps to unlock secure booking and your legal setup."
             buttonLabel="Start Onboarding"
