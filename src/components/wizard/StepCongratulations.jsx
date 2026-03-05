@@ -57,21 +57,21 @@ export default function StepCongratulations({ profile, onSubmit, saving }) {
       </p>
 
       {/* Dashboard Teaser */}
-      <div className="bg-purple-50 border border-purple-200 rounded-xl p-5 text-left mb-6">
-        <p className="text-sm font-semibold text-purple-800 mb-3 flex items-center gap-2">
+      <div className="bg-pink-50 border border-pink-100 rounded-xl p-5 text-left mb-6">
+        <p className="text-sm font-semibold text-[#6B0064] mb-3 flex items-center gap-2">
           <LayoutDashboard className="w-4 h-4" /> Dein persönliches Dashboard
         </p>
         <div className="space-y-2 text-xs text-gray-600">
           <div className="flex items-start gap-2">
-            <FileText className="w-3.5 h-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
+            <FileText className="w-3.5 h-3.5 text-[#FF3CAC] mt-0.5 flex-shrink-0" />
             <span>Sieh den aktuellen Status deines Onboardings jederzeit ein.</span>
           </div>
           <div className="flex items-start gap-2">
-            <FileText className="w-3.5 h-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
+            <FileText className="w-3.5 h-3.5 text-[#FF3CAC] mt-0.5 flex-shrink-0" />
             <span>Alle deine Dokumente (Lohnabrechnungen, Verträge, MwSt.-Abrechnungen) an einem Ort.</span>
           </div>
           <div className="flex items-start gap-2">
-            <MessageCircle className="w-3.5 h-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
+            <MessageCircle className="w-3.5 h-3.5 text-[#FF3CAC] mt-0.5 flex-shrink-0" />
             <span>Nachrichten und Benachrichtigungen von gingr direkt in deinem Dashboard.</span>
           </div>
         </div>
