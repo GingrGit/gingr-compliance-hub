@@ -6,31 +6,31 @@ const CHIP_CONFIG = {
   active: {
     icon: CheckCircle2,
     label: "Aktiv",
-    className: "bg-green-50 text-green-700 border-green-200",
+    className: "bg-white text-green-600 border-green-400",
     iconClass: "text-green-500",
   },
   approved: {
     icon: CheckCircle2,
     label: "Genehmigt",
-    className: "bg-green-50 text-green-700 border-green-200",
+    className: "bg-white text-green-600 border-green-400",
     iconClass: "text-green-500",
   },
   available: {
     icon: CheckCircle2,
     label: "Verfügbar",
-    className: "bg-green-50 text-green-700 border-green-200",
+    className: "bg-white text-green-600 border-green-400",
     iconClass: "text-green-500",
   },
   up_to_date: {
     icon: CheckCircle2,
     label: "Aktuell",
-    className: "bg-green-50 text-green-700 border-green-200",
+    className: "bg-white text-green-600 border-green-400",
     iconClass: "text-green-500",
   },
   in_progress: {
     icon: CheckCircle2,
     label: "Läuft",
-    className: "bg-green-50 text-green-700 border-green-200",
+    className: "bg-white text-green-600 border-green-400",
     iconClass: "text-green-500",
   },
   review_pending: {

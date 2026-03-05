@@ -11,8 +11,8 @@ export default function DashboardTile({ icon: Icon, iconBg = "bg-purple-100", ic
         className="w-full text-left p-5 flex items-center gap-4"
         onClick={() => setExpanded(!expanded)}
       >
-        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", iconBg || "bg-pink-100")}>
-          <Icon className={cn("w-5 h-5", iconColor || "text-[#FF3CAC]")} />
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-purple-100">
+          <Icon className="w-5 h-5 text-purple-500" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
