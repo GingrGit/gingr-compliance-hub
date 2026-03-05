@@ -237,9 +237,9 @@ export default function WorkModelDashboard() {
           <DashboardTile
             icon={Receipt}
             title="Lohnabrechnungen"
-            subtitle={payslips.length > 0 ? `Letzter: ${payslips[0].period || payslips[0].label}` : "Noch keine Abrechnungen"}
+            subtitle={payslips.length > 0 ? `${payslips.length} Abrechnung${payslips.length > 1 ? "en" : ""} verfügbar` : "Noch keine Abrechnungen"}
             status={<StatusChip status={payslips.length > 0 ? "available" : "not_yet_available"} />}
-            primaryAction={payslips.length > 0 ? { label: "Letzte Abrechnung herunterladen", onClick: () => window.open(payslips[0].file_url, "_blank") } : undefined}
+            defaultExpanded={payslips.length > 0}
           >
             <p className="text-xs text-gray-500 mb-3">Lohnabrechnungen werden per E-Mail zugestellt und sind hier zum Download verfügbar.</p>
             <DocumentList documents={payslips} emptyText="Noch keine Lohnabrechnungen — erscheinen nach dem ersten Abrechnungsmonat." />
