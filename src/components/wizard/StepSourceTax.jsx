@@ -111,7 +111,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
           <div className="flex gap-2 mt-1">
             {[["yes","Ja"],["no","Nein"]].map(([v,l]) => (
               <button key={v} type="button" onClick={() => set("has_children")(v)}
-                className={`flex-1 rounded-lg border p-2 text-sm font-medium transition-all ${d.has_children === v ? "border-rose-400 bg-rose-50 text-rose-700" : "border-gray-200 text-gray-600"}`}>
+                className={`flex-1 rounded-lg border p-2 text-sm font-medium transition-all ${d.has_children === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
                 {l}
               </button>
             ))}
