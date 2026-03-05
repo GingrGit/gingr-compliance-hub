@@ -4,6 +4,14 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, LayoutDashboard, FileText, Bell, Loader2 } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
+function getDashboardUrl(profile) {
+  const profileId = profile?.id;
+  if (profileId) {
+    return createPageUrl("WorkModelDashboard") + `?profile_id=${profileId}`;
+  }
+  return createPageUrl("WorkModelDashboard");
+}
+
 export default function StepCongratulations({ profile, onSubmit, saving }) {
   const [submitted, setSubmitted] = useState(false);
 
