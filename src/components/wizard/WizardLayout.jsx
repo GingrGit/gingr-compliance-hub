@@ -6,7 +6,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, on
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
-      <div className="bg-white border-b border-purple-100 shadow-sm sticky top-0 z-30">
+      <div className="bg-white border-b border-pink-100 shadow-sm sticky top-0 z-30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-2xl font-bold text-[#6B0064]">gingr</span>
