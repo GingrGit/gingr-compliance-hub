@@ -48,25 +48,26 @@ export default function MagicLinkLogin() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 px-4 py-12">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F0F0] px-4 py-12">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="flex justify-center mb-8">
+        <div className="flex flex-col items-center mb-8">
           <img
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/bab87dc6b_GingrLogo4x.png"
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/e355eb65f_GingrLogo4x.png"
             alt="Gingr"
             className="h-10 object-contain"
           />
+          <span className="text-xs text-gray-400 font-medium mt-1">Legal Onboarding</span>
         </div>
 
         <AnimatePresence mode="wait">
-          {/* Step 1 — Sent confirmation */}
+          {/* Sent confirmation */}
           {sent ? (
             <motion.div
               key="sent"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center"
+              className="bg-white rounded-2xl border border-pink-100 shadow-sm p-8 text-center"
             >
               <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 className="w-7 h-7 text-green-600" />
@@ -80,20 +81,20 @@ export default function MagicLinkLogin() {
               </p>
               <button
                 onClick={() => { setSent(false); setMethod(null); setValue(""); }}
-                className="mt-6 text-xs text-gray-400 hover:text-purple-600 transition-colors"
+                className="mt-6 text-xs text-gray-400 hover:text-[#FF3CAC] transition-colors"
               >
                 Anderen Weg verwenden
               </button>
             </motion.div>
 
           ) : !method ? (
-            /* Step 1 — Method selection */
+            /* Method selection */
             <motion.div
               key="select"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8"
+              className="bg-white rounded-2xl border border-pink-100 shadow-sm p-8"
             >
               <h1 className="text-xl font-bold text-gray-900 mb-1 text-center">Zugang zu deinen Dokumenten</h1>
               <p className="text-sm text-gray-500 text-center mb-6">Wähle, wie du deinen Magic Link erhalten möchtest.</p>
@@ -101,10 +102,10 @@ export default function MagicLinkLogin() {
               <div className="space-y-3">
                 <button
                   onClick={() => setMethod("sms")}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-purple-400 hover:bg-purple-50 transition-all group text-left"
+                  className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#FF3CAC] hover:bg-pink-50 transition-all text-left"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-5 h-5 text-purple-700" />
+                  <div className="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-5 h-5 text-[#FF3CAC]" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Via SMS</p>
@@ -114,10 +115,10 @@ export default function MagicLinkLogin() {
 
                 <button
                   onClick={() => setMethod("email")}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-violet-400 hover:bg-violet-50 transition-all group text-left"
+                  className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#FF3CAC] hover:bg-pink-50 transition-all text-left"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-violet-700" />
+                  <div className="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-[#FF3CAC]" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Via E-Mail</p>
@@ -128,33 +129,33 @@ export default function MagicLinkLogin() {
 
               <button
                 onClick={() => window.location.href = createPageUrl("Home")}
-                className="mt-6 flex items-center gap-1 text-xs text-gray-400 hover:text-purple-600 transition-colors mx-auto"
+                className="mt-6 flex items-center gap-1 text-xs text-gray-400 hover:text-[#FF3CAC] transition-colors mx-auto"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Zurück zur Startseite
               </button>
             </motion.div>
 
           ) : (
-            /* Step 2 — Input */
+            /* Input */
             <motion.div
               key="input"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8"
+              className="bg-white rounded-2xl border border-pink-100 shadow-sm p-8"
             >
               <button
                 onClick={() => { setMethod(null); setValue(""); setError(""); }}
-                className="flex items-center gap-1 text-xs text-gray-400 hover:text-purple-600 transition-colors mb-6"
+                className="flex items-center gap-1 text-xs text-gray-400 hover:text-[#FF3CAC] transition-colors mb-6"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Zurück
               </button>
 
               <div className="flex items-center gap-3 mb-5">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${method === "sms" ? "bg-purple-100" : "bg-violet-100"}`}>
+                <div className="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center flex-shrink-0">
                   {method === "sms"
-                    ? <MessageCircle className="w-5 h-5 text-purple-700" />
-                    : <Mail className="w-5 h-5 text-violet-700" />
+                    ? <MessageCircle className="w-5 h-5 text-[#FF3CAC]" />
+                    : <Mail className="w-5 h-5 text-[#FF3CAC]" />
                   }
                 </div>
                 <div>
@@ -173,7 +174,7 @@ export default function MagicLinkLogin() {
                 value={value}
                 onChange={e => { setValue(e.target.value); setError(""); }}
                 onKeyDown={e => e.key === "Enter" && handleSend()}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300 mb-2"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200 mb-2"
               />
 
               {error && <p className="text-xs text-red-500 mb-3">{error}</p>}
@@ -181,7 +182,7 @@ export default function MagicLinkLogin() {
               <button
                 onClick={handleSend}
                 disabled={loading}
-                className="w-full mt-2 flex items-center justify-center gap-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-50 text-white text-sm font-semibold py-3 rounded-xl transition-colors"
+                className="w-full mt-2 flex items-center justify-center gap-2 bg-[#FF3CAC] hover:bg-[#e0309a] disabled:opacity-50 text-white text-sm font-semibold py-3 rounded-xl transition-colors"
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                 {loading ? "Senden…" : "Magic Link senden"}
