@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CheckCircle2, Save, ShieldCheck, Info } from "lucide-react";
 
 export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children, currentStepId, profile }) {
