@@ -23,25 +23,27 @@ export default function StepCard({
 
       <div className="space-y-5">{children}</div>
 
-      <div className="flex items-center justify-between mt-8 pt-5 border-t border-gray-100">
-        <div className="flex gap-2">
-          {!hideBack && (
-            <Button variant="outline" size="sm" onClick={onBack} className="rounded-full px-5 text-gray-700 border-gray-300 bg-white hover:bg-gray-50">
-              <ChevronLeft className="w-4 h-4 mr-1" /> Zurück
+      <div className="mt-8 pt-5 border-t border-gray-100">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex gap-1 sm:gap-2 min-w-0">
+            {!hideBack && (
+              <Button variant="outline" size="sm" onClick={onBack} className="rounded-full px-3 sm:px-5 text-gray-700 border-gray-300 bg-white hover:bg-gray-50 flex-shrink-0">
+                <ChevronLeft className="w-4 h-4" /><span className="hidden sm:inline ml-1">Zurück</span>
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={onSaveAndExit} className="text-gray-400 text-xs rounded-full px-2 sm:px-3 flex-shrink-0">
+              <LogOut className="w-3 h-3" /><span className="hidden sm:inline ml-1">Speichern & beenden</span>
             </Button>
-          )}
-          <Button variant="ghost" size="sm" onClick={onSaveAndExit} className="text-gray-400 text-xs rounded-full">
-            <LogOut className="w-3 h-3 mr-1" /> Speichern & beenden
+          </div>
+          <Button
+            onClick={onNext}
+            disabled={nextDisabled || saving}
+            className="bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full px-5 sm:px-8 font-semibold shadow-md flex-shrink-0 text-sm"
+          >
+            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+            {nextLabel}
           </Button>
         </div>
-        <Button
-          onClick={onNext}
-          disabled={nextDisabled || saving}
-          className="bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full px-8 font-semibold shadow-md"
-        >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-          {nextLabel}
-        </Button>
       </div>
     </div>
   );
