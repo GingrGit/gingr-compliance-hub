@@ -103,9 +103,9 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
       </div>
 
       {profile.permit_status === "uploaded_review_pending" && (
-        <div className="flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-xl p-3">
-          <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-700">
+        <div className="flex items-start gap-2 bg-pink-50 border border-pink-100 rounded-xl p-3">
+          <AlertCircle className="w-4 h-4 text-[#FF3CAC] flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-[#6B0064]">
             Dein Ausweis wird noch geprüft. Du kannst trotzdem weitermachen — die endgültige Aktivierung erfolgt nach der Prüfung.
           </p>
         </div>
