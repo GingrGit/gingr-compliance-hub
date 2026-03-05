@@ -251,13 +251,26 @@ export default function WorkModelDashboard() {
           <DashboardTile
             icon={BarChart2}
             title="Monatsabrechnungen & MWST"
-            subtitle={statements.length > 0 ? `Letzter: ${statements[0].period || statements[0].label}` : "Noch keine Abrechnungen"}
-            status={<StatusChip status={statements.length > 0 ? "available" : "not_yet_available"} />}
-            primaryAction={statements.length > 0 ? { label: "Letzte Abrechnung herunterladen", onClick: () => window.open(statements[0].file_url, "_blank") } : undefined}
-            secondaryAction={vatDocs.length > 0 ? { label: "MWST-Zusammenfassung herunterladen", onClick: () => window.open(vatDocs[0].file_url, "_blank") } : undefined}
+            subtitle={statements.length + vatDocs.length > 0 ? `${statements.length + vatDocs.length} Dokument${statements.length + vatDocs.length > 1 ? "e" : ""} verfügbar` : "Noch keine Abrechnungen"}
+            status={<StatusChip status={statements.length + vatDocs.length > 0 ? "available" : "not_yet_available"} />}
+            defaultExpanded={statements.length + vatDocs.length > 0}
           >
             <p className="text-xs text-gray-500 mb-3">Lade Monatsabrechnungen und MWST-Dokumentation herunter, falls dein Unternehmen MWST-pflichtig ist.</p>
-            <DocumentList documents={[...statements, ...vatDocs]} emptyText="Noch keine Abrechnungen — erscheinen nach dem ersten Abrechnungsmonat." />
+            {statements.length > 0 && (
+              <>
+                <p className="text-xs font-semibold text-gray-600 mb-1.5">Monatsabrechnungen</p>
+                <DocumentList documents={statements} emptyText="" />
+              </>
+            )}
+            {vatDocs.length > 0 && (
+              <div className="mt-3">
+                <p className="text-xs font-semibold text-gray-600 mb-1.5">MWST-Abrechnungen</p>
+                <DocumentList documents={vatDocs} emptyText="" />
+              </div>
+            )}
+            {statements.length === 0 && vatDocs.length === 0 && (
+              <DocumentList documents={[]} emptyText="Noch keine Abrechnungen — erscheinen nach dem ersten Abrechnungsmonat." />
+            )}
           </DashboardTile>
         )}
 
