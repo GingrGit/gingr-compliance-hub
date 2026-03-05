@@ -27,16 +27,16 @@ export default function StepCongratulations({ profile, onSubmit, saving }) {
 
   if (!submitted) {
     return (
-      <div className="bg-white rounded-2xl border border-purple-100 shadow-sm p-8 text-center">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-8 h-8 text-green-600" />
+      <div className="bg-white rounded-2xl border border-pink-100 shadow-sm p-8 text-center">
+        <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-8 h-8 text-[#FF3CAC]" />
         </div>
         <h2 className="text-xl font-bold text-gray-900 mb-2">Alles bereit!</h2>
         <p className="text-gray-500 text-sm mb-6">
           Bitte überprüfe deine Angaben und reiche das Onboarding ein. Nach der Einreichung prüfen wir deine Daten und melden uns bei dir.
         </p>
         <Button
-          className="bg-purple-600 hover:bg-purple-700 text-white px-8"
+          className="bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full px-8 shadow-md"
           onClick={handleSubmit}
           disabled={saving}
         >
