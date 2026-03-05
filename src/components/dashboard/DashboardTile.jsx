@@ -36,7 +36,7 @@ export default function DashboardTile({ icon: Icon, iconBg = "bg-purple-100", ic
               <button
                 onClick={primaryAction.onClick}
                 disabled={primaryAction.disabled}
-                className="flex-1 sm:flex-none bg-purple-700 hover:bg-purple-800 disabled:opacity-40 text-white text-sm font-medium rounded-xl px-4 py-2 transition-colors"
+                className="flex-1 sm:flex-none bg-[#FF3CAC] hover:bg-[#e030a0] disabled:opacity-40 text-white text-sm font-medium rounded-xl px-4 py-2 transition-colors"
               >
                 {primaryAction.label}
               </button>
