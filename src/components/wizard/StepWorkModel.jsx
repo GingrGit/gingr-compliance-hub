@@ -60,7 +60,7 @@ export default function StepWorkModel({ profile, onNext, onBack, onSaveAndExit, 
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-gray-900">{m.label}</span>
-                  {selected === m.id && <CheckCircle2 className="w-5 h-5 text-rose-500" />}
+                  {selected === m.id && <CheckCircle2 className="w-5 h-5 text-[#FF3CAC]" />}
                 </div>
                 <p className="text-sm text-gray-500 mt-0.5">{m.desc}</p>
                 <ul className="mt-2 space-y-1">
