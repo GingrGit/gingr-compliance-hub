@@ -66,7 +66,7 @@ export default function StepWorkModel({ profile, onNext, onBack, onSaveAndExit, 
                 <ul className="mt-2 space-y-1">
                   {m.pros.map((p) => (
                     <li key={p} className="text-xs text-gray-600 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-300 flex-shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FF3CAC] flex-shrink-0" />
                       {p}
                     </li>
                   ))}
