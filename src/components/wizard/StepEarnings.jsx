@@ -65,7 +65,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
 
       <div>
         <p className="text-sm font-medium text-gray-700 mb-3">Quellensteuer</p>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
           {[
             { v: "yes", l: "Ja", d: "Quellensteuer wird abgezogen" },
             { v: "no", l: "Nein", d: "Keine Quellensteuer" },
