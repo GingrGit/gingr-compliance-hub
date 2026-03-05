@@ -35,8 +35,8 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
         </div>
 
         {/* Step Progress */}
-        <div className="max-w-5xl mx-auto px-4 pb-3">
-          <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-hide">
+        <div className="max-w-5xl mx-auto px-3 sm:px-4 pb-3">
+          <div className="flex items-center gap-1 overflow-x-auto pb-1" style={{scrollbarWidth:'none'}}>
             {steps.map((step, idx) => {
               const done = idx < currentStep;
               const active = idx === currentStep;
@@ -44,22 +44,22 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
               return (
                 <React.Fragment key={step.id}>
                   <div
-                    className={`flex items-center gap-1 flex-shrink-0 ${clickable ? "cursor-pointer group" : ""}`}
+                    className={`flex items-center gap-1 flex-shrink-0 ${clickable ? "cursor-pointer" : ""}`}
                     onClick={() => clickable && onStepClick(idx)}
                   >
                     {done ? (
-                      <CheckCircle2 className="w-4 h-4 text-[#00CC44]" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00CC44]" />
                     ) : (
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${active ? "border-[#FF3CAC] bg-[#FF3CAC]" : "border-gray-300"}`}>
-                        {active && <div className="w-2 h-2 rounded-full bg-white" />}
+                      <div className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center ${active ? "border-[#FF3CAC] bg-[#FF3CAC]" : "border-gray-300"}`}>
+                        {active && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                       </div>
                     )}
-                    <span className={`text-xs font-medium whitespace-nowrap ${active ? "text-[#6B0064]" : done ? "text-[#00AA33]" : "text-gray-300"}`}>
+                    <span className={`text-[10px] sm:text-xs font-medium whitespace-nowrap ${active ? "text-[#6B0064]" : done ? "text-[#00AA33]" : "text-gray-300"}`}>
                       {step.label}
                     </span>
                   </div>
                   {idx < steps.length - 1 && (
-                    <div className={`h-0.5 w-4 flex-shrink-0 ${idx < currentStep ? "bg-[#00CC44]" : "bg-gray-200"}`} />
+                    <div className={`h-0.5 w-3 sm:w-4 flex-shrink-0 ${idx < currentStep ? "bg-[#00CC44]" : "bg-gray-200"}`} />
                   )}
                 </React.Fragment>
               );
