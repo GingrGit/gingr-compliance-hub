@@ -77,7 +77,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
             {children}
           </div>
           <div className="hidden lg:block">
-            <GuidancePanel mode={mode} />
+            <GuidancePanel mode={mode} stepId={currentStepId} profile={profile} />
           </div>
         </div>
       </div>
