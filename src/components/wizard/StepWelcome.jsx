@@ -26,7 +26,7 @@ export default function StepWelcome({ onNext, mode }) {
           { icon: HeartHandshake, title: "Jederzeit pausieren", desc: "Autosave aktiv" },
         ].map(({ icon: Icon, title, desc }) => (
           <div key={title} className="bg-pink-50 rounded-xl p-4 text-center">
-            <Icon className="w-5 h-5 text-[#F49FFC] mx-auto mb-2" />
+            <Icon className="w-5 h-5 text-[#FF3CAC] mx-auto mb-2" />
             <p className="text-sm font-semibold text-gray-800">{title}</p>
             <p className="text-xs text-gray-500">{desc}</p>
           </div>
