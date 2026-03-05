@@ -71,8 +71,8 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
         </div>
       )}
 
-      <div className="bg-amber-50 border border-amber-100 rounded-xl p-3">
-        <p className="text-xs text-amber-700">
+      <div className="bg-pink-50 border border-pink-100 rounded-xl p-3">
+        <p className="text-xs text-[#6B0064]">
           ⏳ Nach dem Upload wird dein Ausweis von unserem Team geprüft. Du kannst in der Zwischenzeit mit dem Onboarding fortfahren.
         </p>
       </div>
