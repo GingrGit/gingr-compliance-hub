@@ -99,9 +99,9 @@ function GuidancePanel({ mode }) {
           ? "Du begleitest die Escort durch das Onboarding. Alle Eingaben werden automatisch gespeichert. Geh in deinem eigenen Tempo vor."
           : "Alle deine Daten werden sicher gespeichert. Du kannst jederzeit unterbrechen und später weitermachen."}
       </p>
-      <div className="mt-4 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
-        <p className="text-xs font-medium text-yellow-700">🔒 Datenschutz</p>
-        <p className="text-xs text-yellow-600 mt-1">Deine Angaben sind vertraulich und werden nur für rechtliche Zwecke verwendet.</p>
+      <div className="mt-4 p-3 bg-pink-50 rounded-xl border border-pink-100">
+      <p className="text-xs font-medium text-[#6B0064]">🔒 Datenschutz</p>
+      <p className="text-xs text-[#6B0064] opacity-80 mt-1">Deine Angaben sind vertraulich und werden nur für rechtliche Zwecke verwendet.</p>
       </div>
     </div>
   );
