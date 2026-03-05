@@ -79,7 +79,7 @@ export default function StepCongratulations({ profile, onSubmit, saving }) {
         </div>
       </div>
 
-      <a href={createPageUrl("MagicDashboard")}>
+      <a href={getDashboardUrl(profile)}>
         <Button className="w-full bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full py-3 text-base font-semibold shadow-md">
           <LayoutDashboard className="w-4 h-4 mr-2" />
           Zu meinem Work Dashboard
