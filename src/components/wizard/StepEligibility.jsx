@@ -96,7 +96,7 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
                   <p className="text-xs text-gray-500 mt-0.5">{opt.desc}</p>
                 </div>
               </div>
-              {selected === opt.id && <CheckCircle2 className="w-5 h-5 text-rose-500 flex-shrink-0 mt-1" />}
+              {selected === opt.id && <CheckCircle2 className="w-5 h-5 text-[#FF3CAC] flex-shrink-0 mt-1" />}
             </div>
           </button>
         ))}
