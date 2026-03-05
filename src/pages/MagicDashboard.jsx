@@ -9,6 +9,16 @@ export default function MagicDashboard() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
+    const profileId = urlParams.get("profile_id");
+
+    // Direct redirect from wizard (no token needed)
+    if (profileId) {
+      setStatus("success");
+      setTimeout(() => {
+        window.location.href = createPageUrl("WorkModelDashboard") + `?profile_id=${profileId}`;
+      }, 1200);
+      return;
+    }
 
     if (!token) {
       setStatus("error");
