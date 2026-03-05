@@ -26,18 +26,18 @@ export default function StepCard({
       <div className="flex items-center justify-between mt-8 pt-5 border-t border-gray-100">
         <div className="flex gap-2">
           {!hideBack && (
-            <Button variant="ghost" size="sm" onClick={onBack} className="text-gray-500">
+            <Button variant="outline" size="sm" onClick={onBack} className="rounded-full px-5 text-gray-700 border-gray-300 bg-white hover:bg-gray-50">
               <ChevronLeft className="w-4 h-4 mr-1" /> Zurück
             </Button>
           )}
-          <Button variant="ghost" size="sm" onClick={onSaveAndExit} className="text-gray-400 text-xs">
+          <Button variant="ghost" size="sm" onClick={onSaveAndExit} className="text-gray-400 text-xs rounded-full">
             <LogOut className="w-3 h-3 mr-1" /> Speichern & beenden
           </Button>
         </div>
         <Button
           onClick={onNext}
           disabled={nextDisabled || saving}
-          className="bg-[#F49FFC] hover:bg-[#e080f0] text-white rounded-xl px-6"
+          className="bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full px-8 font-semibold shadow-md"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
           {nextLabel}
