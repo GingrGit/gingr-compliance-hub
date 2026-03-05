@@ -6,8 +6,8 @@ export default function StepWelcome({ onNext, mode }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-4">
-          <ShieldCheck className="w-8 h-8 text-purple-600" />
+        <div className="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center mx-auto mb-4">
+          <ShieldCheck className="w-8 h-8 text-[#F49FFC]" />
         </div>
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
           {mode === "guided" ? "Willkommen zum geführten Onboarding" : "Willkommen bei gingr"}
@@ -25,8 +25,8 @@ export default function StepWelcome({ onNext, mode }) {
           { icon: ShieldCheck, title: "100% sicher", desc: "Verschlüsselte Daten" },
           { icon: HeartHandshake, title: "Jederzeit pausieren", desc: "Autosave aktiv" },
         ].map(({ icon: Icon, title, desc }) => (
-          <div key={title} className="bg-purple-50 rounded-xl p-4 text-center">
-            <Icon className="w-5 h-5 text-purple-500 mx-auto mb-2" />
+          <div key={title} className="bg-pink-50 rounded-xl p-4 text-center">
+            <Icon className="w-5 h-5 text-[#F49FFC] mx-auto mb-2" />
             <p className="text-sm font-semibold text-gray-800">{title}</p>
             <p className="text-xs text-gray-500">{desc}</p>
           </div>
@@ -44,7 +44,7 @@ export default function StepWelcome({ onNext, mode }) {
 
       <Button
         onClick={() => onNext({})}
-        className="w-full bg-purple-700 hover:bg-purple-800 text-white rounded-xl py-6 text-base font-semibold"
+        className="w-full bg-[#F49FFC] hover:bg-[#e080f0] text-white rounded-xl py-6 text-base font-semibold"
       >
         Jetzt starten →
       </Button>
