@@ -35,7 +35,7 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
     <StepCard
       title="Arbeitsvertrag & Einwilligungen"
       subtitle="Bitte lies und unterzeichne deinen Vertrag, um das Onboarding abzuschliessen."
-      onNext={() => onNext({ contract_signed: contractSigned, contract_signed_at: new Date().toISOString() })}
+      onNext={() => onNext({ contract_signed: contractSigned, contract_signed_at: contractSigned ? new Date().toISOString() : null })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       nextDisabled={!payrollConsent}
