@@ -1,8 +1,7 @@
 import React from "react";
-import { CheckCircle2, Save } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { CheckCircle2, Save, ShieldCheck, Info } from "lucide-react";
 
-export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children }) {
+export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children, currentStepId, profile }) {
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
