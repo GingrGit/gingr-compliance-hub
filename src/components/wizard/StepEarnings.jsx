@@ -56,9 +56,9 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
       </div>
 
       {estimated && (
-        <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-center">
+        <div className="bg-pink-50 border border-pink-200 rounded-xl p-4 text-center">
           <p className="text-sm text-gray-600">Geschätzter Monatsverdienst</p>
-          <p className="text-3xl font-bold text-rose-500 mt-1">CHF {parseInt(estimated).toLocaleString("de-CH")}</p>
+          <p className="text-3xl font-bold text-[#FF3CAC] mt-1">CHF {parseInt(estimated).toLocaleString("de-CH")}</p>
           <p className="text-xs text-gray-400 mt-1">Brutto, vor Abzügen</p>
         </div>
       )}
