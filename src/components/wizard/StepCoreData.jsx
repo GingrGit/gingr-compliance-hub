@@ -169,7 +169,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <Label className="text-xs text-gray-600 mb-1">PLZ</Label>
             <Input
