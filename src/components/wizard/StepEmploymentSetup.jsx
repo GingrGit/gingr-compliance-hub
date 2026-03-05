@@ -38,7 +38,7 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
       onNext={() => onNext({ contract_signed: contractSigned, contract_signed_at: new Date().toISOString() })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!contractSigned || !payrollConsent}
+      nextDisabled={!payrollConsent}
       nextLabel="Abschliessen & Einreichen"
       saving={saving}
     >
