@@ -44,8 +44,26 @@ export default function WorkModelDashboard() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const profileId = params.get("profile_id");
+    const token = params.get("token");
+
     if (!profileId) { setNotFound(true); setLoading(false); return; }
 
+    // If token present, load data via verifyMagicLink (unauthenticated)
+    if (token) {
+      base44.functions.invoke("verifyMagicLink", { token }).then((res) => {
+        const data = res.data;
+        if (data?.success && data?.profile) {
+          setProfile(data.profile);
+          setDocuments(data.documents || []);
+        } else {
+          setNotFound(true);
+        }
+        setLoading(false);
+      }).catch(() => { setNotFound(true); setLoading(false); });
+      return;
+    }
+
+    // Admin/direct access — authenticated
     Promise.all([
       base44.entities.OnboardingProfile.filter({ id: profileId }),
       base44.entities.EscortDocument.filter({ profile_id: profileId }),
