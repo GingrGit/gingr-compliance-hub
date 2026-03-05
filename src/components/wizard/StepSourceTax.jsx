@@ -69,7 +69,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
         <div className="grid grid-cols-3 gap-2">
           {[["single", "Ledig"], ["married", "Verheiratet"], ["partnership", "Eingetr. Partnerschaft"], ["divorced", "Geschieden"], ["widowed", "Verwitwet"], ["unsure", "Nicht sicher"]].map(([v, l]) => (
             <button key={v} type="button" onClick={() => set("marital_status")(v)}
-              className={`rounded-lg border p-2 text-xs font-medium transition-all ${d.marital_status === v ? "border-rose-400 bg-rose-50 text-rose-700" : "border-gray-200 text-gray-600"}`}>
+              className={`rounded-lg border p-2 text-xs font-medium transition-all ${d.marital_status === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
               {l}
             </button>
           ))}
