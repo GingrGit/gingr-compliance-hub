@@ -83,7 +83,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
           ))}
         </div>
         {defaultST !== sourceTax && (
-          <p className="text-xs text-amber-600 mt-2">
+          <p className="text-xs text-[#6B0064] opacity-70 mt-2">
             💡 Aufgrund deiner Situation würden wir "{defaultST === "yes" ? "Ja" : defaultST === "no" ? "Nein" : "Nicht sicher"}" empfehlen — du kannst aber selbst wählen.
           </p>
         )}
