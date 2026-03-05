@@ -8,42 +8,48 @@ export default function ModeSelector({ onSelect }) {
   return (
     <div className="min-h-screen bg-[#F0F0F0] flex flex-col items-center justify-center px-4">
       <div className="text-center mb-10">
-        <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/73e94775a_GingrLogo4x.png" alt="gingr" className="h-12 object-contain mx-auto" />
+        <img
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/73e94775a_GingrLogo4x.png"
+          alt="gingr"
+          className="h-12 object-contain mx-auto"
+        />
         <h1 className="text-2xl font-bold text-gray-800 mt-4">Legal Onboarding</h1>
-        <p className="text-gray-500 mt-2 max-w-sm">
+        <p className="text-gray-500 mt-2 max-w-sm text-sm">
           Wie möchtest du das Onboarding starten?
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
+        {/* Self mode */}
         <button
           onClick={() => onSelect("self")}
-          className="group bg-white rounded-2xl border-2 border-pink-100 hover:border-[#F49FFC] p-7 text-left shadow-sm hover:shadow-md transition-all"
+          className="group bg-white rounded-3xl border-2 border-transparent hover:border-[#FF3CAC] p-7 text-left shadow-sm hover:shadow-md transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-pink-100 group-hover:bg-pink-200 flex items-center justify-center mb-4 transition-colors">
-            <User className="w-6 h-6 text-[#F49FFC]" />
+          <div className="w-12 h-12 rounded-full bg-pink-100 group-hover:bg-pink-200 flex items-center justify-center mb-4 transition-colors">
+            <User className="w-6 h-6 text-[#FF3CAC]" />
           </div>
           <h3 className="text-lg font-bold text-gray-800 mb-1">Ich mache es selbst</h3>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 leading-relaxed">
             Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.
           </p>
-          <span className="inline-block mt-4 text-sm font-semibold text-[#6B0064] group-hover:translate-x-1 transition-transform">
+          <span className="inline-block mt-5 bg-[#FF3CAC] hover:bg-[#e030a0] text-white text-sm font-semibold rounded-full px-5 py-2 transition-colors shadow-sm">
             Starten →
           </span>
         </button>
 
+        {/* Guided mode */}
         <button
           onClick={() => setShowGuidedInfo(true)}
-          className="group bg-white rounded-2xl border-2 border-yellow-200 hover:border-yellow-400 p-7 text-left shadow-sm hover:shadow-md transition-all"
+          className="group bg-white rounded-3xl border-2 border-transparent hover:border-gray-300 p-7 text-left shadow-sm hover:shadow-md transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-yellow-100 group-hover:bg-yellow-200 flex items-center justify-center mb-4 transition-colors">
-            <Users className="w-6 h-6 text-yellow-600" />
+          <div className="w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 flex items-center justify-center mb-4 transition-colors">
+            <Users className="w-6 h-6 text-gray-500" />
           </div>
           <h3 className="text-lg font-bold text-gray-800 mb-1">Mit gingr-Mitarbeiter</h3>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 leading-relaxed">
             Ein Teammitglied von gingr begleitet dich persönlich durch das Onboarding.
           </p>
-          <span className="inline-block mt-4 text-sm font-semibold text-yellow-600 group-hover:translate-x-1 transition-transform">
+          <span className="inline-block mt-5 bg-white border-2 border-gray-300 text-gray-700 text-sm font-semibold rounded-full px-5 py-2 transition-colors group-hover:border-gray-400">
             Termin buchen →
           </span>
         </button>
@@ -55,7 +61,7 @@ export default function ModeSelector({ onSelect }) {
 
       <a
         href={createPageUrl("AdminDashboard")}
-        className="mt-6 flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#6B0064] transition-colors"
+        className="mt-6 flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#FF3CAC] transition-colors"
       >
         <ShieldCheck className="w-3.5 h-3.5" />
         Admin-Dashboard
@@ -64,7 +70,7 @@ export default function ModeSelector({ onSelect }) {
       {/* Guided Mode Modal */}
       {showGuidedInfo && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-7 relative">
+          <div className="bg-white rounded-3xl shadow-xl max-w-md w-full p-7 relative">
             <button
               onClick={() => setShowGuidedInfo(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -73,8 +79,8 @@ export default function ModeSelector({ onSelect }) {
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-yellow-100 flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-yellow-600" />
+              <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-[#FF3CAC]" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-gray-800">Termin buchen</h2>
@@ -88,8 +94,8 @@ export default function ModeSelector({ onSelect }) {
 
             <ul className="space-y-3 mb-6">
               <li className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-purple-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <FileText className="w-4 h-4 text-purple-500" />
+                <div className="w-7 h-7 rounded-full bg-pink-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <FileText className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-gray-800">Ausweis / Pass</p>
@@ -97,8 +103,8 @@ export default function ModeSelector({ onSelect }) {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <CreditCard className="w-4 h-4 text-blue-500" />
+                <div className="w-7 h-7 rounded-full bg-pink-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <CreditCard className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-gray-800">Aufenthaltsbewilligung</p>
@@ -106,8 +112,8 @@ export default function ModeSelector({ onSelect }) {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Briefcase className="w-4 h-4 text-green-500" />
+                <div className="w-7 h-7 rounded-full bg-pink-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Briefcase className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-gray-800">Selbständige: Gewerbenachweis</p>
@@ -120,7 +126,7 @@ export default function ModeSelector({ onSelect }) {
               href="https://calendly.com/ps-gingr/gingr-legal-onboarding"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-xl py-3 transition-colors"
+              className="block w-full text-center bg-[#FF3CAC] hover:bg-[#e030a0] text-white font-semibold rounded-full py-3 transition-colors shadow-md"
             >
               Jetzt Termin buchen →
             </a>
