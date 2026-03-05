@@ -45,7 +45,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
         Bei der Quellensteuer wird die Einkommenssteuer direkt vom Lohn abgezogen. Dies gilt für Personen ohne Niederlassungsbewilligung C. Der Kanton berechnet den genauen Satz.
       </InfoAccordion>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label className="text-sm font-medium text-gray-700">Kanton *</Label>
           <select
