@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export default function DashboardTile({ icon: Icon, iconBg = "bg-purple-100", iconColor = "text-purple-600", title, subtitle, status, children, primaryAction, secondaryAction, unavailable = false }) {
-  const [expanded, setExpanded] = useState(false);
+export default function DashboardTile({ icon: Icon, iconBg = "bg-purple-100", iconColor = "text-purple-600", title, subtitle, status, children, primaryAction, secondaryAction, unavailable = false, defaultExpanded = false }) {
+  const [expanded, setExpanded] = useState(defaultExpanded);
 
   return (
     <div className={cn("bg-white rounded-2xl border shadow-sm overflow-hidden transition-all", unavailable ? "border-gray-100 opacity-60" : "border-gray-200 hover:border-pink-200 hover:shadow-md")}>
