@@ -19,7 +19,7 @@ export default function StepWelcome({ onNext, mode }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
         {[
           { icon: Clock, title: "~15 Minuten", desc: "Durchschnittliche Dauer" },
           { icon: ShieldCheck, title: "100% sicher", desc: "Verschlüsselte Daten" },
