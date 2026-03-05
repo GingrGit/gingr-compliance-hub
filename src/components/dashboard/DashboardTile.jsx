@@ -6,13 +6,13 @@ export default function DashboardTile({ icon: Icon, iconBg = "bg-purple-100", ic
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className={cn("bg-white rounded-2xl border shadow-sm overflow-hidden transition-all", unavailable ? "border-gray-100 opacity-60" : "border-gray-200 hover:border-purple-200 hover:shadow-md")}>
+    <div className={cn("bg-white rounded-2xl border shadow-sm overflow-hidden transition-all", unavailable ? "border-gray-100 opacity-60" : "border-gray-200 hover:border-pink-200 hover:shadow-md")}>
       <button
         className="w-full text-left p-5 flex items-center gap-4"
         onClick={() => setExpanded(!expanded)}
       >
-        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", iconBg)}>
-          <Icon className={cn("w-5 h-5", iconColor)} />
+        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", iconBg || "bg-pink-100")}>
+          <Icon className={cn("w-5 h-5", iconColor || "text-[#FF3CAC]")} />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
