@@ -191,6 +191,8 @@ export default function OnboardingWizard() {
         mode={mode}
         onModeChange={setMode}
         saving={saving}
+        currentStepId={currentStepId}
+        profile={profile}
       >
         {renderStep()}
       </WizardLayout>
