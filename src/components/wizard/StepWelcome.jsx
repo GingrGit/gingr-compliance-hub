@@ -33,9 +33,9 @@ export default function StepWelcome({ onNext, mode }) {
         ))}
       </div>
 
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-8">
-        <p className="text-sm font-medium text-yellow-700 mb-1">Was du bereit haben solltest:</p>
-        <ul className="text-sm text-yellow-700 space-y-1 list-disc list-inside">
+      <div className="bg-pink-50 border border-pink-100 rounded-xl p-4 mb-8">
+        <p className="text-sm font-medium text-[#6B0064] mb-1">Was du bereit haben solltest:</p>
+        <ul className="text-sm text-[#6B0064] space-y-1 list-disc list-inside">
           <li>Ausweis / Pass</li>
           <li>Aufenthaltsbewilligung (falls nicht Schweizerin)</li>
           <li>Angaben zu deiner Steuersituation (optional)</li>
