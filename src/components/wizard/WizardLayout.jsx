@@ -12,15 +12,10 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
           <div className="flex-1 flex justify-center">
             <div className="flex flex-col items-center">
               <img
-                src="https://gingr.ch/wp-content/uploads/2023/03/gingr-logo.png"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/e355eb65f_GingrLogo4x.png"
                 alt="Gingr"
-                className="h-8 object-contain"
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  e.target.nextSibling.style.display = "block";
-                }}
+                className="h-10 object-contain"
               />
-              <span className="text-2xl font-bold text-[#6B0064] hidden">gingr</span>
               <span className="text-xs text-gray-400 font-medium">Legal Onboarding</span>
             </div>
           </div>
