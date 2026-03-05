@@ -48,7 +48,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
               key={p.value}
               type="button"
               onClick={() => setPermitType(p.value)}
-              className={`rounded-xl border-2 p-3 text-left transition-all ${permitType === p.value ? "border-rose-400 bg-rose-50" : "border-gray-200 hover:border-rose-200"}`}
+              className={`rounded-xl border-2 p-3 text-left transition-all ${permitType === p.value ? "border-[#FF3CAC] bg-pink-50" : "border-gray-200 hover:border-pink-300"}`}
             >
               <p className="font-semibold text-sm text-gray-800">{p.label}</p>
               <p className="text-xs text-gray-500">{p.desc}</p>
