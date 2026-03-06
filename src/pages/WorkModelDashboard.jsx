@@ -120,6 +120,12 @@ export default function WorkModelDashboard() {
 
       <div className="max-w-2xl mx-auto px-4 space-y-3 mt-6">
 
+        {/* Identity Card */}
+        <ProfileCard profile={profile} />
+
+        {/* Contract Card */}
+        <ContractCard profile={profile} contracts={contracts} />
+
         {/* Tile 1 — Work Model */}
         <DashboardTile
           icon={Briefcase}
