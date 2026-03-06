@@ -265,9 +265,9 @@ export default function ModeSelector({ onSelect }) {
           alt="gingr"
           className="h-12 object-contain mx-auto"
         />
-        <h1 className="text-2xl font-bold text-gray-800 mt-4">Legal Onboarding</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mt-4">{t.title}</h1>
         <p className="text-gray-500 mt-2 max-w-sm text-sm">
-          Wie möchtest du das Onboarding starten?
+          {t.subtitle}
         </p>
       </div>
 
