@@ -46,10 +46,13 @@ export default function ProfileCard({ profile }) {
 
       {/* Avatar + Name + Status */}
       <div className="flex items-start gap-4 relative">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FF3CAC] to-purple-400 flex items-center justify-center shadow-md flex-shrink-0">
-          <span className="text-xl font-bold text-white">
-            {profile.first_name?.[0] || "?"}{profile.last_name?.[0] || ""}
-          </span>
+        <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-md flex-shrink-0 bg-gradient-to-br from-[#FF3CAC] to-purple-400">
+          <img
+            src="https://media.gingr.com/gingrs/1701_276_image.webp"
+            alt={profile.first_name}
+            className="w-full h-full object-cover"
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2 flex-wrap">
