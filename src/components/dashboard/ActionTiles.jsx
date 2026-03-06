@@ -130,28 +130,113 @@ export function WorkEligibilityTile({ profile }) {
 }
 
 // ── Prostituiertenbewilligung ─────────────────────────────────────────────────
-export function ProstitutionPermitTile({ profile }) {
-  const needed = !!profile.canton;
+export function ProstitutionPermitTile({ profile, onUpdate }) {
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const fileInputRef = useRef(null);
+
   const cantons = ["ZH", "BE", "GE", "BS", "LU"];
   const mightBeRequired = cantons.includes(profile.canton);
+
+  // Derive status from profile fields
+  // We reuse profile.permit_status but scoped to the prostitution permit via a separate field ideally.
+  // For now we use profile.prostitution_permit_status (new field) falling back to logic.
+  const ppStatus = profile.prostitution_permit_status;
+  const derivedStatus = ppStatus === "approved" ? "approved"
+    : ppStatus === "submitted" ? "review_pending"
+    : mightBeRequired ? "action_required"
+    : "not_required";
+
+  const statusLabel = derivedStatus === "approved" ? "Genehmigt"
+    : derivedStatus === "review_pending" ? "In Prüfung"
+    : derivedStatus === "action_required" ? "Aktion erforderlich"
+    : "Nicht erforderlich";
+
+  async function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadError(null);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    await base44.entities.OnboardingProfile.update(profile.id, {
+      prostitution_permit_url: file_url,
+      prostitution_permit_status: "submitted",
+    });
+    setUploading(false);
+    if (onUpdate) onUpdate();
+  }
 
   return (
     <DashboardTile
       icon={ShieldCheck}
       title="Prostituiertenbewilligung"
-      subtitle={profile.canton ? `Kanton ${profile.canton}` : "Kanton nicht bekannt"}
-      status={<StatusChip status={mightBeRequired ? "action_required" : "not_required"} />}
-      unavailable={!needed}
+      subtitle={profile.canton ? `Kanton ${profile.canton} · ${statusLabel}` : "Kanton nicht bekannt"}
+      status={<StatusChip status={derivedStatus} />}
       secondaryAction={{ label: "Wann ist das erforderlich?", onClick: () => {} }}
     >
-      <p className="text-xs text-gray-500 mb-2">
-        Einige Kantone verlangen eine zusätzliche Bewilligung. Lade sie hier hoch, falls sie für dich gilt.
+      <p className="text-xs text-gray-500 mb-3">
+        Einige Kantone verlangen eine zusätzliche Bewilligung für die Ausübung der Prostitution. Lade sie hier hoch, falls sie für dich gilt.
       </p>
-      {mightBeRequired && (
-        <div className="flex items-start gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2">
-          <AlertTriangle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-          Im Kanton {profile.canton} ist eine kantonale Bewilligung in der Regel erforderlich.
+
+      {/* Status block */}
+      {derivedStatus === "approved" && (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-100 rounded-xl px-3 py-2.5 mb-3">
+          <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+          <div>
+            <p className="text-xs font-semibold text-green-800">Bewilligung genehmigt</p>
+            {profile.prostitution_permit_url && (
+              <a href={profile.prostitution_permit_url} target="_blank" rel="noreferrer" className="text-[10px] text-green-600 underline">
+                Dokument ansehen
+              </a>
+            )}
+          </div>
         </div>
+      )}
+
+      {derivedStatus === "review_pending" && (
+        <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-xl px-3 py-2.5 mb-3">
+          <Clock className="w-4 h-4 text-blue-500 flex-shrink-0" />
+          <div>
+            <p className="text-xs font-semibold text-blue-800">Dokument eingereicht — wird geprüft</p>
+            {profile.prostitution_permit_url && (
+              <a href={profile.prostitution_permit_url} target="_blank" rel="noreferrer" className="text-[10px] text-blue-600 underline">
+                Hochgeladenes Dokument ansehen
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+
+      {derivedStatus === "action_required" && (
+        <div className="flex items-start gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2 mb-3">
+          <AlertTriangle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+          Im Kanton {profile.canton} ist eine kantonale Bewilligung in der Regel erforderlich. Bitte lade sie hoch.
+        </div>
+      )}
+
+      {/* Upload area — show when not yet approved */}
+      {derivedStatus !== "approved" && (
+        <>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-pink-200 hover:border-[#FF3CAC] text-sm text-gray-500 hover:text-[#FF3CAC] rounded-xl py-3 transition-colors disabled:opacity-50"
+          >
+            {uploading ? (
+              <><Loader2 className="w-4 h-4 animate-spin" /> Wird hochgeladen…</>
+            ) : (
+              <><Upload className="w-4 h-4" /> {derivedStatus === "review_pending" ? "Neues Dokument hochladen" : "Bewilligung hochladen (PDF / Bild)"}</>
+            )}
+          </button>
+          {uploadError && <p className="text-xs text-red-500 mt-1">{uploadError}</p>}
+        </>
       )}
     </DashboardTile>
   );
