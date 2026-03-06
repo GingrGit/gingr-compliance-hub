@@ -9,7 +9,7 @@ import StepResidency from "@/components/wizard/StepResidency";
 import StepEligibility from "@/components/wizard/StepEligibility";
 import StepEarnings from "@/components/wizard/StepEarnings";
 import StepSourceTax from "@/components/wizard/StepSourceTax";
-import StepEmploymentSetup from "@/components/wizard/StepEmploymentSetup";
+import StepSummary from "@/components/wizard/StepSummary";
 import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
 import StepSelfEmployedAgreement from "@/components/wizard/StepSelfEmployedAgreement";
 import StepCongratulations from "@/components/wizard/StepCongratulations";
