@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, LayoutDashboard, FileText, Bell } from "lucide-react";
+import { CheckCircle2, LayoutDashboard, FileText, Bell, PenLine } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
 function getDashboardUrl(profile, profileId) {
