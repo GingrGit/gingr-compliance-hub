@@ -5,14 +5,15 @@
  *  - Prostituiertenbewilligung
  *  - 90-Tage Tracker
  */
-import React from "react";
+import React, { useState, useRef } from "react";
 import {
   FileSignature, CheckCircle2, Clock, AlertTriangle, Globe,
-  ShieldCheck, Timer, ExternalLink, Download
+  ShieldCheck, Timer, ExternalLink, Upload, Loader2
 } from "lucide-react";
 import StatusChip from "./StatusChip";
 import DashboardTile from "./DashboardTile";
 import NinetyDayTracker from "./NinetyDayTracker";
+import { base44 } from "@/api/base44Client";
 
 const CONTRACT_LABELS = {
   employee_unlimited: "Arbeitsvertrag",
