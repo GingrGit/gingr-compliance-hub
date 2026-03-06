@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, LayoutDashboard, FileText, Bell, Loader2 } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
-function getDashboardUrl(profile) {
-  const profileId = profile?.id;
-  if (profileId) {
-    return createPageUrl("WorkModelDashboard") + `?profile_id=${profileId}`;
+function getDashboardUrl(profile, profileId) {
+  const id = profileId || profile?.id;
+  if (id) {
+    return createPageUrl("WorkModelDashboard") + `?profile_id=${id}`;
   }
   return createPageUrl("WorkModelDashboard");
 }
