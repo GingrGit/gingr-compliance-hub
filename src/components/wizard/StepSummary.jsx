@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
-import { CheckCircle2, User, Briefcase, Calendar, ChevronRight, Info } from "lucide-react";
+import { CheckCircle2, User, Briefcase, Calendar, ChevronRight, Info, LayoutDashboard, FileText, Bell } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { createPageUrl } from "@/utils";
 
 const WORK_MODEL_LABELS = {
   employee_unlimited: "Angestelltenverhältnis (unbefristet)",
