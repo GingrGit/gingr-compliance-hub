@@ -36,9 +36,9 @@ export default function StepWelcome({ onNext, mode }) {
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-4 mb-8">
         <p className="text-sm font-medium text-[#6B0064] mb-1">Was du bereit haben solltest:</p>
         <ul className="text-sm text-[#6B0064] space-y-1 list-disc list-inside">
-          <li>Ausweis / Pass</li>
-          <li>Aufenthaltsbewilligung (falls nicht Schweizerin)</li>
-          <li>Angaben zu deiner Steuersituation (optional)</li>
+          <li>Identitätskarte oder Pass</li>
+          <li>Aufenthaltsbewilligung (falls nicht Schweizer*in)</li>
+          <li>AHV Bestätigung oder Handelsregisterauszug (falls du Selbstständig tätig bist)</li>
         </ul>
       </div>
 
