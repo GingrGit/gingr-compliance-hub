@@ -39,6 +39,7 @@ export default function StepWelcome({ onNext, mode }) {
           <li>Identitätskarte oder Pass</li>
           <li>Aufenthaltsbewilligung (falls nicht Schweizer*in)</li>
           <li>AHV Bestätigung oder Handelsregisterauszug (falls du Selbstständig tätig bist)</li>
+          <li>Deine Bankverbindung / IBAN</li>
         </ul>
       </div>
 
