@@ -19,6 +19,19 @@ export default function ModeSelector({ onSelect }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
   const [selectedLang, setSelectedLang] = useState(LANGUAGES[0]);
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const [rotatingIdx, setRotatingIdx] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setRotatingIdx(i => (i + 1) % LANGUAGES.length);
+        setFade(true);
+      }, 300);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#F0F0F0] flex flex-col items-center justify-center px-4 relative">
