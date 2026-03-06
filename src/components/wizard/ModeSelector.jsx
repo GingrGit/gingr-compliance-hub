@@ -17,9 +17,47 @@ const LANGUAGES = [
 
 export default function ModeSelector({ onSelect }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
+  const [selectedLang, setSelectedLang] = useState(LANGUAGES[0]);
+  const [showLangMenu, setShowLangMenu] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F0F0F0] flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-[#F0F0F0] flex flex-col items-center justify-center px-4 relative">
+      {/* Language Selector */}
+      <div className="absolute top-4 right-4">
+        <div className="relative">
+          <button
+            onClick={() => setShowLangMenu(!showLangMenu)}
+            className="flex items-center gap-2 bg-white rounded-full px-3 py-2 shadow-sm border border-gray-100 hover:border-pink-200 hover:shadow-md transition-all text-sm font-medium text-gray-700"
+          >
+            <span className="text-base">{selectedLang.flag}</span>
+            <span className="hidden sm:inline">{selectedLang.name}</span>
+            <Globe className="w-3.5 h-3.5 text-gray-400" />
+          </button>
+          {showLangMenu && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setShowLangMenu(false)} />
+              <div className="absolute right-0 top-12 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 min-w-[160px] overflow-hidden">
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider px-4 pt-1 pb-2">Sprache wählen</p>
+                {LANGUAGES.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => { setSelectedLang(lang); setShowLangMenu(false); }}
+                    className={`w-full flex items-center gap-3 px-4 py-2 text-sm hover:bg-pink-50 transition-colors ${selectedLang.code === lang.code ? "bg-pink-50 text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
+                  >
+                    <span className="text-base">{lang.flag}</span>
+                    <span>{lang.name}</span>
+                    {selectedLang.code === lang.code && <span className="ml-auto text-[#FF3CAC]">✓</span>}
+                  </button>
+                ))}
+                <div className="mx-4 mt-2 pt-2 border-t border-gray-100">
+                  <p className="text-[10px] text-gray-400 text-center pb-1">Mehr Sprachen bald verfügbar</p>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
       <div className="text-center mb-10">
         <img
           src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/73e94775a_GingrLogo4x.png"
