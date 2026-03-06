@@ -119,12 +119,13 @@ function getStepContent(stepId, profile) {
     case "work_model":
       if (isSelfEmployed) return {
         icon: "💼",
-        title: "Selbstständig-Modus",
-        body: "Du bleibst vollständig in Kontrolle über Preise und Verfügbarkeit. Du kümmerst dich selbst um Steuern, AHV und Versicherungen.",
+        title: "Selbstständig",
+        body: "Dieses Modell ist für erfahrene Selbstständige, die ihre Tätigkeit eigenverantwortlich führen möchten. Du behältst die volle Kontrolle über deine Preise, deine Verfügbarkeit und darüber, welche Buchungen du annimmst. Die Auszahlungen erfolgen über Secure Payment auf Gingr. Für Steuern, Versicherungen und deine soziale Absicherung bist du selbst verantwortlich.",
         accordions: [
-          { title: "Was du selbst regelst", content: "AHV/AVS-Registrierung als Selbstständige, eigene Steuererklärung, Kranken- & Unfallversicherung, Vorsorge (3. Säule)." },
-          { title: "Wer kann wählen?", content: "CH-Bürgerinnen (wenn wohnhaft in CH), EU/EFTA-Bürgerinnen mit CH-Wohnsitz und Nachweis. Nicht verfügbar für Non-EU/EFTA." },
-          { title: "Vergleich: Angestellt vs. Selbstständig", content: "Angestellt: volle Versicherung, Lohnabrechnung via QUITT, keine Buchhaltung nötig.\nSelbstständig: volle Kontrolle, eigene Steuern & Versicherungen, Nachweis erforderlich." },
+          { title: "Inbegriffen", content: "✔ Secure Payment auf Gingr inklusive Stornoschutz\n✔ Klare Plattformregeln und ein sichereres Buchungsumfeld\n✔ Datenschutzfreundliches Setup mit öffentlichem Nickname und verifizierter Identität im Hintergrund\n✔ Dokumentenablage für Bestätigungen, Nachweise und Abrechnungen an einem Ort\n✔ Entwickelt für selbstständiges Arbeiten" },
+          { title: "Du bist selbst verantwortlich für", content: "✔ AHV/AVS-Anmeldung bzw. Bestätigung der Selbstständigkeit oder ein belastbares Nachweispaket\n✔ Deine Steuern\n✔ Deine Versicherungen, insbesondere Unfall- und Krankenversicherung\n✔ Deine Vorsorge und Pensionsplanung" },
+          { title: "Für wen ist das passend?", content: "Am besten für Escorts, die bereits selbstständig arbeiten und ihre Tätigkeit professionell organisiert haben – zum Beispiel mit mehreren Kanälen oder Kunden, einer bestehenden Struktur und den nötigen Nachweisen zur Selbstständigkeit." },
+          { title: "Verfügbarkeit", content: "✅ Schweizer Staatsbürgerinnen: Ja, wenn du in der Schweiz wohnst\n✅ EU-/EFTA-Staatsbürgerinnen: Ja, aber nur wenn du in der Schweiz wohnst, hier legal arbeiten darfst und einen klaren Schweiz-Bezug sowie entsprechende Nachweise hast\n❌ Nicht-EU-/EFTA-Staatsbürgerinnen: Nicht verfügbar\n❌ EU-/EFTA-Staatsbürgerinnen ohne bestehende selbstständige Struktur oder ohne ausreichende Nachweise: Nicht verfügbar" },
         ]
       };
       if (isEmployee && is90days) return {
@@ -138,11 +139,11 @@ function getStepContent(stepId, profile) {
       };
       if (isEmployee) return {
         icon: "🛡️",
-        title: "Angestellt — Unbefristet",
-        body: "Die sicherste Option. Vollständig versichert und rechtlich geschützt. Monatlicher Lohn auf dein Konto, basierend auf deinen eigenen Preisen.",
+        title: "Angestellt (unbefristet)",
+        body: "Das ist die einfachste und sicherste Lösung. Du bist rechtlich abgesichert, vollständig versichert und bekommst deinen Lohn jeden Monat direkt auf dein Bankkonto – basierend auf deinen eigenen Preisen. Du kannst dieses Arbeitsverhältnis jederzeit beenden und gehst keine Verpflichtungen ein, setzt deine eigenen Preise und bestimmst komplett frei, wann und wie viel du arbeiten möchtest.",
         accordions: [
-          { title: "Was alles inbegriffen ist", content: "✔ Vollkasko-Unfallversicherung (NBU)\n✔ Sozialversicherungen (AHV/ALV/IV/EO)\n✔ BVG-Pensionsbeiträge (wenn berechtigt)\n✔ Steuern werden automatisch abgehandelt\n✔ Professionelle Lohnabrechnung via QUITT.ch\n✔ Garantierte Auszahlungen" },
-          { title: "Wer kann wählen?", content: "CH-Bürgerinnen: ✅ Ja\nEU/EFTA-Bürgerinnen: ✅ Ja (ggf. Bewilligung B/C)\nNon-EU/EFTA: ✅ Nur mit gültiger Bewilligung B/C" },
+          { title: "Inbegriffen", content: "✔ Vollständige Unfallversicherung (NBU)\n✔ Sozialversicherungen (AHV/ALV/IV/EO)\n✔ Pensionskasse (BVG), falls du die Voraussetzungen erfüllst\n✔ G-IT AG (Gingr) ist deine Arbeitgeberin\n✔ Lohn- und Vertragsabwicklung über QUITT.ch\n✔ Sichere und garantierte Auszahlungen\n✔ Keine eigene Firma nötig\n✔ In allen Schweizer Kantonen legal" },
+          { title: "Für wen ist das passend?", content: "Ideal für die meisten Escorts, die eine sichere, legale und unkomplizierte Lösung ohne Papierkram möchten." },
         ]
       };
       return {
