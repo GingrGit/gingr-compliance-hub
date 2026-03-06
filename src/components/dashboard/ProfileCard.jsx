@@ -1,5 +1,6 @@
 import React from "react";
-import { User, MapPin, Flag, Phone, Calendar, Briefcase } from "lucide-react";
+import { MapPin, Phone, Calendar, Flag, Building2, Hash } from "lucide-react";
+import StatusChip from "./StatusChip";
 
 const WORK_MODEL_LABELS = {
   employee_unlimited: "Anstellung (unbefristet)",
@@ -7,59 +8,76 @@ const WORK_MODEL_LABELS = {
   self_employed: "Selbstständig",
 };
 
-function InfoItem({ icon: Icon, label, value }) {
+const WORK_MODEL_COLORS = {
+  employee_unlimited: "bg-blue-100 text-blue-700",
+  employee_90days: "bg-orange-100 text-orange-700",
+  self_employed: "bg-purple-100 text-purple-700",
+};
+
+function InfoRow({ icon: Icon, value }) {
   if (!value) return null;
   return (
-    <div className="flex items-start gap-3">
-      <div className="w-8 h-8 rounded-lg bg-white/60 flex items-center justify-center flex-shrink-0">
-        <Icon className="w-3.5 h-3.5 text-[#FF3CAC]" />
-      </div>
-      <div className="min-w-0">
-        <p className="text-[10px] text-pink-400 uppercase tracking-wide font-medium">{label}</p>
-        <p className="text-sm font-semibold text-gray-800 truncate">{value}</p>
-      </div>
+    <div className="flex items-center gap-2 text-sm text-gray-600">
+      <Icon className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+      <span>{value}</span>
     </div>
   );
+}
+
+function getOverallStatus(profile) {
+  if (profile.status === "approved") return "active";
+  if (profile.status === "submitted") return "review_pending";
+  if (profile.status === "needs_action") return "action_required";
+  return "pending";
 }
 
 export default function ProfileCard({ profile }) {
   const fullName = [profile.first_name, profile.last_name].filter(Boolean).join(" ");
   const fullAddress = [profile.address, profile.postal_code, profile.city].filter(Boolean).join(", ");
+  const overallStatus = getOverallStatus(profile);
+  const workModelLabel = WORK_MODEL_LABELS[profile.work_model];
+  const workModelColor = WORK_MODEL_COLORS[profile.work_model] || "bg-gray-100 text-gray-600";
 
   return (
     <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#fff0fb] via-white to-[#fce7fb] border border-pink-100 shadow-sm p-5">
-      {/* Decorative background shape */}
+      {/* Decorative blobs */}
       <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-gradient-to-br from-[#FF3CAC]/10 to-purple-200/20 pointer-events-none" />
       <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-pink-100/30 pointer-events-none" />
 
-      {/* Header row */}
-      <div className="flex items-center gap-4 mb-5 relative">
+      {/* Avatar + Name + Status */}
+      <div className="flex items-start gap-4 relative">
         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FF3CAC] to-purple-400 flex items-center justify-center shadow-md flex-shrink-0">
           <span className="text-xl font-bold text-white">
             {profile.first_name?.[0] || "?"}{profile.last_name?.[0] || ""}
           </span>
         </div>
-        <div>
-          <p className="text-[10px] text-pink-400 uppercase tracking-widest font-medium mb-0.5">Profil</p>
-          <h2 className="text-lg font-bold text-gray-900 leading-tight">{fullName || "–"}</h2>
-          <p className="text-xs text-gray-500">{WORK_MODEL_LABELS[profile.work_model] || "Work Model ausstehend"}</p>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2 flex-wrap">
+            <div>
+              <h2 className="text-lg font-bold text-gray-900 leading-tight">{fullName || "–"}</h2>
+              {workModelLabel && (
+                <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full mt-1 ${workModelColor}`}>
+                  {workModelLabel}
+                </span>
+              )}
+            </div>
+            <StatusChip status={overallStatus} />
+          </div>
         </div>
       </div>
 
-      {/* Info grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 relative">
-        <InfoItem icon={Calendar} label="Geburtsdatum" value={profile.date_of_birth} />
-        <InfoItem icon={Flag} label="Nationalität" value={profile.nationality} />
-        <InfoItem icon={MapPin} label="Adresse" value={fullAddress || null} />
-        <InfoItem icon={Phone} label="Telefon" value={profile.phone} />
-        {profile.canton && <InfoItem icon={Briefcase} label="Kanton" value={profile.canton} />}
-        {profile.source_tax && (
-          <InfoItem
-            icon={User}
-            label="Quellensteuer"
-            value={profile.source_tax === "yes" ? "Ja" : profile.source_tax === "no" ? "Nein" : "Unsicher"}
-          />
-        )}
+      {/* Divider */}
+      <div className="border-t border-pink-100 my-4 relative" />
+
+      {/* Contact & address info */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 relative">
+        <InfoRow icon={Calendar} value={profile.date_of_birth} />
+        <InfoRow icon={Flag} value={profile.nationality} />
+        <InfoRow icon={Phone} value={profile.phone} />
+        <InfoRow icon={MapPin} value={fullAddress || null} />
+        {profile.canton && <InfoRow icon={MapPin} value={`Kanton ${profile.canton}`} />}
+        {profile.business_name && <InfoRow icon={Building2} value={profile.business_name} />}
+        {profile.uid_number && <InfoRow icon={Hash} value={profile.uid_number} />}
       </div>
     </div>
   );
