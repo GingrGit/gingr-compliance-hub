@@ -106,14 +106,15 @@ const ALL_COUNTRIES = [
   { name: "Weissrussland", flag: "🇧🇾", group: "NON_EU" },
 ];
 
-function NationalityDropdown({ value, onChange }) {
+function NationalityDropdown({ value, onChange, citizenshipGroup }) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
   const selected = ALL_COUNTRIES.find(c => c.name === value);
   const filtered = ALL_COUNTRIES.filter(c =>
-    c.name.toLowerCase().includes(search.toLowerCase())
+    c.name.toLowerCase().includes(search.toLowerCase()) &&
+    (citizenshipGroup ? c.group === citizenshipGroup : true)
   );
 
   useEffect(() => {
