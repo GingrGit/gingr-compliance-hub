@@ -61,12 +61,16 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     setLinkSent(true);
   };
 
+  const isSwiss = profile.citizenship_group === "CH";
+
   const canProceed =
     profile.first_name &&
     profile.last_name &&
     profile.date_of_birth &&
     profile.escort_email &&
     profile.phone &&
+    profile.citizenship_group &&
+    profile.id_document_url &&
     !ageError;
 
   return (
