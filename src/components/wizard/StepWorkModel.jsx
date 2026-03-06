@@ -27,8 +27,13 @@ const models = [
   },
 ];
 
-export default function StepWorkModel({ profile, onNext, onBack, onSaveAndExit, saving }) {
+export default function StepWorkModel({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
   const [selected, setSelected] = useState(profile.work_model || null);
+
+  const handleSelect = (id) => {
+    setSelected(id);
+    updateProfile({ work_model: id });
+  };
 
   return (
     <StepCard
