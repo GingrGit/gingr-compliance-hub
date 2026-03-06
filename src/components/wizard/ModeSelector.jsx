@@ -1,6 +1,19 @@
 import React, { useState } from "react";
-import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase } from "lucide-react";
+import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase, Globe } from "lucide-react";
 import { createPageUrl } from "@/utils";
+
+const LANGUAGES = [
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "ro", name: "Română", flag: "🇷🇴" },
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "it", name: "Italiano", flag: "🇮🇹" },
+  { code: "ru", name: "Русский", flag: "🇷🇺" },
+  { code: "pl", name: "Polski", flag: "🇵🇱" },
+  { code: "cs", name: "Čeština", flag: "🇨🇿" },
+  { code: "hu", name: "Magyar", flag: "🇭🇺" },
+];
 
 export default function ModeSelector({ onSelect }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
