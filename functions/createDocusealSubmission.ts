@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
         {
           email: submitterEmail,
           name: submitterName,
-          role: 'Escort',
+          role: 'Angestellte',
           fields: [
             { name: 'Name', default_value: profile.last_name || '' },
             { name: 'Vorname', default_value: profile.first_name || '' },
