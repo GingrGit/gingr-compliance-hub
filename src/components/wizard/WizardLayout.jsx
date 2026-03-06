@@ -113,10 +113,7 @@ function getStepContent(stepId, profile) {
         icon: "👋",
         title: "Willkommen beim Onboarding",
         body: "Dieser Assistent führt dich Schritt für Schritt durch dein rechtliches Setup. Du kannst jederzeit pausieren und später weitermachen.",
-        accordions: [
-          { title: "Was du bereit haben solltest", content: "Ausweis / Pass, Aufenthaltsbewilligung (falls zutreffend), Bankverbindung (IBAN)." },
-          { title: "Wie lange dauert es?", content: "Ca. 10–15 Minuten. Alle Schritte werden automatisch gespeichert." },
-        ]
+        accordions: []
       };
 
     case "work_model":
