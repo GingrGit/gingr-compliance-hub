@@ -370,8 +370,8 @@ export default function ModeSelector({ onSelect }) {
                 <Calendar className="w-5 h-5 text-[#FF3CAC]" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-800">Termin buchen</h2>
-                <p className="text-sm text-gray-500">Onboarding mit gingr-Begleitung</p>
+                <h2 className="text-lg font-bold text-gray-800">{t.modalTitle}</h2>
+                <p className="text-sm text-gray-500">{t.modalSubtitle}</p>
               </div>
             </div>
 
