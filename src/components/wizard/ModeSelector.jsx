@@ -327,7 +327,7 @@ export default function ModeSelector({ onSelect }) {
             <>
               <div className="fixed inset-0 z-10" onClick={() => setShowLangMenu(false)} />
               <div className="absolute left-1/2 -translate-x-1/2 bottom-12 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 min-w-[200px] overflow-hidden">
-                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider px-4 pt-1 pb-2">Sprache wählen</p>
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider px-4 pt-1 pb-2">{t.langLabel}</p>
                 <div className="grid grid-cols-2 gap-0">
                   {LANGUAGES.map((lang) => (
                     <button
