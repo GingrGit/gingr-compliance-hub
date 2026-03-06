@@ -72,7 +72,6 @@ export default function OnboardingWizard() {
       }
       steps.push({ id: "summary", label: "Zusammenfassung" });
     }
-    steps.push({ id: "congratulations", label: "Abschluss" });
     return steps;
   };
 
