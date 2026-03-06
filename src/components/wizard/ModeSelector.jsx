@@ -295,12 +295,10 @@ export default function ModeSelector({ onSelect }) {
           <div className="w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 flex items-center justify-center mb-4 transition-colors">
             <Users className="w-6 h-6 text-gray-500" />
           </div>
-          <h3 className="text-lg font-bold text-gray-800 mb-1">Mit gingr-Mitarbeiter</h3>
-          <p className="text-sm text-gray-500 leading-relaxed">
-            Ein Teammitglied von gingr begleitet dich persönlich durch das Onboarding.
-          </p>
+          <h3 className="text-lg font-bold text-gray-800 mb-1">{t.guidedTitle}</h3>
+          <p className="text-sm text-gray-500 leading-relaxed">{t.guidedDesc}</p>
           <span className="inline-block mt-5 bg-white border-2 border-gray-300 text-gray-700 text-sm font-semibold rounded-full px-5 py-2 transition-colors group-hover:border-gray-400">
-            Termin buchen →
+            {t.guidedBtn}
           </span>
         </button>
       </div>
