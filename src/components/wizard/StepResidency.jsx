@@ -36,10 +36,6 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
       onSaveAndExit={onSaveAndExit}
       saving={saving}
     >
-      <InfoAccordion title="Warum wird das benötigt?">
-        Gemäss Schweizer Recht müssen wir den legalen Aufenthalt aller Mitarbeiterinnen prüfen. Deine Dokumente werden vertraulich behandelt.
-      </InfoAccordion>
-
       <div>
         <p className="text-sm font-medium text-gray-700 mb-3">Art des Ausweises</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
