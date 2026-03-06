@@ -1,4 +1,6 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
+
+const TEMPLATE_ID_EMPLOYEE = 439619;
 
 Deno.serve(async (req) => {
   try {
@@ -8,13 +10,51 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { template_id, email, name } = await req.json();
-
-    if (!template_id) {
-      return Response.json({ error: 'template_id is required' }, { status: 400 });
+    const { profile } = await req.json();
+    if (!profile) {
+      return Response.json({ error: 'profile is required' }, { status: 400 });
     }
 
-    const signerEmail = email || user.email;
+    const templateId = TEMPLATE_ID_EMPLOYEE;
+
+    // Map work_model to German label for "Variante" field
+    const varianteMap = {
+      employee_unlimited: 'Unbefristete Anstellung',
+      employee_90days: 'Anstellung 90 Tage',
+    };
+
+    // Map permit_type to German label for "Aufenthaltsstatus" field
+    const aufenthaltsstatusMap = {
+      none: 'Keine Bewilligung erforderlich',
+      B: 'Ausweis B',
+      C: 'Ausweis C',
+      L: 'Ausweis L',
+      other: 'Andere',
+    };
+
+    const submitterEmail = profile.escort_email || user.email;
+    const submitterName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || submitterEmail;
+
+    const body = {
+      template_id: templateId,
+      send_email: false,
+      submitters: [
+        {
+          email: submitterEmail,
+          name: submitterName,
+          role: 'Escort',
+          fields: [
+            { name: 'Name', default_value: profile.last_name || '' },
+            { name: 'Vorname', default_value: profile.first_name || '' },
+            { name: 'Geburtsdatum', default_value: profile.date_of_birth || '' },
+            { name: 'Adresse / Strasse', default_value: [profile.address, profile.postal_code, profile.city].filter(Boolean).join(', ') },
+            { name: 'Staatsangehörigkeit', default_value: profile.nationality || '' },
+            { name: 'Aufenthaltsstatus', default_value: aufenthaltsstatusMap[profile.permit_type] || '' },
+            { name: 'Variante', default_value: varianteMap[profile.work_model] || '' },
+          ],
+        },
+      ],
+    };
 
     const response = await fetch('https://api.docuseal.com/submissions', {
       method: 'POST',
@@ -22,17 +62,7 @@ Deno.serve(async (req) => {
         'X-Auth-Token': Deno.env.get('DOCUSEAL_API_KEY'),
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        template_id,
-        send_email: false,
-        submitters: [
-          {
-            email: signerEmail,
-            role: 'Escort',
-            name: name || signerEmail,
-          },
-        ],
-      }),
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {
@@ -41,10 +71,11 @@ Deno.serve(async (req) => {
     }
 
     const data = await response.json();
-    // data is an array of submitters; get the slug of the first one
-    const slug = Array.isArray(data) ? data[0]?.slug : data?.submitters?.[0]?.slug;
+    const submitter = Array.isArray(data) ? data[0] : data?.submitters?.[0];
+    const slug = submitter?.slug;
+    const submissionId = submitter?.submission_id;
 
-    return Response.json({ slug });
+    return Response.json({ slug, submissionId });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
