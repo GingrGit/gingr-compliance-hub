@@ -40,10 +40,6 @@ export default function StepWorkModel({ profile, onNext, onBack, onSaveAndExit, 
       nextDisabled={!selected}
       saving={saving}
     >
-      <InfoAccordion title="Nicht sicher? Hier mehr erfahren">
-        <p>Die Wahl des Arbeitsmodells bestimmt deine rechtliche Stellung. Als Angestellte kümmert sich gingr um Steuern und Versicherungen. Als Selbständige bist du für deine eigene Buchhaltung verantwortlich. Du kannst uns jederzeit kontaktieren, wenn du unsicher bist.</p>
-      </InfoAccordion>
-
       <div className="space-y-3">
         {models.map((m) => (
           <button
