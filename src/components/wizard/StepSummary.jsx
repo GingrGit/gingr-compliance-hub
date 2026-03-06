@@ -47,11 +47,12 @@ function getDashboardUrl(profile, profileId) {
   return createPageUrl("WorkModelDashboard");
 }
 
-export default function StepSummary({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
+export default function StepSummary({ profile, updateProfile, onNext, onBack, onSaveAndExit, onSubmit, saving }) {
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
 
   const handleNext = async () => {
+    if (onSubmit) await onSubmit();
     onNext({ employment_start_date: startDate });
   };
 
