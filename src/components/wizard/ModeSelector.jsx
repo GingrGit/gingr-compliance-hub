@@ -242,6 +242,7 @@ export default function ModeSelector({ onSelect }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
   const [selectedLang, setSelectedLang] = useState(LANGUAGES[0]);
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const t = TRANSLATIONS[selectedLang.code] || TRANSLATIONS.de;
   const [rotatingIdx, setRotatingIdx] = useState(0);
   const [fade, setFade] = useState(true);
 
