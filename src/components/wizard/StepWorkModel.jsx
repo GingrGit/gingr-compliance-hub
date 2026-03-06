@@ -49,7 +49,7 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
         {models.map((m) => (
           <button
             key={m.id}
-            onClick={() => setSelected(m.id)}
+            onClick={() => handleSelect(m.id)}
             className={`w-full text-left rounded-xl border-2 p-4 transition-all ${
               selected === m.id
                 ? "border-[#FF3CAC] bg-pink-50"
