@@ -5,7 +5,7 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const payload = await req.json();
 
-    // DocuSeal sends event_type in the webhook payload
+    // DocuSeal EU webhook payload
     const eventType = payload?.event_type;
     const submission = payload?.data;
 

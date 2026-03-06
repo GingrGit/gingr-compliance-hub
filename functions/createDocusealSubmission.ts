@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
       ],
     };
 
-    const response = await fetch('https://api.docuseal.com/submissions', {
+    const response = await fetch('https://api.docuseal.eu/submissions', {
       method: 'POST',
       headers: {
         'X-Auth-Token': Deno.env.get('DOCUSEAL_API_KEY'),
