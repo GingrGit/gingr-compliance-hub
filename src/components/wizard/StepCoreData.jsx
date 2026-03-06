@@ -364,16 +364,42 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
         <div>
           <Label className="text-xs text-gray-600 mb-1">Staatsangehörigkeit *</Label>
-          <NationalityDropdown
-            value={profile.nationality || ""}
-            onChange={(country) => updateProfile({ nationality: country.name, citizenship_group: country.group })}
-          />
-          {profile.citizenship_group && (
-            <p className="text-xs text-gray-400 mt-1">
-              {profile.citizenship_group === "CH" && "🇨🇭 Schweizer Bürger/in – kein Aufenthaltsausweis erforderlich"}
-              {profile.citizenship_group === "EU_EFTA" && "🇪🇺 EU/EFTA-Bürger/in"}
-              {profile.citizenship_group === "NON_EU" && "🌍 Drittstaaten – Aufenthaltsausweis erforderlich"}
-            </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
+            {[
+              { value: "CH", label: "🇨🇭 Schweiz" },
+              { value: "EU_EFTA", label: "🇪🇺 EU / EFTA" },
+              { value: "NON_EU", label: "🌍 Drittstaaten" },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => {
+                  updateProfile({
+                    citizenship_group: opt.value,
+                    nationality: opt.value === "CH" ? "Schweiz" : "",
+                  });
+                }}
+                className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
+                  profile.citizenship_group === opt.value
+                    ? "border-rose-400 bg-rose-50 text-rose-700"
+                    : "border-gray-200 bg-white text-gray-700 hover:border-rose-300"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          {profile.citizenship_group === "CH" && (
+            <p className="text-xs text-gray-500 mt-2">🇨🇭 Schweizer Bürger/in – kein Aufenthaltsausweis erforderlich</p>
+          )}
+          {profile.citizenship_group && profile.citizenship_group !== "CH" && (
+            <div className="mt-2">
+              <NationalityDropdown
+                value={profile.nationality || ""}
+                onChange={(country) => updateProfile({ nationality: country.name })}
+                citizenshipGroup={profile.citizenship_group}
+              />
+            </div>
           )}
         </div>
 
