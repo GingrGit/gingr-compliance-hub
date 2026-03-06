@@ -280,12 +280,10 @@ export default function ModeSelector({ onSelect }) {
           <div className="w-12 h-12 rounded-full bg-pink-100 group-hover:bg-pink-200 flex items-center justify-center mb-4 transition-colors">
             <User className="w-6 h-6 text-[#FF3CAC]" />
           </div>
-          <h3 className="text-lg font-bold text-gray-800 mb-1">Ich mache es selbst</h3>
-          <p className="text-sm text-gray-500 leading-relaxed">
-            Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.
-          </p>
+          <h3 className="text-lg font-bold text-gray-800 mb-1">{t.selfTitle}</h3>
+          <p className="text-sm text-gray-500 leading-relaxed">{t.selfDesc}</p>
           <span className="inline-block mt-5 bg-[#FF3CAC] hover:bg-[#e030a0] text-white text-sm font-semibold rounded-full px-5 py-2 transition-colors shadow-sm">
-            Starten →
+            {t.selfBtn}
           </span>
         </button>
 
