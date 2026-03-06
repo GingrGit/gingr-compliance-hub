@@ -28,25 +28,42 @@ export default function StepCongratulations({ profile, profileId }) {
       </p>
 
       {/* What happens next */}
-      <div className="bg-pink-50 border border-pink-100 rounded-xl p-5 text-left mb-7 space-y-3">
-        <p className="text-xs font-semibold text-[#6B0064] uppercase tracking-wide mb-1">Was jetzt passiert</p>
+      <div className="bg-pink-50 border border-pink-100 rounded-xl p-5 text-left mb-7 space-y-4">
+        <p className="text-xs font-semibold text-[#6B0064] uppercase tracking-wide">Was jetzt passiert</p>
+
         <div className="flex items-start gap-3">
           <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0 mt-0.5">
             <FileText className="w-3 h-3 text-[#6B0064]" />
           </div>
-          <p className="text-sm text-gray-700">Wir prüfen deine eingereichten Dokumente und Angaben.</p>
+          <p className="text-sm text-gray-700">Wir prüfen deine Angaben und Dokumente — das dauert in der Regel 1–2 Werktage.</p>
         </div>
+
+        <div className="flex items-start gap-3">
+          <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <PenLine className="w-3 h-3 text-[#6B0064]" />
+          </div>
+          <div>
+            <p className="text-sm text-gray-700">
+              {profile?.work_model === "self_employed"
+                ? <>Du erhältst per <strong>SMS/E-Mail</strong> einen Link zu deiner <strong>Zusammenarbeitsvereinbarung</strong>, die du digital unterzeichnen kannst.</>
+                : <>Du erhältst per <strong>SMS/E-Mail</strong> einen Link zu deinem <strong>Arbeitsvertrag</strong>, den du digital unterzeichnen kannst.</>
+              }
+            </p>
+          </div>
+        </div>
+
         <div className="flex items-start gap-3">
           <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0 mt-0.5">
             <LayoutDashboard className="w-3 h-3 text-[#6B0064]" />
           </div>
-          <p className="text-sm text-gray-700">In deinem Dashboard siehst du jederzeit den Status deiner Dokumente und die Freigabe.</p>
+          <p className="text-sm text-gray-700">Im Dashboard kannst du jederzeit den Status deines Antrags und deine Dokumente einsehen.</p>
         </div>
+
         <div className="flex items-start gap-3">
           <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0 mt-0.5">
             <Bell className="w-3 h-3 text-[#6B0064]" />
           </div>
-          <p className="text-sm text-gray-700">Du erhältst eine Benachrichtigung per <strong>SMS und E-Mail</strong>, sobald dein Account freigegeben ist.</p>
+          <p className="text-sm text-gray-700">Sobald der Vertrag unterzeichnet ist, wird dein Profil auf gingr.ch aktiviert — ab dem vereinbarten Startdatum kannst du legal arbeiten. 🎉</p>
         </div>
       </div>
 
