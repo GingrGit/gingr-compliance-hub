@@ -174,7 +174,7 @@ export default function OnboardingWizard() {
       case "eligibility": return <StepEligibility {...stepProps} />;
       case "earnings": return <StepEarnings {...stepProps} />;
       case "source_tax": return <StepSourceTax {...stepProps} />;
-      case "summary": return <StepSummary {...stepProps} />;
+      case "summary": return <StepSummary {...stepProps} profileId={profileId} />;
       case "self_employed": return <StepSelfEmployed {...stepProps} />;
       case "self_employed_agreement": return <StepSelfEmployedAgreement {...stepProps} />;
       case "congratulations": return <StepCongratulations {...stepProps} profileId={profileId} />;
