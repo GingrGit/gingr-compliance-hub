@@ -121,7 +121,13 @@ export default function WorkModelDashboard() {
       <div className="max-w-2xl mx-auto px-4 space-y-3 mt-6">
 
         {/* Identity Card */}
-        <ProfileCard profile={profile} />
+        <ProfileCard profile={profile} onUpdate={() => {
+          const params = new URLSearchParams(window.location.search);
+          const profileId = params.get("profile_id");
+          if (profileId) {
+            base44.entities.OnboardingProfile.filter({ id: profileId }).then(([p]) => p && setProfile(p));
+          }
+        }} />
 
         {/* Contract Card */}
         <ContractCard profile={profile} contracts={contracts} />
