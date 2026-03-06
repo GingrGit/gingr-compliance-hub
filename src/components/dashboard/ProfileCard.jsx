@@ -72,11 +72,13 @@ export default function ProfileCard({ profile, onUpdate }) {
 
   async function saveEdit() {
     setSaving(true);
-    await base44.entities.OnboardingProfile.update(profile.id, editValues);
+    if (profile.id && !profile.id.startsWith("dev-")) {
+      await base44.entities.OnboardingProfile.update(profile.id, editValues);
+      if (onUpdate) onUpdate();
+    }
     setSaving(false);
     setEditing(false);
     setEditValues({});
-    if (onUpdate) onUpdate();
   }
 
   return (
