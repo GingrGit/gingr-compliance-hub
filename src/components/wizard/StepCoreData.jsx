@@ -98,7 +98,6 @@ const ALL_COUNTRIES = [
   { name: "Tunesien", flag: "🇹🇳", group: "NON_EU" },
   { name: "Türkei", flag: "🇹🇷", group: "NON_EU" },
   { name: "Ukraine", flag: "🇺🇦", group: "NON_EU" },
-  { name: "Ungarn", flag: "🇭🇺", group: "EU_EFTA" },
   { name: "USA", flag: "🇺🇸", group: "NON_EU" },
   { name: "Usbekistan", flag: "🇺🇿", group: "NON_EU" },
   { name: "Venezuela", flag: "🇻🇪", group: "NON_EU" },
