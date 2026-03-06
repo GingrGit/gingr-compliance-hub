@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, Phone, Calendar, Flag, Building2, Hash } from "lucide-react";
+import { MapPin, Phone, Calendar, Flag, Building2, Hash, Mail, ExternalLink } from "lucide-react";
 import StatusChip from "./StatusChip";
 
 const WORK_MODEL_LABELS = {
