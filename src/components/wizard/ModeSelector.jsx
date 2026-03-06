@@ -119,9 +119,48 @@ export default function ModeSelector({ onSelect }) {
         </button>
       </div>
 
-      <p className="text-xs text-gray-400 mt-8 text-center max-w-sm">
-        Du kannst den Modus jederzeit wechseln. Alle Daten werden automatisch gespeichert.
-      </p>
+      {/* Language Selector Block */}
+      <div className="mt-8 flex flex-col items-center gap-3 w-full max-w-xl">
+        <div className="h-5 flex items-center justify-center">
+          <p
+            style={{ transition: "opacity 0.3s ease", opacity: fade ? 1 : 0 }}
+            className="text-xs text-gray-400 text-center"
+          >
+            <span className="mr-1">{LANGUAGES[rotatingIdx].flag}</span>
+            {LANGUAGES[rotatingIdx].tagline}
+          </p>
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => setShowLangMenu(!showLangMenu)}
+            className="flex items-center gap-2 bg-white rounded-full px-4 py-2.5 shadow-sm border border-gray-200 hover:border-pink-300 hover:shadow-md transition-all text-sm font-semibold text-gray-700"
+          >
+            <span className="text-base">{selectedLang.flag}</span>
+            <span>{selectedLang.name}</span>
+            <Globe className="w-3.5 h-3.5 text-gray-400 ml-1" />
+          </button>
+          {showLangMenu && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setShowLangMenu(false)} />
+              <div className="absolute left-1/2 -translate-x-1/2 bottom-12 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 min-w-[200px] overflow-hidden">
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider px-4 pt-1 pb-2">Sprache wählen</p>
+                <div className="grid grid-cols-2 gap-0">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => { setSelectedLang(lang); setShowLangMenu(false); }}
+                      className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-pink-50 transition-colors ${selectedLang.code === lang.code ? "bg-pink-50 text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
+                    >
+                      <span className="text-base">{lang.flag}</span>
+                      <span>{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
 
       <a
         href={createPageUrl("AdminDashboard")}
