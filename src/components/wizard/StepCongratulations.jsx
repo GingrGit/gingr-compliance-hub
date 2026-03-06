@@ -12,7 +12,7 @@ function getDashboardUrl(profile) {
   return createPageUrl("WorkModelDashboard");
 }
 
-export default function StepCongratulations({ profile, onSubmit, saving }) {
+export default function StepCongratulations({ profile, onSubmit, saving, profileId }) {
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async () => {
