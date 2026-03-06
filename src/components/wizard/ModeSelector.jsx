@@ -375,9 +375,7 @@ export default function ModeSelector({ onSelect }) {
               </div>
             </div>
 
-            <p className="text-sm text-gray-600 mb-5">
-              Bitte halte folgende Dokumente bereit, bevor du deinen Termin buchst:
-            </p>
+            <p className="text-sm text-gray-600 mb-5">{t.modalIntro}</p>
 
             <ul className="space-y-3 mb-6">
               <li className="flex items-start gap-3">
@@ -385,8 +383,8 @@ export default function ModeSelector({ onSelect }) {
                   <FileText className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">Ausweis / Pass</p>
-                  <p className="text-xs text-gray-500">Reisepass oder Personalausweis (gültig)</p>
+                  <p className="text-sm font-semibold text-gray-800">{t.doc1Title}</p>
+                  <p className="text-xs text-gray-500">{t.doc1Desc}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -394,8 +392,8 @@ export default function ModeSelector({ onSelect }) {
                   <CreditCard className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">Aufenthaltsbewilligung</p>
-                  <p className="text-xs text-gray-500">Für Nicht-Schweizer: Permit B, C, L oder ähnliches</p>
+                  <p className="text-sm font-semibold text-gray-800">{t.doc2Title}</p>
+                  <p className="text-xs text-gray-500">{t.doc2Desc}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -403,8 +401,8 @@ export default function ModeSelector({ onSelect }) {
                   <Briefcase className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">Selbständige: Gewerbenachweis</p>
-                  <p className="text-xs text-gray-500">UID-Nummer und Handelsregisterauszug oder ähnliches</p>
+                  <p className="text-sm font-semibold text-gray-800">{t.doc3Title}</p>
+                  <p className="text-xs text-gray-500">{t.doc3Desc}</p>
                 </div>
               </li>
             </ul>
@@ -415,7 +413,7 @@ export default function ModeSelector({ onSelect }) {
               rel="noopener noreferrer"
               className="block w-full text-center bg-[#FF3CAC] hover:bg-[#e030a0] text-white font-semibold rounded-full py-3 transition-colors shadow-md"
             >
-              Jetzt Termin buchen →
+              {t.bookBtn}
             </a>
           </div>
         </div>
