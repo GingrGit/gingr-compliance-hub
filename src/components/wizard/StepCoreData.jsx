@@ -1,10 +1,174 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+
+const EU_EFTA = [
+  "Belgien","Bulgarien","Dänemark","Deutschland","Estland","Finnland","Frankreich",
+  "Griechenland","Grossbritannien","Irland","Island","Italien","Kroatien","Lettland",
+  "Liechtenstein","Litauen","Luxemburg","Malta","Niederlande","Norwegen","Österreich",
+  "Polen","Portugal","Rumänien","Schweden","Slowakei","Slowenien","Spanien",
+  "Tschechische Republik","Ungarn","Zypern"
+];
+
+const ALL_COUNTRIES = [
+  { name: "Schweiz", flag: "🇨🇭", group: "CH" },
+  { name: "Belgien", flag: "🇧🇪", group: "EU_EFTA" },
+  { name: "Bulgarien", flag: "🇧🇬", group: "EU_EFTA" },
+  { name: "Dänemark", flag: "🇩🇰", group: "EU_EFTA" },
+  { name: "Deutschland", flag: "🇩🇪", group: "EU_EFTA" },
+  { name: "Estland", flag: "🇪🇪", group: "EU_EFTA" },
+  { name: "Finnland", flag: "🇫🇮", group: "EU_EFTA" },
+  { name: "Frankreich", flag: "🇫🇷", group: "EU_EFTA" },
+  { name: "Griechenland", flag: "🇬🇷", group: "EU_EFTA" },
+  { name: "Grossbritannien", flag: "🇬🇧", group: "EU_EFTA" },
+  { name: "Irland", flag: "🇮🇪", group: "EU_EFTA" },
+  { name: "Island", flag: "🇮🇸", group: "EU_EFTA" },
+  { name: "Italien", flag: "🇮🇹", group: "EU_EFTA" },
+  { name: "Kroatien", flag: "🇭🇷", group: "EU_EFTA" },
+  { name: "Lettland", flag: "🇱🇻", group: "EU_EFTA" },
+  { name: "Liechtenstein", flag: "🇱🇮", group: "EU_EFTA" },
+  { name: "Litauen", flag: "🇱🇹", group: "EU_EFTA" },
+  { name: "Luxemburg", flag: "🇱🇺", group: "EU_EFTA" },
+  { name: "Malta", flag: "🇲🇹", group: "EU_EFTA" },
+  { name: "Niederlande", flag: "🇳🇱", group: "EU_EFTA" },
+  { name: "Norwegen", flag: "🇳🇴", group: "EU_EFTA" },
+  { name: "Österreich", flag: "🇦🇹", group: "EU_EFTA" },
+  { name: "Polen", flag: "🇵🇱", group: "EU_EFTA" },
+  { name: "Portugal", flag: "🇵🇹", group: "EU_EFTA" },
+  { name: "Rumänien", flag: "🇷🇴", group: "EU_EFTA" },
+  { name: "Schweden", flag: "🇸🇪", group: "EU_EFTA" },
+  { name: "Slowakei", flag: "🇸🇰", group: "EU_EFTA" },
+  { name: "Slowenien", flag: "🇸🇮", group: "EU_EFTA" },
+  { name: "Spanien", flag: "🇪🇸", group: "EU_EFTA" },
+  { name: "Tschechische Republik", flag: "🇨🇿", group: "EU_EFTA" },
+  { name: "Ungarn", flag: "🇭🇺", group: "EU_EFTA" },
+  { name: "Zypern", flag: "🇨🇾", group: "EU_EFTA" },
+  { name: "Afghanistan", flag: "🇦🇫", group: "NON_EU" },
+  { name: "Ägypten", flag: "🇪🇬", group: "NON_EU" },
+  { name: "Albanien", flag: "🇦🇱", group: "NON_EU" },
+  { name: "Algerien", flag: "🇩🇿", group: "NON_EU" },
+  { name: "Argentinien", flag: "🇦🇷", group: "NON_EU" },
+  { name: "Äthiopien", flag: "🇪🇹", group: "NON_EU" },
+  { name: "Australien", flag: "🇦🇺", group: "NON_EU" },
+  { name: "Bangladesch", flag: "🇧🇩", group: "NON_EU" },
+  { name: "Bosnien und Herzegowina", flag: "🇧🇦", group: "NON_EU" },
+  { name: "Brasilien", flag: "🇧🇷", group: "NON_EU" },
+  { name: "Chile", flag: "🇨🇱", group: "NON_EU" },
+  { name: "China", flag: "🇨🇳", group: "NON_EU" },
+  { name: "Dominikanische Republik", flag: "🇩🇴", group: "NON_EU" },
+  { name: "Ecuador", flag: "🇪🇨", group: "NON_EU" },
+  { name: "Indien", flag: "🇮🇳", group: "NON_EU" },
+  { name: "Indonesien", flag: "🇮🇩", group: "NON_EU" },
+  { name: "Iran", flag: "🇮🇷", group: "NON_EU" },
+  { name: "Irak", flag: "🇮🇶", group: "NON_EU" },
+  { name: "Japan", flag: "🇯🇵", group: "NON_EU" },
+  { name: "Jordanien", flag: "🇯🇴", group: "NON_EU" },
+  { name: "Kamerun", flag: "🇨🇲", group: "NON_EU" },
+  { name: "Kanada", flag: "🇨🇦", group: "NON_EU" },
+  { name: "Kasachstan", flag: "🇰🇿", group: "NON_EU" },
+  { name: "Kenia", flag: "🇰🇪", group: "NON_EU" },
+  { name: "Kolumbien", flag: "🇨🇴", group: "NON_EU" },
+  { name: "Kosovo", flag: "🇽🇰", group: "NON_EU" },
+  { name: "Kuba", flag: "🇨🇺", group: "NON_EU" },
+  { name: "Libanon", flag: "🇱🇧", group: "NON_EU" },
+  { name: "Marokko", flag: "🇲🇦", group: "NON_EU" },
+  { name: "Mazedonien", flag: "🇲🇰", group: "NON_EU" },
+  { name: "Mexiko", flag: "🇲🇽", group: "NON_EU" },
+  { name: "Moldau", flag: "🇲🇩", group: "NON_EU" },
+  { name: "Montenegro", flag: "🇲🇪", group: "NON_EU" },
+  { name: "Myanmar", flag: "🇲🇲", group: "NON_EU" },
+  { name: "Nepal", flag: "🇳🇵", group: "NON_EU" },
+  { name: "Nigeria", flag: "🇳🇬", group: "NON_EU" },
+  { name: "Pakistan", flag: "🇵🇰", group: "NON_EU" },
+  { name: "Peru", flag: "🇵🇪", group: "NON_EU" },
+  { name: "Philippinen", flag: "🇵🇭", group: "NON_EU" },
+  { name: "Russland", flag: "🇷🇺", group: "NON_EU" },
+  { name: "Saudi-Arabien", flag: "🇸🇦", group: "NON_EU" },
+  { name: "Serbien", flag: "🇷🇸", group: "NON_EU" },
+  { name: "Südafrika", flag: "🇿🇦", group: "NON_EU" },
+  { name: "Südkorea", flag: "🇰🇷", group: "NON_EU" },
+  { name: "Sri Lanka", flag: "🇱🇰", group: "NON_EU" },
+  { name: "Syrien", flag: "🇸🇾", group: "NON_EU" },
+  { name: "Thailand", flag: "🇹🇭", group: "NON_EU" },
+  { name: "Tunesien", flag: "🇹🇳", group: "NON_EU" },
+  { name: "Türkei", flag: "🇹🇷", group: "NON_EU" },
+  { name: "Ukraine", flag: "🇺🇦", group: "NON_EU" },
+  { name: "Ungarn", flag: "🇭🇺", group: "EU_EFTA" },
+  { name: "USA", flag: "🇺🇸", group: "NON_EU" },
+  { name: "Usbekistan", flag: "🇺🇿", group: "NON_EU" },
+  { name: "Venezuela", flag: "🇻🇪", group: "NON_EU" },
+  { name: "Vietnam", flag: "🇻🇳", group: "NON_EU" },
+  { name: "Weissrussland", flag: "🇧🇾", group: "NON_EU" },
+];
+
+function NationalityDropdown({ value, onChange }) {
+  const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  const selected = ALL_COUNTRIES.find(c => c.name === value);
+  const filtered = ALL_COUNTRIES.filter(c =>
+    c.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  useEffect(() => {
+    const handleClick = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-3 py-2 border border-gray-200 rounded-lg bg-white text-sm hover:border-rose-300 transition-colors"
+      >
+        <span className={selected ? "text-gray-900" : "text-gray-400"}>
+          {selected ? `${selected.flag} ${selected.name}` : "Land auswählen…"}
+        </span>
+        <ChevronDown className="w-4 h-4 text-gray-400" />
+      </button>
+      {open && (
+        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+          <div className="p-2 border-b border-gray-100">
+            <Input
+              autoFocus
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Suchen…"
+              className="h-8 text-sm"
+            />
+          </div>
+          <div className="max-h-52 overflow-y-auto">
+            {filtered.length === 0 && (
+              <p className="text-sm text-gray-400 text-center py-4">Keine Ergebnisse</p>
+            )}
+            {filtered.map((c) => (
+              <button
+                key={c.name}
+                type="button"
+                onClick={() => { onChange(c); setOpen(false); setSearch(""); }}
+                className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm hover:bg-rose-50 transition-colors ${value === c.name ? "bg-rose-50 text-rose-700 font-medium" : "text-gray-800"}`}
+              >
+                <span className="text-base">{c.flag}</span>
+                <span>{c.name}</span>
+                <span className="ml-auto text-xs text-gray-400">
+                  {c.group === "CH" ? "CH" : c.group === "EU_EFTA" ? "EU/EFTA" : "Drittstaat"}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [emailWarning, setEmailWarning] = useState(null);
