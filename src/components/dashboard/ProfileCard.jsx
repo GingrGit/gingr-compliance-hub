@@ -77,11 +77,23 @@ export default function ProfileCard({ profile }) {
         <InfoRow icon={Calendar} value={profile.date_of_birth} />
         <InfoRow icon={Flag} value={profile.nationality} />
         <InfoRow icon={Phone} value={profile.phone} />
+        <InfoRow icon={Mail} value={profile.escort_email} />
         <InfoRow icon={MapPin} value={fullAddress || null} />
         {profile.canton && <InfoRow icon={MapPin} value={`Kanton ${profile.canton}`} />}
         {profile.business_name && <InfoRow icon={Building2} value={profile.business_name} />}
         {profile.uid_number && <InfoRow icon={Hash} value={profile.uid_number} />}
       </div>
+
+      {/* Gingr Profile Link */}
+      <a
+        href="https://gingr.ch/en/escorts/1701-daniella"
+        target="_blank"
+        rel="noreferrer"
+        className="mt-4 flex items-center gap-2 text-xs text-[#FF3CAC] hover:underline relative"
+      >
+        <ExternalLink className="w-3.5 h-3.5" />
+        Gingr.ch Profil ansehen
+      </a>
     </div>
   );
 }
