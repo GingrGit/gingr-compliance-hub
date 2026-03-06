@@ -31,26 +31,15 @@ export default function DashboardTile({ icon: Icon, iconBg = "bg-purple-100", ic
       {expanded && (
         <div className="border-t border-gray-100 px-5 pb-5 pt-4">
           {children && <div className="mb-4">{children}</div>}
-          {(primaryAction || secondaryAction) && (
+          {primaryAction && (
             <div className="flex flex-wrap gap-2">
-              {primaryAction && (
-                <button
-                  onClick={primaryAction.onClick}
-                  disabled={primaryAction.disabled}
-                  className="flex-1 sm:flex-none bg-[#FF3CAC] hover:bg-[#e030a0] disabled:opacity-40 text-white text-sm font-medium rounded-full px-5 py-2 transition-colors"
-                >
-                  {primaryAction.label}
-                </button>
-              )}
-              {secondaryAction && (
-                <button
-                  onClick={secondaryAction.onClick}
-                  disabled={secondaryAction.disabled}
-                  className="flex-1 sm:flex-none bg-gray-100 hover:bg-gray-200 disabled:opacity-40 text-gray-700 text-sm font-medium rounded-full px-5 py-2 transition-colors"
-                >
-                  {secondaryAction.label}
-                </button>
-              )}
+              <button
+                onClick={primaryAction.onClick}
+                disabled={primaryAction.disabled}
+                className="flex-1 sm:flex-none bg-[#FF3CAC] hover:bg-[#e030a0] disabled:opacity-40 text-white text-sm font-medium rounded-full px-5 py-2 transition-colors"
+              >
+                {primaryAction.label}
+              </button>
             </div>
           )}
         </div>
