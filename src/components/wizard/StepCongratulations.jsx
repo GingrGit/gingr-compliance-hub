@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { base44 } from "@/api/base44Client";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, LayoutDashboard, FileText, Bell, Loader2 } from "lucide-react";
+import { CheckCircle2, LayoutDashboard, FileText, Bell } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
 function getDashboardUrl(profile, profileId) {
