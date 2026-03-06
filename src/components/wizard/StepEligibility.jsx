@@ -70,10 +70,6 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
         <p className="text-sm text-green-700">Deine Daten wurden geprüft. Wähle jetzt dein bevorzugtes Modell.</p>
       </div>
 
-      <InfoAccordion title="Was bedeuten diese Optionen?">
-        Die angezeigten Optionen basieren auf deiner Staatsbürgerschaft und deinem Aufenthaltsstatus. Wähle das Modell, das am besten zu dir passt.
-      </InfoAccordion>
-
       <div className="space-y-3">
         {options.map((opt) => (
           <button
