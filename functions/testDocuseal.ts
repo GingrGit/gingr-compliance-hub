@@ -8,7 +8,8 @@ Deno.serve(async (req) => {
 
     const apiKey = Deno.env.get('DOCUSEAL_API_KEY');
 
-    const response = await fetch('https://api.docuseal.com/templates', {
+    // Try EU endpoint
+    const response = await fetch('https://api.docuseal.eu/templates', {
       headers: {
         'X-Auth-Token': apiKey,
       },
