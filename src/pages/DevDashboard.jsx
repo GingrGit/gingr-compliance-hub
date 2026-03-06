@@ -57,6 +57,12 @@ function DashboardPreview({ profile, documents }) {
 
       <div className="max-w-2xl mx-auto px-4 space-y-3 mt-6">
 
+        {/* Identity Card */}
+        <ProfileCard profile={profile} />
+
+        {/* Contract Card */}
+        <ContractCard profile={profile} contracts={contracts} />
+
         <DashboardTile
           icon={Briefcase}
           title="Work Model"
