@@ -86,6 +86,11 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         address: profile.address,
         city: profile.city,
         postal_code: profile.postal_code,
+        citizenship_group: profile.citizenship_group,
+        nationality: profile.nationality,
+        id_document_url: profile.id_document_url,
+        permit_type: isSwiss ? "none" : profile.permit_type,
+        permit_status: isSwiss ? "not_required" : profile.permit_status,
       })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
