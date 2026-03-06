@@ -3,16 +3,16 @@ import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase,
 import { createPageUrl } from "@/utils";
 
 const LANGUAGES = [
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  { code: "ro", name: "Română", flag: "🇷🇴" },
-  { code: "en", name: "English", flag: "🇬🇧" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "it", name: "Italiano", flag: "🇮🇹" },
-  { code: "ru", name: "Русский", flag: "🇷🇺" },
-  { code: "pl", name: "Polski", flag: "🇵🇱" },
-  { code: "cs", name: "Čeština", flag: "🇨🇿" },
-  { code: "hu", name: "Magyar", flag: "🇭🇺" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪", tagline: "Wähle deine Sprache für das Legal Onboarding" },
+  { code: "ro", name: "Română", flag: "🇷🇴", tagline: "Alege limba pentru onboardingul legal" },
+  { code: "en", name: "English", flag: "🇬🇧", tagline: "Choose your language for Legal Onboarding" },
+  { code: "fr", name: "Français", flag: "🇫🇷", tagline: "Choisissez votre langue pour l'onboarding légal" },
+  { code: "es", name: "Español", flag: "🇪🇸", tagline: "Elige tu idioma para el onboarding legal" },
+  { code: "it", name: "Italiano", flag: "🇮🇹", tagline: "Scegli la tua lingua per l'onboarding legale" },
+  { code: "ru", name: "Русский", flag: "🇷🇺", tagline: "Выберите язык для правового онбординга" },
+  { code: "pl", name: "Polski", flag: "🇵🇱", tagline: "Wybierz język dla onboardingu prawnego" },
+  { code: "cs", name: "Čeština", flag: "🇨🇿", tagline: "Vyberte jazyk pro právní onboarding" },
+  { code: "hu", name: "Magyar", flag: "🇭🇺", tagline: "Válasszon nyelvet a jogi onboardinghoz" },
 ];
 
 export default function ModeSelector({ onSelect }) {
