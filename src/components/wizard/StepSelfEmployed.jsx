@@ -33,10 +33,6 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       onSaveAndExit={onSaveAndExit}
       saving={saving}
     >
-      <InfoAccordion title="Was wird akzeptiert als Nachweis?">
-        Akzeptiert werden: UID-Registerauszug (uid.admin.ch), Handelsregistereintrag, oder offizielle Bestätigung der Selbständigkeit. Das Dokument darf nicht älter als 6 Monate sein.
-      </InfoAccordion>
-
       <div className="space-y-4">
         <div>
           <Label className="text-sm font-medium text-gray-700">Name des Unternehmens / Einzelfirma *</Label>
