@@ -351,7 +351,7 @@ export default function ModeSelector({ onSelect }) {
         className="mt-6 flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#FF3CAC] transition-colors"
       >
         <ShieldCheck className="w-3.5 h-3.5" />
-        Admin-Dashboard
+        {t.admin}
       </a>
 
       {/* Guided Mode Modal */}
