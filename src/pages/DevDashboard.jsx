@@ -12,6 +12,8 @@ import DashboardTile from "@/components/dashboard/DashboardTile";
 import DocumentList from "@/components/dashboard/DocumentList";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import NinetyDayTracker from "@/components/dashboard/NinetyDayTracker";
+import ProfileCard from "@/components/dashboard/ProfileCard";
+import ContractCard from "@/components/dashboard/ContractCard";
 
 const WORK_MODEL_LABELS = {
   employee_unlimited: "Anstellung (unbefristet)",
