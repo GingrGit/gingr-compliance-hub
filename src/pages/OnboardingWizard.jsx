@@ -70,7 +70,7 @@ export default function OnboardingWizard() {
       if (profile.source_tax === "yes" || profile.source_tax === "unsure") {
         steps.push({ id: "source_tax", label: "Quellensteuer" });
       }
-      steps.push({ id: "employment_setup", label: "Vertrag" });
+      steps.push({ id: "summary", label: "Zusammenfassung" });
     }
     steps.push({ id: "congratulations", label: "Abschluss" });
     return steps;
