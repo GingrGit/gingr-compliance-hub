@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
-import { CheckCircle2 } from "lucide-react";
-
-const DOCUSEAL_SLUG = "TpXUVLRqaSx2Z1";
+import { CheckCircle2, Loader2 } from "lucide-react";
 
 export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const [contractSigned, setContractSigned] = useState(profile.contract_signed || false);
   const [payrollConsent, setPayrollConsent] = useState(false);
+  const [slug, setSlug] = useState(null);
+  const [loadingSlug, setLoadingSlug] = useState(false);
+  const [slugError, setSlugError] = useState(null);
 
   const contractType = profile.work_model === "employee_90days" ? "Kurzarbeitsvertrag (max. 90 Tage)" : "Unbefristeter Arbeitsvertrag";
+
+  // Create a new DocuSeal submission for this escort
+  useEffect(() => {
+    setLoadingSlug(true);
+    base44.functions.invoke("createDocusealSubmission", { profile })
+      .then((res) => {
+        if (res.data?.slug) {
+          setSlug(res.data.slug);
+        } else {
+          setSlugError("Vertrag konnte nicht geladen werden.");
+        }
+      })
+      .catch(() => setSlugError("Vertrag konnte nicht geladen werden."))
+      .finally(() => setLoadingSlug(false));
+  }, []);
 
   // Inject DocuSeal script once
   useEffect(() => {
@@ -22,11 +39,7 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
 
   // Listen for DocuSeal completion event
   useEffect(() => {
-    const handler = (e) => {
-      if (e.detail?.status === "completed" || e.type === "docuseal:completed") {
-        setContractSigned(true);
-      }
-    };
+    const handler = () => setContractSigned(true);
     window.addEventListener("docuseal:completed", handler);
     return () => window.removeEventListener("docuseal:completed", handler);
   }, []);
@@ -56,12 +69,23 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
         <div className="bg-gray-50 px-4 py-3">
           <p className="text-sm font-medium text-gray-700">Digitale Signatur via DocuSeal</p>
         </div>
-        <div className="bg-white">
-          <docuseal-form
-            data-src={`https://docuseal.eu/d/${DOCUSEAL_SLUG}`}
-            data-email={profile.escort_email || ""}
-            style={{ display: "block", minHeight: "400px" }}
-          />
+        <div className="bg-white min-h-[400px] flex items-center justify-center">
+          {loadingSlug && (
+            <div className="flex flex-col items-center gap-2 text-gray-400 py-12">
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <p className="text-sm">Vertrag wird vorbereitet…</p>
+            </div>
+          )}
+          {slugError && (
+            <p className="text-sm text-red-500 p-4">{slugError}</p>
+          )}
+          {slug && !loadingSlug && (
+            <docuseal-form
+              data-src={`https://docuseal.eu/d/${slug}`}
+              data-email={profile.escort_email || ""}
+              style={{ display: "block", width: "100%", minHeight: "400px" }}
+            />
+          )}
         </div>
       </div>
 
