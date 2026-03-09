@@ -52,10 +52,10 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
                         : <span className={`text-[10px] font-bold ${active ? "text-white" : "text-gray-400"}`}>{idx + 1}</span>
                       }
                     </div>
-                    <span className={`text-[9px] font-medium whitespace-nowrap transition-colors ${
-                      active ? "text-[#FF3CAC]" : done ? "text-green-600" : "text-gray-300"
+                    <span className={`text-[9px] font-medium whitespace-nowrap transition-colors w-16 text-center ${
+                     active ? "text-[#FF3CAC]" : done ? "text-green-600" : "text-gray-300"
                     }`}>
-                      {step.label}
+                     {step.label}
                     </span>
                   </div>
                   {idx < steps.length - 1 && (
