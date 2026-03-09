@@ -217,7 +217,7 @@ function getStepContent(stepId, profile) {
 
     case "earnings":
       return {
-        icon: "💰",
+        icon: CircleDollarSign,
         title: "Einkommens-Rechner",
         body: "Gib deinen Stundenpreis ein und sieh, wie sich dein Nettolohn zusammensetzt — inklusive Sozialversicherungen und Plattformgebühr.",
         accordions: [
