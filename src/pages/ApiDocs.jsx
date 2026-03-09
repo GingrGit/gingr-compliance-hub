@@ -188,21 +188,21 @@ Content-Type: application/json`} />
   "expires_in": 300
 }`} />
           <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-800">
-            💡 Signierte URLs sollten on-demand generiert und nie gecacht werden, da sie nach 300 Sekunden ablaufen.
+            💡 Signed URLs should be generated on-demand and never cached, as they expire after 300 seconds.
           </div>
         </Section>
 
         {/* Error codes */}
-        <Section icon={<span className="text-base">⚠️</span>} title="Fehlercodes">
+        <Section icon={<span className="text-base">⚠️</span>} title="Error Codes">
           <table className="w-full text-sm">
-            <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">HTTP Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Bedeutung</th></tr></thead>
+            <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">HTTP Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Meaning</th></tr></thead>
             <tbody>
               {[
-                ["200", "Erfolg"],
-                ["400", "Fehlende oder ungültige Parameter"],
-                ["401", "Ungültiger oder fehlender API-Schlüssel"],
-                ["404", "Profil nicht gefunden"],
-                ["500", "Interner Serverfehler"],
+                ["200", "Success"],
+                ["400", "Missing or invalid parameters"],
+                ["401", "Invalid or missing API key"],
+                ["404", "Profile not found"],
+                ["500", "Internal server error"],
               ].map(([code, desc]) => (
                 <tr key={code} className="border-t border-gray-100">
                   <td className="py-2 pr-4 font-mono text-xs text-pink-700">{code}</td>
