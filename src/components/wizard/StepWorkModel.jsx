@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Calendar, Briefcase } from "lucide-react";
 
 const models = [
   {
     id: "employee_unlimited",
     label: "Angestellte (unbefristet)",
-    emoji: "📋",
+    icon: ShieldCheck,
     desc: "Du arbeitest als Angestellte bei gingr. Unbefristeter Vertrag.",
     pros: ["Lohnabrechnung & Sozialversicherung durch gingr", "Klare rechtliche Absicherung", "Für CH / EU / Permit C"],
   },
