@@ -34,7 +34,7 @@ export default function OnboardingWizard() {
   const [mode, setMode] = useState(prefillMode ? "self" : null); // "self" | "guided"
   const [profile, setProfile] = useState({
     status: "draft",
-    current_step: 2, // skip to core_data step when prefill mode
+    current_step: prefillMode ? 2 : 0,
     work_model: prefillMode ? "employee_unlimited" : null,
     citizenship_group: prefillMode ? "EU_EFTA" : null,
     permit_type: "none",
