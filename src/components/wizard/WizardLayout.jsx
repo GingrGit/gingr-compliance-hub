@@ -194,7 +194,7 @@ function getStepContent(stepId, profile) {
 
     case "residency":
       return {
-        icon: "🏠",
+        icon: Home,
         title: "Warum die Aufenthaltsbewilligung?",
         body: "Wir müssen deinen Aufenthaltsstatus bestätigen, um dein Setup legal zu machen. Das Dokument wird nicht öffentlich angezeigt.",
         accordions: [
