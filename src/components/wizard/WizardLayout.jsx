@@ -183,7 +183,7 @@ function getStepContent(stepId, profile) {
 
     case "core_data":
       return {
-        icon: "🔒",
+        icon: Lock,
         title: "Deine Daten sind sicher",
         body: "Deine Adresse und persönlichen Daten werden verschlüsselt gespeichert und niemals öffentlich angezeigt — nicht auf deinem Profil, nicht für Kunden.",
         accordions: [
