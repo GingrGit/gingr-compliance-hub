@@ -68,23 +68,23 @@ export default function ApiDocs() {
         </div>
 
         {/* Auth */}
-        <Section icon={<Lock className="w-4 h-4 text-pink-500" />} title="Authentifizierung">
+        <Section icon={<Lock className="w-4 h-4 text-pink-500" />} title="Authentication">
           <p className="text-sm text-gray-600 mb-3">
-            Alle Anfragen müssen einen gültigen API-Schlüssel im HTTP-Header <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">x-api-key</code> mitschicken.
-            Der Schlüssel wird sicher als Environment-Variable auf dem Server verwaltet.
+            All requests must include a valid API key in the HTTP header <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">x-api-key</code>.
+            The key is securely managed as an environment variable on the server.
           </p>
           <CodeBlock code={`POST https://<function-url>/gingrApi
 x-api-key: <GINGR_API_KEY>
 Content-Type: application/json`} />
           <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-xl text-xs text-yellow-800">
-            ⚠️ Den API-Schlüssel niemals in Frontend-Code oder öffentlichen Repositories speichern. Nur serverseitig verwenden.
+            ⚠️ Never store the API key in frontend code or public repositories. Use server-side only.
           </div>
         </Section>
 
         {/* Base URL */}
-        <Section icon={<Link className="w-4 h-4 text-pink-500" />} title="Basis-URL">
+        <Section icon={<Link className="w-4 h-4 text-pink-500" />} title="Base URL">
           <p className="text-sm text-gray-600 mb-3">
-            Die Funktion-URL findest du im Base44 Dashboard unter <strong>Code → Functions → gingrApi</strong>.
+            Find the function URL in the Base44 Dashboard under <strong>Code → Functions → gingrApi</strong>.
           </p>
           <CodeBlock code={`Base URL: https://<your-app>.base44.app/functions/gingrApi`} />
         </Section>
