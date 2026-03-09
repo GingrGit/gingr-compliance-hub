@@ -25,13 +25,9 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
             <span className="hidden sm:block text-xs text-gray-300 font-medium">Legal Onboarding</span>
           </div>
           <div className="flex items-center gap-2">
-            {saving ? (
+            {saving && (
               <span className="text-xs text-gray-400 flex items-center gap-1">
                 <Save className="w-3 h-3" /> Speichert…
-              </span>
-            ) : (
-              <span className="text-xs text-gray-300 flex items-center gap-1">
-                {mode === "guided" ? "👤 Geführt" : "🧍 Selbst"}
               </span>
             )}
           </div>
