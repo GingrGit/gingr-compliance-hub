@@ -265,7 +265,7 @@ function getStepContent(stepId, profile) {
 
     case "self_employed_agreement":
       return {
-        icon: "✍️",
+        icon: PenLine,
         title: "Selbstständigen-Vereinbarung",
         body: "Unterzeichne deine Vereinbarung und bestätige, dass du selbstständig tätig bist.",
         accordions: [
