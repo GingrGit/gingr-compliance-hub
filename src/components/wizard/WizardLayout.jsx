@@ -155,7 +155,7 @@ function getStepContent(stepId, profile) {
         ]
       };
       if (isEmployee && is90days) return {
-        icon: "📋",
+        icon: Calendar,
         title: "Angestellt — bis 90 Tage",
         body: "Kurzzeit-Anstellung für EU/EFTA-Bürgerinnen ohne Schweizer Aufenthaltsbewilligung. Volle Absicherung für die Dauer.",
         accordions: [
