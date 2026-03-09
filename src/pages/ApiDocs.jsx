@@ -153,10 +153,10 @@ Content-Type: application/json`} />
     {
       "id": "doc456",
       "type": "payslip",          // payslip | vat_statement | monthly_statement | contract | permit | other
-      "label": "Lohnabrechnung März 2026",
+      "label": "Payslip March 2026",
       "period": "2026-03",
       "status": "available",      // available | pending | archived
-      "file_url": "https://...",  // Öffentliche URL (falls vorhanden)
+      "file_url": "https://...",  // Public URL (if available)
       "uploaded_by_admin": true,
       "created_date": "2026-03-01T08:00:00Z"
     }
