@@ -74,6 +74,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
           <span className="text-xs text-gray-400">Schritt {currentStep + 1} / {steps.length}</span>
         </div>
       </div>
+      </div>
 
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
