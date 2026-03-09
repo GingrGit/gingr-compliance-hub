@@ -229,7 +229,7 @@ function getStepContent(stepId, profile) {
 
     case "source_tax":
       return {
-        icon: "📊",
+        icon: BarChart2,
         title: "Quellensteuer (Quellensteuer)",
         body: "Diese Angaben helfen uns, deine Auszahlung korrekt zu schätzen. Der finale Tarif wird von QUITT vor der Lohnabrechnung bestätigt.",
         accordions: [
