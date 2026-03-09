@@ -173,7 +173,7 @@ function getStepContent(stepId, profile) {
         ]
       };
       return {
-        icon: "💡",
+        icon: Lightbulb,
         title: "Arbeitsmodell wählen",
         body: "Deine Wahl bestimmt, welche rechtlichen Dokumente du unterzeichnest und wie deine Auszahlungen verarbeitet werden.",
         accordions: [
