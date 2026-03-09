@@ -279,7 +279,7 @@ function GuidancePanel({ mode, stepId, profile }) {
   const content = getStepContent(stepId, profile);
 
   return (
-    <div className="bg-white rounded-2xl border border-pink-100 shadow-sm p-5 sticky top-32">
+    <div className="bg-white rounded-2xl border border-pink-100 shadow-sm p-5 sticky top-24">
       <div className="flex items-center gap-2 mb-3">
         <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
           <span className="text-lg">{mode === "guided" ? "👤" : content.icon}</span>
