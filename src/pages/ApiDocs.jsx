@@ -132,12 +132,12 @@ Content-Type: application/json`} />
 
         {/* Action: get_documents */}
         <Section icon={<FileText className="w-4 h-4 text-pink-500" />} title="Action: get_documents">
-          <p className="text-sm text-gray-600 mb-3">Gibt alle Dokumente einer Escort zurück (Lohnabrechnungen, Verträge, Permits, etc.).</p>
+          <p className="text-sm text-gray-600 mb-3">Returns all documents for an escort (payslips, contracts, permits, etc.).</p>
           <table className="w-full mb-4">
-            <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">Parameter</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Typ</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Beschreibung</th></tr></thead>
+            <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">Parameter</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Type</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Description</th></tr></thead>
             <tbody>
-              <ParamRow name="action" type="string" required desc={`Muss "get_documents" sein`} />
-              <ParamRow name="escort_email" type="string" required desc="E-Mail-Adresse der Escort" />
+              <ParamRow name="action" type="string" required desc={`Must be "get_documents"`} />
+              <ParamRow name="escort_email" type="string" required desc="Email address of the escort" />
             </tbody>
           </table>
           <CodeBlock code={`// Request
