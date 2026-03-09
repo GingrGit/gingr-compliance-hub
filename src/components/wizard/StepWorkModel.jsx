@@ -14,7 +14,7 @@ const models = [
   {
     id: "employee_90days",
     label: "Angestellte (max. 90 Tage)",
-    emoji: "📅",
+    icon: Calendar,
     desc: "Kurzfristiges Anstellungsverhältnis, bis 90 Tage pro Jahr.",
     pros: ["Für Permit B/L geeignet", "Flexibel & unkompliziert", "Quellensteuer inklusive"],
   },
