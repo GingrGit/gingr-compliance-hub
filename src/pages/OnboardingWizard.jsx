@@ -55,6 +55,7 @@ export default function OnboardingWizard() {
 
   // Build dynamic steps based on path
   const buildSteps = () => {
+    const committedStep = profile.current_step || 0;
     const steps = [
       { id: "welcome", label: "Willkommen" },
       { id: "work_model", label: "Arbeitsmodell" },
@@ -62,17 +63,20 @@ export default function OnboardingWizard() {
     ];
     if (!isSwiss) steps.push({ id: "residency", label: "Aufenthalt" });
     steps.push({ id: "eligibility", label: "Berechtigung" });
-    if (isSelfEmployed) {
-      steps.push({ id: "self_employed", label: "Geschäft" });
-      steps.push({ id: "self_employed_agreement", label: "Vereinbarung" });
-    } else if (profile.work_model) {
-      steps.push({ id: "earnings", label: "Verdienst" });
-      if (profile.source_tax === "yes" || profile.source_tax === "unsure") {
-        steps.push({ id: "source_tax", label: "Quellensteuer" });
+    // Only expand model-specific steps after work_model step is committed (step > 1)
+    if (committedStep > 1) {
+      if (isSelfEmployed) {
+        steps.push({ id: "self_employed", label: "Geschäft" });
+        steps.push({ id: "self_employed_agreement", label: "Abschluss" });
+      } else if (profile.work_model) {
+        steps.push({ id: "earnings", label: "Verdienst" });
+        if (profile.source_tax === "yes" || profile.source_tax === "unsure") {
+          steps.push({ id: "source_tax", label: "Quellensteuer" });
+        }
+        steps.push({ id: "summary", label: "Abschluss" });
       }
-      steps.push({ id: "summary", label: "Zusammenfassung" });
     }
-    steps.push({ id: "congratulations", label: "Abschluss" });
+    steps.push({ id: "congratulations", label: "Fertig" });
     return steps;
   };
 
