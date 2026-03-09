@@ -302,7 +302,10 @@ function GuidancePanel({ mode, stepId, profile }) {
     <div className="bg-white rounded-2xl border border-pink-100 shadow-sm p-5 sticky top-24">
       <div className="flex items-center gap-2 mb-3">
         <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
-          <span className="text-lg">{mode === "guided" ? "👤" : content.icon}</span>
+          {mode === "guided"
+            ? <User className="w-4 h-4 text-[#FF3CAC]" />
+            : React.createElement(content.icon, { className: "w-4 h-4 text-[#FF3CAC]" })
+          }
         </div>
         <div>
           <p className="text-sm font-semibold text-gray-800">
