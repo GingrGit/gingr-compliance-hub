@@ -1,7 +1,32 @@
 import React, { useState } from "react";
 import { CheckCircle2, Save, ShieldCheck, Info } from "lucide-react";
 
+const FIXED_PHASES = [
+  { label: "Start" },
+  { label: "Modell" },
+  { label: "Daten" },
+  { label: "Berechtigung" },
+  { label: "Setup" },
+  { label: "Abschluss" },
+];
+
+const STEP_TO_PHASE = {
+  welcome: 0,
+  work_model: 1,
+  core_data: 2,
+  residency: 2,
+  eligibility: 3,
+  earnings: 4,
+  source_tax: 4,
+  self_employed: 4,
+  summary: 4,
+  self_employed_agreement: 4,
+  congratulations: 5,
+};
+
 export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children, currentStepId, profile }) {
+  const currentPhase = STEP_TO_PHASE[currentStepId] ?? 0;
+
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
@@ -10,7 +35,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
         <div className="h-1 bg-gray-100">
           <div
             className="h-full bg-gradient-to-r from-[#FF3CAC] to-[#6B0064] transition-all duration-500 ease-out"
-            style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+            style={{ width: `${((currentPhase + 1) / FIXED_PHASES.length) * 100}%` }}
           />
         </div>
 
@@ -31,19 +56,15 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
           )}
         </div>
 
-        {/* Step indicators — Desktop */}
+        {/* Step indicators — Desktop (fixed phases) */}
         <div className="hidden sm:block max-w-5xl mx-auto px-4 pb-3">
-          <div className="flex items-start justify-center overflow-x-auto" style={{scrollbarWidth:'none'}}>
-            {steps.map((step, idx) => {
-              const done = idx < currentStep;
-              const active = idx === currentStep;
-              const clickable = done && onStepClick;
+          <div className="flex items-start justify-center">
+            {FIXED_PHASES.map((phase, idx) => {
+              const done = idx < currentPhase;
+              const active = idx === currentPhase;
               return (
-                <React.Fragment key={step.id}>
-                  <div
-                    className={`flex flex-col items-center gap-1 flex-shrink-0 px-1 ${clickable ? "cursor-pointer" : ""}`}
-                    onClick={() => clickable && onStepClick(idx)}
-                  >
+                <React.Fragment key={idx}>
+                  <div className="flex flex-col items-center gap-1 flex-shrink-0 px-1">
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
                       done ? "bg-green-500" : active ? "bg-[#FF3CAC] shadow-sm shadow-pink-300" : "bg-gray-200"
                     }`}>
@@ -53,13 +74,13 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
                       }
                     </div>
                     <span className={`text-[9px] font-medium whitespace-nowrap transition-colors w-16 text-center ${
-                     active ? "text-[#FF3CAC]" : done ? "text-green-600" : "text-gray-300"
+                      active ? "text-[#FF3CAC]" : done ? "text-green-600" : "text-gray-300"
                     }`}>
-                     {step.label}
+                      {phase.label}
                     </span>
                   </div>
-                  {idx < steps.length - 1 && (
-                    <div className={`h-px w-6 sm:w-8 flex-shrink-0 mt-3 mx-0.5 transition-colors duration-300 ${idx < currentStep ? "bg-green-400" : "bg-gray-200"}`} />
+                  {idx < FIXED_PHASES.length - 1 && (
+                    <div className={`h-px w-8 flex-shrink-0 mt-3 mx-0.5 transition-colors duration-300 ${idx < currentPhase ? "bg-green-400" : "bg-gray-200"}`} />
                   )}
                 </React.Fragment>
               );
@@ -69,8 +90,8 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
 
         {/* Step indicators — Mobile compact */}
         <div className="sm:hidden max-w-5xl mx-auto px-4 pb-2.5 flex items-center justify-between">
-          <span className="text-sm font-semibold text-[#6B0064]">{steps[currentStep]?.label}</span>
-          <span className="text-xs text-gray-400">Schritt {currentStep + 1} / {steps.length}</span>
+          <span className="text-sm font-semibold text-[#6B0064]">{FIXED_PHASES[currentPhase]?.label}</span>
+          <span className="text-xs text-gray-400">Phase {currentPhase + 1} / {FIXED_PHASES.length}</span>
         </div>
       </div>
 
