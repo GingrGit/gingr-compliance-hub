@@ -144,7 +144,7 @@ function getStepContent(stepId, profile) {
 
     case "work_model":
       if (isSelfEmployed) return {
-        icon: "💼",
+        icon: Briefcase,
         title: "Selbstständig",
         body: "Dieses Modell ist für erfahrene Selbstständige, die ihre Tätigkeit eigenverantwortlich führen möchten. Du behältst die volle Kontrolle über deine Preise, deine Verfügbarkeit und darüber, welche Buchungen du annimmst. Die Auszahlungen erfolgen über Secure Payment auf Gingr. Für Steuern, Versicherungen und deine soziale Absicherung bist du selbst verantwortlich.",
         accordions: [
