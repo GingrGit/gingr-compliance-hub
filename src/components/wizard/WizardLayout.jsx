@@ -15,7 +15,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
         </div>
 
         {/* Logo row */}
-        <div className="max-w-5xl mx-auto px-4 pt-2.5 pb-1 flex items-center justify-center relative">
+        <div className="max-w-5xl mx-auto px-4 pt-4 pb-2 flex items-center justify-center relative">
           <div className="flex items-center gap-2">
             <img
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/e355eb65f_GingrLogo4x.png"
