@@ -206,7 +206,7 @@ function getStepContent(stepId, profile) {
 
     case "eligibility":
       return {
-        icon: "✅",
+        icon: CheckCircle2,
         title: "Deine verfügbaren Optionen",
         body: "Basierend auf deinen verifizierten Daten zeigen wir dir genau, welche Modelle für dich verfügbar sind.",
         accordions: [
