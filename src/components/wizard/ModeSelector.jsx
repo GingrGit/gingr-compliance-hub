@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase, Globe } from "lucide-react";
 import { createPageUrl } from "@/utils";
+import { LANGUAGES, TRANSLATIONS, getStoredLanguage, storeLanguage } from "@/components/language";
 
-const TRANSLATIONS = {
+const _TRANSLATIONS_UNUSED = {
   de: {
     title: "Legal Onboarding",
     subtitle: "Wie möchtest du das Onboarding starten?",
