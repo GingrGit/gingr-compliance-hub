@@ -136,7 +136,7 @@ function getStepContent(stepId, profile) {
   switch (stepId) {
     case "welcome":
       return {
-        icon: "👋",
+        icon: Sparkles,
         title: "Willkommen beim Onboarding",
         body: "Dieser Assistent führt dich Schritt für Schritt durch dein rechtliches Setup. Du kannst jederzeit pausieren und später weitermachen.",
         accordions: []
