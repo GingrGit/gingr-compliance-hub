@@ -276,7 +276,7 @@ function getStepContent(stepId, profile) {
 
     case "congratulations":
       return {
-        icon: "🎉",
+        icon: Trophy,
         title: "Fast geschafft!",
         body: "Dein Onboarding ist abgeschlossen. Hier findest du, was als nächstes passiert.",
         accordions: [
