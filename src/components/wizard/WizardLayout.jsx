@@ -5,27 +5,31 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
-      <div className="bg-white border-b border-pink-100 shadow-sm sticky top-0 z-30">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          {/* Logo centered */}
-          <div className="flex-1 flex justify-center">
-            <div className="flex flex-col items-center">
-              <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/e355eb65f_GingrLogo4x.png"
-                alt="Gingr"
-                className="h-10 object-contain"
-              />
-              <span className="text-xs text-gray-400 font-medium">Legal Onboarding</span>
-            </div>
+      <div className="bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-lg sticky top-0 z-30">
+        {/* Gradient progress bar at very top */}
+        <div className="h-1 bg-gray-100">
+          <div
+            className="h-full bg-gradient-to-r from-[#FF3CAC] to-[#6B0064] transition-all duration-500 ease-out"
+            style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+          />
+        </div>
+
+        {/* Logo row */}
+        <div className="max-w-5xl mx-auto px-4 pt-2.5 pb-1 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a69aeeacd958731b1cf96e/e355eb65f_GingrLogo4x.png"
+              alt="Gingr"
+              className="h-7 object-contain"
+            />
+            <span className="hidden sm:block text-xs text-gray-300 font-medium">Legal Onboarding</span>
           </div>
-          {/* Save indicator right */}
-          <div className="w-24 flex justify-end">
-            {saving && (
+          <div className="flex items-center gap-2">
+            {saving ? (
               <span className="text-xs text-gray-400 flex items-center gap-1">
                 <Save className="w-3 h-3" /> Speichert…
               </span>
-            )}
-            {!saving && (
+            ) : (
               <span className="text-xs text-gray-300 flex items-center gap-1">
                 {mode === "guided" ? "👤 Geführt" : "🧍 Selbst"}
               </span>
@@ -33,9 +37,9 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
           </div>
         </div>
 
-        {/* Step Progress */}
-        <div className="max-w-5xl mx-auto px-3 sm:px-4 pb-3">
-          <div className="flex items-center gap-1 overflow-x-auto pb-1" style={{scrollbarWidth:'none'}}>
+        {/* Step indicators — Desktop */}
+        <div className="hidden sm:block max-w-5xl mx-auto px-4 pb-3">
+          <div className="flex items-start justify-center overflow-x-auto" style={{scrollbarWidth:'none'}}>
             {steps.map((step, idx) => {
               const done = idx < currentStep;
               const active = idx === currentStep;
@@ -43,30 +47,36 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
               return (
                 <React.Fragment key={step.id}>
                   <div
-                    className={`flex items-center gap-1 flex-shrink-0 ${clickable ? "cursor-pointer" : ""}`}
+                    className={`flex flex-col items-center gap-1 flex-shrink-0 px-1 ${clickable ? "cursor-pointer" : ""}`}
                     onClick={() => clickable && onStepClick(idx)}
                   >
-                    {done ? (
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00CC44]" />
-                    ) : (
-                      <div className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center ${active ? "border-[#FF3CAC] bg-[#FF3CAC]" : "border-gray-300"}`}>
-                        {active && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
-                      </div>
-                    )}
-                    <span className={`text-[10px] sm:text-xs font-medium whitespace-nowrap ${active ? "text-[#6B0064]" : done ? "text-[#00AA33]" : "text-gray-300"}`}>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
+                      done ? "bg-green-500" : active ? "bg-[#FF3CAC] shadow-sm shadow-pink-300" : "bg-gray-200"
+                    }`}>
+                      {done
+                        ? <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                        : <span className={`text-[10px] font-bold ${active ? "text-white" : "text-gray-400"}`}>{idx + 1}</span>
+                      }
+                    </div>
+                    <span className={`text-[9px] font-medium whitespace-nowrap transition-colors ${
+                      active ? "text-[#FF3CAC]" : done ? "text-green-600" : "text-gray-300"
+                    }`}>
                       {step.label}
                     </span>
                   </div>
                   {idx < steps.length - 1 && (
-                    <div className={`h-0.5 w-3 sm:w-4 flex-shrink-0 ${idx < currentStep ? "bg-[#00CC44]" : "bg-gray-200"}`} />
+                    <div className={`h-px w-6 sm:w-8 flex-shrink-0 mt-3 mx-0.5 transition-colors duration-300 ${idx < currentStep ? "bg-green-400" : "bg-gray-200"}`} />
                   )}
                 </React.Fragment>
               );
             })}
           </div>
-          <p className="text-xs text-gray-400 mt-1">
-            Schritt {currentStep + 1} von {steps.length} · Wird automatisch gespeichert
-          </p>
+        </div>
+
+        {/* Step indicators — Mobile compact */}
+        <div className="sm:hidden max-w-5xl mx-auto px-4 pb-2.5 flex items-center justify-between">
+          <span className="text-sm font-semibold text-[#6B0064]">{steps[currentStep]?.label}</span>
+          <span className="text-xs text-gray-400">Schritt {currentStep + 1} / {steps.length}</span>
         </div>
       </div>
 
