@@ -21,15 +21,26 @@ export default function OnboardingWizard() {
   const urlParams = new URLSearchParams(window.location.search);
   const prefillMode = urlParams.get("prefill") === "true";
 
-  const [mode, setMode] = useState(null); // "self" | "guided"
+  const PREFILL_DEMO_DATA = prefillMode ? {
+    first_name: "Anna",
+    last_name: "Müller",
+    date_of_birth: "1995-06-15",
+    escort_email: "anna.mueller@example.com",
+    phone: "+41 79 123 45 67",
+    nationality: "Deutschland",
+    citizenship_group: "EU_EFTA",
+  } : {};
+
+  const [mode, setMode] = useState(prefillMode ? "self" : null); // "self" | "guided"
   const [profile, setProfile] = useState({
     status: "draft",
-    current_step: 0,
-    work_model: null,
-    citizenship_group: null,
+    current_step: 2, // skip to core_data step when prefill mode
+    work_model: prefillMode ? "employee_unlimited" : null,
+    citizenship_group: prefillMode ? "EU_EFTA" : null,
     permit_type: "none",
     permit_status: "not_required",
     source_tax: null,
+    ...PREFILL_DEMO_DATA,
   });
   const [profileId, setProfileId] = useState(null);
   const [showAbandonModal, setShowAbandonModal] = useState(false);
