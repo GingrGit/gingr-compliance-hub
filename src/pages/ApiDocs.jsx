@@ -213,7 +213,7 @@ Content-Type: application/json`} />
           </table>
         </Section>
 
-        <p className="text-center text-xs text-gray-400 pb-10">Gingr Legal Onboarding API · Intern · Nicht öffentlich zugänglich</p>
+        <p className="text-center text-xs text-gray-400 pb-10">Gingr Legal Onboarding API · Internal · Not publicly accessible</p>
       </div>
     </div>
   );
