@@ -57,7 +57,9 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
             }`}
           >
             <div className="flex items-start gap-3">
-              <span className="text-2xl mt-0.5">{m.emoji}</span>
+              <div className="w-9 h-9 rounded-xl bg-pink-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <m.icon className="w-5 h-5 text-[#FF3CAC]" />
+              </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-gray-900">{m.label}</span>
