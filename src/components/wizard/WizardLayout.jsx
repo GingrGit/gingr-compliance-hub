@@ -253,7 +253,7 @@ function getStepContent(stepId, profile) {
 
     case "self_employed":
       return {
-        icon: "🏢",
+        icon: Building2,
         title: "Selbstständig-Setup",
         body: "Wir brauchen ein paar Details und einen Nachweis. Du kannst nach dem Upload sofort weitermachen — wir prüfen innerhalb von 24 Stunden.",
         accordions: [
