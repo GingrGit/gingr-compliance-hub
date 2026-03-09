@@ -519,6 +519,15 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           onChange={(url) => updateProfile({ id_document_url: url })}
           hint={true}
         />
+
+        <div className="pt-2 border-t border-gray-100 text-center">
+          <a
+            href="?prefill=true"
+            className="text-xs text-pink-400 hover:text-pink-600 underline underline-offset-2"
+          >
+            🔗 Demo: Version mit Gingr-Daten anzeigen
+          </a>
+        </div>
       </div>
     </StepCard>
   );
