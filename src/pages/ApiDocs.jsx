@@ -167,13 +167,13 @@ Content-Type: application/json`} />
         {/* Action: get_signed_url */}
         <Section icon={<Lock className="w-4 h-4 text-pink-500" />} title="Action: get_signed_url">
           <p className="text-sm text-gray-600 mb-3">
-            Generiert eine temporäre, signierte URL für den sicheren Zugriff auf ein privates Dokument. Gültig für <strong>300 Sekunden</strong>.
+            Generates a temporary signed URL for secure access to a private document. Valid for <strong>300 seconds</strong>.
           </p>
           <table className="w-full mb-4">
-            <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">Parameter</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Typ</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Beschreibung</th></tr></thead>
+            <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">Parameter</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Type</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Description</th></tr></thead>
             <tbody>
-              <ParamRow name="action" type="string" required desc={`Muss "get_signed_url" sein`} />
-              <ParamRow name="document_uri" type="string" required desc="Private Datei-URI (aus get_documents Antwort)" />
+              <ParamRow name="action" type="string" required desc={`Must be "get_signed_url"`} />
+              <ParamRow name="document_uri" type="string" required desc="Private file URI (from get_documents response)" />
             </tbody>
           </table>
           <CodeBlock code={`// Request
