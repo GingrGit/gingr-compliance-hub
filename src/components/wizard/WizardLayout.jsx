@@ -164,7 +164,7 @@ function getStepContent(stepId, profile) {
         ]
       };
       if (isEmployee) return {
-        icon: "🛡️",
+        icon: ShieldCheck,
         title: "Angestellt (unbefristet)",
         body: "Das ist die einfachste und sicherste Lösung. Du bist rechtlich abgesichert, vollständig versichert und bekommst deinen Lohn jeden Monat direkt auf dein Bankkonto – basierend auf deinen eigenen Preisen. Du kannst dieses Arbeitsverhältnis jederzeit beenden und gehst keine Verpflichtungen ein, setzt deine eigenen Preise und bestimmst komplett frei, wann und wie viel du arbeiten möchtest.",
         accordions: [
