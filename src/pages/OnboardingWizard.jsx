@@ -18,6 +18,9 @@ import StepCoreDataPrefilled from "@/components/wizard/StepCoreDataPrefilled";
 import AbandonModal from "@/components/wizard/AbandonModal";
 
 export default function OnboardingWizard() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const prefillMode = urlParams.get("prefill") === "true";
+
   const [mode, setMode] = useState(null); // "self" | "guided"
   const [profile, setProfile] = useState({
     status: "draft",
