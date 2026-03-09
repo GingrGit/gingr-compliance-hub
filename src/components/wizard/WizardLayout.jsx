@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CheckCircle2, Save, ShieldCheck, Info } from "lucide-react";
+import { CheckCircle2, Save, ShieldCheck, Info, Sparkles, Briefcase, Calendar, Lightbulb, Lock, Home, CircleDollarSign, BarChart2, FileText, Building2, PenLine, Trophy, User } from "lucide-react";
 
 const FIXED_PHASES = [
   { label: "Start" },
