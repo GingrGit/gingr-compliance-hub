@@ -60,10 +60,10 @@ export default function ApiDocs() {
           />
           <h1 className="text-3xl font-bold text-gray-900">Legal Onboarding API</h1>
           <p className="text-gray-500 mt-2 text-sm max-w-lg mx-auto">
-            Interne API-Dokumentation für die Integration der Onboarding-Daten in die gingr.ch Hauptplattform.
+            Internal API documentation for integrating onboarding data into the gingr.ch main platform.
           </p>
           <div className="mt-3 inline-flex items-center gap-1.5 bg-green-50 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full border border-green-200">
-            <CheckCircle2 className="w-3.5 h-3.5" /> v1.0 · Aktiv
+            <CheckCircle2 className="w-3.5 h-3.5" /> v1.0 · Active
           </div>
         </div>
 
