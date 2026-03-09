@@ -13,6 +13,7 @@ import StepSummary from "@/components/wizard/StepSummary";
 import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
 import StepSelfEmployedAgreement from "@/components/wizard/StepSelfEmployedAgreement";
 import StepCongratulations from "@/components/wizard/StepCongratulations";
+import StepCoreDataPrefilled from "@/components/wizard/StepCoreDataPrefilled";
 
 import AbandonModal from "@/components/wizard/AbandonModal";
 
