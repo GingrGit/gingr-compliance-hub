@@ -287,7 +287,7 @@ function getStepContent(stepId, profile) {
 
     default:
       return {
-        icon: "💡",
+        icon: Lightbulb,
         title: "Hilfe & Infos",
         body: "Alle deine Daten werden sicher gespeichert. Du kannst jederzeit unterbrechen und später weitermachen.",
         accordions: []
