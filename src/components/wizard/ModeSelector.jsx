@@ -3,7 +3,7 @@ import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase,
 import { createPageUrl } from "@/utils";
 import { LANGUAGES, TRANSLATIONS, getStoredLanguage, storeLanguage } from "@/components/language";
 
-const _TRANSLATIONS_UNUSED = {
+const _TRANSLATIONS_OLD = {
   de: {
     title: "Legal Onboarding",
     subtitle: "Wie möchtest du das Onboarding starten?",
