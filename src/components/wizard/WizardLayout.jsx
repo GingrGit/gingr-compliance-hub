@@ -5,7 +5,8 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
-      <div className="bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-lg sticky top-0 z-30">
+      <div className="sm:sticky sm:top-4 sm:z-30 sm:px-4 sticky top-0 z-30">
+      <div className="bg-white/90 backdrop-blur-md border border-gray-100 sm:rounded-2xl shadow-lg overflow-hidden">
         {/* Gradient progress bar at very top */}
         <div className="h-1 bg-gray-100">
           <div
