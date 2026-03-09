@@ -177,7 +177,9 @@ export default function OnboardingWizard() {
     switch (currentStepId) {
       case "welcome": return <StepWelcome {...stepProps} />;
       case "work_model": return <StepWorkModel {...stepProps} />;
-      case "core_data": return <StepCoreData {...stepProps} profileId={profileId} />;
+      case "core_data": return prefillMode
+        ? <StepCoreDataPrefilled {...stepProps} />
+        : <StepCoreData {...stepProps} profileId={profileId} />;
       case "residency": return <StepResidency {...stepProps} />;
       case "eligibility": return <StepEligibility {...stepProps} />;
       case "earnings": return <StepEarnings {...stepProps} />;
