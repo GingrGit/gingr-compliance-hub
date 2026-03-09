@@ -241,7 +241,7 @@ function getStepContent(stepId, profile) {
 
     case "employment_setup":
       return {
-        icon: "✍️",
+        icon: PenLine,
         title: is90days ? "Vertrag — bis 90 Tage" : "Arbeitsvertrag",
         body: "Überprüfe deine Daten und unterzeichne deinen Arbeitsvertrag. Nach der Unterzeichnung wird Secure Payment aktiviert.",
         accordions: [
