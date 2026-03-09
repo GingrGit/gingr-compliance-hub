@@ -21,7 +21,7 @@ const models = [
   {
     id: "self_employed",
     label: "Selbständig",
-    emoji: "🏢",
+    icon: Briefcase,
     desc: "Du arbeitest auf eigene Rechnung als selbständige Escort.",
     pros: ["Eigenes Unternehmen / UID-Nummer erforderlich", "Mehr Flexibilität", "Eigene Buchhaltung"],
   },
