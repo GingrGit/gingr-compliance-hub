@@ -518,6 +518,8 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           value={profile.id_document_url || ""}
           onChange={(url) => updateProfile({ id_document_url: url })}
           hint={true}
+          profileId={profileId}
+          documentType="id"
         />
 
         <div className="pt-2 border-t border-gray-100 text-center">
