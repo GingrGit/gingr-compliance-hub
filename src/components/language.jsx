@@ -117,6 +117,14 @@ export const TRANSLATIONS = {
     homeOnboardingTitle: "Commencer l'onboarding", homeOnboardingDesc: "Complétez votre configuration légale étape par étape.", homeOnboardingBtn: "Démarrer",
     homeDocsTitle: "Mes documents", homeDocsDesc: "Consultez vos contrats, statuts et documents téléversés.", homeDocsBtn: "Se connecter",
     homeNeedHelp: "Besoin d'aide ?",
+    // StepWorkModel
+    workModelTitle: "Choisissez votre modèle de travail", workModelSubtitle: "Cela détermine quels contrats et documents sont nécessaires.",
+    workModel1Label: "Employée (permanent)", workModel1Desc: "Vous travaillez comme employée chez gingr. Contrat permanent.",
+    workModel1Pro1: "Salaire & assurances sociales gérés par gingr", workModel1Pro2: "Protection juridique claire", workModel1Pro3: "Pour CH / UE / Permis C",
+    workModel2Label: "Employée (max. 90 jours)", workModel2Desc: "Relation de travail à court terme, jusqu'à 90 jours par an.",
+    workModel2Pro1: "Adapté au permis B/L", workModel2Pro2: "Flexible & simple", workModel2Pro3: "Impôt à la source inclus",
+    workModel3Label: "Indépendante", workModel3Desc: "Vous travaillez à votre compte comme escort indépendante.",
+    workModel3Pro1: "Entreprise propre / numéro UID requis", workModel3Pro2: "Plus de flexibilité", workModel3Pro3: "Comptabilité propre",
   },
   es: {
     // StepCard navigation
