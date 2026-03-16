@@ -349,8 +349,8 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
   return (
     <StepCard
-      title="Deine persönlichen Daten"
-      subtitle="Diese Angaben werden für deinen Vertrag und die Lohnabrechnung benötigt."
+      title={t.coreDataTitle || "Deine persönlichen Daten"}
+      subtitle={t.coreDataSubtitle || "Diese Angaben werden für deinen Vertrag und die Lohnabrechnung benötigt."}
       onNext={() => onNext({
         first_name: profile.first_name,
         last_name: profile.last_name,
@@ -370,6 +370,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       onSaveAndExit={onSaveAndExit}
       nextDisabled={!canProceed}
       saving={saving}
+      t={t}
     >
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
