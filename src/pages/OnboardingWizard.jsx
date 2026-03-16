@@ -191,12 +191,12 @@ export default function OnboardingWizard() {
       case "core_data": return prefillMode
         ? <StepCoreDataPrefilled {...stepProps} />
         : <StepCoreData {...stepProps} profileId={profileId} />;
-      case "residency": return <StepResidency {...stepProps} />;
+      case "residency": return <StepResidency {...stepProps} profileId={profileId} />;
       case "eligibility": return <StepEligibility {...stepProps} />;
       case "earnings": return <StepEarnings {...stepProps} />;
       case "source_tax": return <StepSourceTax {...stepProps} />;
       case "summary": return <StepSummary {...stepProps} profileId={profileId} />;
-      case "self_employed": return <StepSelfEmployed {...stepProps} />;
+      case "self_employed": return <StepSelfEmployed {...stepProps} profileId={profileId} />;
       case "self_employed_agreement": return <StepSelfEmployedAgreement {...stepProps} />;
       case "congratulations": return <StepCongratulations {...stepProps} profileId={profileId} />;
       default: return <StepWelcome {...stepProps} />;
