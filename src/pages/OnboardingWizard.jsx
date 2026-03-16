@@ -16,7 +16,6 @@ import StepCongratulations from "@/components/wizard/StepCongratulations";
 import StepCoreDataPrefilled from "@/components/wizard/StepCoreDataPrefilled";
 
 import AbandonModal from "@/components/wizard/AbandonModal";
-import { TRANSLATIONS, getStoredLanguage, LANGUAGES } from "@/components/language";
 
 export default function OnboardingWizard() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -31,9 +30,6 @@ export default function OnboardingWizard() {
     nationality: "Deutschland",
     citizenship_group: "EU_EFTA",
   } : {};
-
-  const [lang, setLang] = useState(getStoredLanguage);
-  const t = TRANSLATIONS[lang.code] || TRANSLATIONS.de;
 
   const [mode, setMode] = useState(prefillMode ? "self" : null); // "self" | "guided"
   const [profile, setProfile] = useState({
@@ -174,7 +170,7 @@ export default function OnboardingWizard() {
   }
 
   if (!mode) {
-    return <ModeSelector onSelect={setMode} onLangChange={setLang} />;
+    return <ModeSelector onSelect={setMode} />;
   }
 
   const stepProps = {
@@ -186,7 +182,6 @@ export default function OnboardingWizard() {
     onSubmit: handleSubmit,
     saving,
     mode,
-    t,
   };
 
   const renderStep = () => {

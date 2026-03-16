@@ -3,7 +3,7 @@ import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase,
 import { createPageUrl } from "@/utils";
 import { LANGUAGES, TRANSLATIONS, getStoredLanguage, storeLanguage } from "@/components/language";
 
-export default function ModeSelector({ onSelect, onLangChange }) {
+export default function ModeSelector({ onSelect }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
   const [selectedLang, setSelectedLang] = useState(getStoredLanguage);
   const [showLangMenu, setShowLangMenu] = useState(false);
@@ -95,7 +95,7 @@ export default function ModeSelector({ onSelect, onLangChange }) {
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { setSelectedLang(lang); storeLanguage(lang); setShowLangMenu(false); if (onLangChange) onLangChange(lang); }}
+                      onClick={() => { setSelectedLang(lang); storeLanguage(lang); setShowLangMenu(false); }}
                       className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-pink-50 transition-colors ${selectedLang.code === lang.code ? "bg-pink-50 text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
                     >
                       <span className="text-base">{lang.flag}</span>
