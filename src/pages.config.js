@@ -50,7 +50,6 @@
 import AdminDashboard from './pages/AdminDashboard';
 import ApiDocs from './pages/ApiDocs';
 import DevDashboard from './pages/DevDashboard';
-import Home from './pages/Home';
 import Magic from './pages/Magic';
 import MagicDashboard from './pages/MagicDashboard';
 import MagicLinkLogin from './pages/MagicLinkLogin';
@@ -61,7 +60,6 @@ export const PAGES = {
     "AdminDashboard": AdminDashboard,
     "ApiDocs": ApiDocs,
     "DevDashboard": DevDashboard,
-    "Home": Home,
     "Magic": Magic,
     "MagicDashboard": MagicDashboard,
     "MagicLinkLogin": MagicLinkLogin,
