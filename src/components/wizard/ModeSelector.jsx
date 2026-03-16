@@ -3,7 +3,7 @@ import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase,
 import { createPageUrl } from "@/utils";
 import { LANGUAGES, TRANSLATIONS, getStoredLanguage, storeLanguage } from "@/components/language";
 
-export default function ModeSelector({ onSelect }) {
+export default function ModeSelector({ onSelect, onLangChange }) {
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
   const [selectedLang, setSelectedLang] = useState(getStoredLanguage);
   const [showLangMenu, setShowLangMenu] = useState(false);
