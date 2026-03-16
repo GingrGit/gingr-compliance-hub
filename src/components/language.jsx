@@ -13,6 +13,22 @@ export const LANGUAGES = [
 
 export const TRANSLATIONS = {
   de: {
+    // StepCard navigation
+    btnNext: "Weiter", btnBack: "Zurück", btnSaveExit: "Speichern & beenden",
+    // StepWelcome
+    welcomeTitleGuided: "Willkommen zum geführten Onboarding", welcomeTitle: "Willkommen bei gingr",
+    welcomeDescGuided: "Du begleitest jetzt eine Escort durch das legale Onboarding. Folge den Schritten gemeinsam.",
+    welcomeDesc: "Wir führen dich Schritt für Schritt durch alles, was du brauchst, um legal in der Schweiz zu arbeiten.",
+    welcomeStat1Title: "~15 Minuten", welcomeStat1Desc: "Durchschnittliche Dauer",
+    welcomeStat2Title: "100% sicher", welcomeStat2Desc: "Verschlüsselte Daten",
+    welcomeStat3Title: "Jederzeit pausieren", welcomeStat3Desc: "Autosave aktiv",
+    welcomeChecklist: "Was du bereit haben solltest:",
+    welcomeItem1: "Identitätskarte oder Pass",
+    welcomeItem2: "Aufenthaltsbewilligung (falls nicht Schweizer*in)",
+    welcomeItem3: "AHV Bestätigung oder Handelsregisterauszug (falls du Selbstständig tätig bist)",
+    welcomeItem4: "Deine Bankverbindung / IBAN",
+    welcomeStart: "Jetzt starten →",
+    // ModeSelector
     title: "Legal Onboarding", subtitle: "Wie möchtest du das Onboarding starten?",
     selfTitle: "Ich mache es selbst YO", selfDesc: "Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.", selfBtn: "Starten →",
     guidedTitle: "Mit gingr-Mitarbeiter", guidedDesc: "Ein Teammitglied von gingr begleitet dich persönlich durch das Onboarding.", guidedBtn: "Termin buchen →",
@@ -27,6 +43,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Brauchst du Hilfe?",
   },
   en: {
+    // StepCard navigation
+    btnNext: "Next", btnBack: "Back", btnSaveExit: "Save & exit",
+    // StepWelcome
+    welcomeTitleGuided: "Welcome to the guided onboarding", welcomeTitle: "Welcome to gingr",
+    welcomeDescGuided: "You are now guiding an escort through the legal onboarding. Follow the steps together.",
+    welcomeDesc: "We guide you step by step through everything you need to work legally in Switzerland.",
+    welcomeStat1Title: "~15 minutes", welcomeStat1Desc: "Average duration",
+    welcomeStat2Title: "100% secure", welcomeStat2Desc: "Encrypted data",
+    welcomeStat3Title: "Pause anytime", welcomeStat3Desc: "Autosave enabled",
+    welcomeChecklist: "What you should have ready:",
+    welcomeItem1: "ID card or passport",
+    welcomeItem2: "Residence permit (if not Swiss)",
+    welcomeItem3: "AHV confirmation or commercial register extract (if self-employed)",
+    welcomeItem4: "Your bank details / IBAN",
+    welcomeStart: "Start now →",
+    // ModeSelector
     title: "Legal Onboarding", subtitle: "How would you like to start the onboarding?",
     selfTitle: "I'll do it myself", selfDesc: "You'll be guided step by step through the process — at your own pace.", selfBtn: "Get started →",
     guidedTitle: "With a gingr team member", guidedDesc: "A gingr team member will personally guide you through the onboarding.", guidedBtn: "Book appointment →",
@@ -41,6 +73,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Need help?",
   },
   fr: {
+    // StepCard navigation
+    btnNext: "Suivant", btnBack: "Retour", btnSaveExit: "Enregistrer et quitter",
+    // StepWelcome
+    welcomeTitleGuided: "Bienvenue dans l'onboarding guidé", welcomeTitle: "Bienvenue sur gingr",
+    welcomeDescGuided: "Vous accompagnez maintenant une escorte dans l'onboarding légal. Suivez les étapes ensemble.",
+    welcomeDesc: "Nous vous guidons étape par étape à travers tout ce dont vous avez besoin pour travailler légalement en Suisse.",
+    welcomeStat1Title: "~15 minutes", welcomeStat1Desc: "Durée moyenne",
+    welcomeStat2Title: "100% sécurisé", welcomeStat2Desc: "Données chiffrées",
+    welcomeStat3Title: "Pause à tout moment", welcomeStat3Desc: "Sauvegarde automatique",
+    welcomeChecklist: "Ce que vous devriez avoir sous la main :",
+    welcomeItem1: "Carte d'identité ou passeport",
+    welcomeItem2: "Permis de séjour (si vous n'êtes pas Suisse)",
+    welcomeItem3: "Confirmation AVS ou extrait du registre du commerce (si indépendant)",
+    welcomeItem4: "Vos coordonnées bancaires / IBAN",
+    welcomeStart: "Commencer maintenant →",
+    // ModeSelector
     title: "Onboarding Légal", subtitle: "Comment souhaitez-vous démarrer l'onboarding ?",
     selfTitle: "Je le fais moi-même", selfDesc: "Vous serez guidé pas à pas à travers le processus — à votre propre rythme.", selfBtn: "Commencer →",
     guidedTitle: "Avec un employé gingr", guidedDesc: "Un membre de l'équipe gingr vous accompagnera personnellement dans l'onboarding.", guidedBtn: "Prendre rendez-vous →",
@@ -55,6 +103,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Besoin d'aide ?",
   },
   es: {
+    // StepCard navigation
+    btnNext: "Siguiente", btnBack: "Atrás", btnSaveExit: "Guardar y salir",
+    // StepWelcome
+    welcomeTitleGuided: "Bienvenido al onboarding guiado", welcomeTitle: "Bienvenido a gingr",
+    welcomeDescGuided: "Ahora estás acompañando a una escort en el onboarding legal. Sigue los pasos juntos.",
+    welcomeDesc: "Te guiamos paso a paso por todo lo que necesitas para trabajar legalmente en Suiza.",
+    welcomeStat1Title: "~15 minutos", welcomeStat1Desc: "Duración media",
+    welcomeStat2Title: "100% seguro", welcomeStat2Desc: "Datos cifrados",
+    welcomeStat3Title: "Pausar en cualquier momento", welcomeStat3Desc: "Guardado automático activo",
+    welcomeChecklist: "Lo que deberías tener listo:",
+    welcomeItem1: "Documento de identidad o pasaporte",
+    welcomeItem2: "Permiso de residencia (si no eres suizo/a)",
+    welcomeItem3: "Confirmación AHV o extracto del registro mercantil (si eres autónomo/a)",
+    welcomeItem4: "Tus datos bancarios / IBAN",
+    welcomeStart: "Empezar ahora →",
+    // ModeSelector
     title: "Incorporación Legal", subtitle: "¿Cómo deseas iniciar el proceso de incorporación?",
     selfTitle: "Lo hago yo mismo", selfDesc: "Serás guiado paso a paso por el proceso — a tu propio ritmo.", selfBtn: "Empezar →",
     guidedTitle: "Con un empleado de gingr", guidedDesc: "Un miembro del equipo de gingr te acompañará personalmente en el proceso.", guidedBtn: "Reservar cita →",
@@ -69,6 +133,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "¿Necesitas ayuda?",
   },
   it: {
+    // StepCard navigation
+    btnNext: "Avanti", btnBack: "Indietro", btnSaveExit: "Salva ed esci",
+    // StepWelcome
+    welcomeTitleGuided: "Benvenuto nell'onboarding guidato", welcomeTitle: "Benvenuto su gingr",
+    welcomeDescGuided: "Stai ora accompagnando un'escort nell'onboarding legale. Segui i passaggi insieme.",
+    welcomeDesc: "Ti guidiamo passo dopo passo attraverso tutto ciò di cui hai bisogno per lavorare legalmente in Svizzera.",
+    welcomeStat1Title: "~15 minuti", welcomeStat1Desc: "Durata media",
+    welcomeStat2Title: "100% sicuro", welcomeStat2Desc: "Dati crittografati",
+    welcomeStat3Title: "Pausa in qualsiasi momento", welcomeStat3Desc: "Salvataggio automatico attivo",
+    welcomeChecklist: "Cosa dovresti avere a portata di mano:",
+    welcomeItem1: "Carta d'identità o passaporto",
+    welcomeItem2: "Permesso di soggiorno (se non sei svizzero/a)",
+    welcomeItem3: "Conferma AVS o estratto del registro di commercio (se sei lavoratore autonomo)",
+    welcomeItem4: "Le tue coordinate bancarie / IBAN",
+    welcomeStart: "Inizia ora →",
+    // ModeSelector
     title: "Onboarding Legale", subtitle: "Come desideri iniziare l'onboarding?",
     selfTitle: "Lo faccio da solo", selfDesc: "Sarai guidato passo dopo passo nel processo — ai tuoi ritmi.", selfBtn: "Inizia →",
     guidedTitle: "Con un membro del team gingr", guidedDesc: "Un membro del team gingr ti accompagnerà personalmente nell'onboarding.", guidedBtn: "Prenota appuntamento →",
@@ -83,6 +163,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Hai bisogno di aiuto?",
   },
   ro: {
+    // StepCard navigation
+    btnNext: "Următorul", btnBack: "Înapoi", btnSaveExit: "Salvează și ieși",
+    // StepWelcome
+    welcomeTitleGuided: "Bun venit la onboardingul ghidat", welcomeTitle: "Bun venit pe gingr",
+    welcomeDescGuided: "Acum însoțești o escortă prin onboardingul legal. Urmați pașii împreună.",
+    welcomeDesc: "Vă ghidăm pas cu pas prin tot ce aveți nevoie pentru a lucra legal în Elveția.",
+    welcomeStat1Title: "~15 minute", welcomeStat1Desc: "Durată medie",
+    welcomeStat2Title: "100% sigur", welcomeStat2Desc: "Date criptate",
+    welcomeStat3Title: "Pauză oricând", welcomeStat3Desc: "Salvare automată activă",
+    welcomeChecklist: "Ce ar trebui să ai pregătit:",
+    welcomeItem1: "Carte de identitate sau pașaport",
+    welcomeItem2: "Permis de ședere (dacă nu ești elvețian/ă)",
+    welcomeItem3: "Confirmare AVS sau extras din registrul comerțului (dacă ești independent/ă)",
+    welcomeItem4: "Datele tale bancare / IBAN",
+    welcomeStart: "Începe acum →",
+    // ModeSelector
     title: "Onboarding Legal", subtitle: "Cum dorești să începi procesul de onboarding?",
     selfTitle: "Fac singur", selfDesc: "Vei fi ghidat pas cu pas prin proces — în propriul tău ritm.", selfBtn: "Începe →",
     guidedTitle: "Cu un angajat gingr", guidedDesc: "Un membru al echipei gingr te va însoți personal prin onboarding.", guidedBtn: "Programează întâlnire →",
@@ -97,6 +193,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Ai nevoie de ajutor?",
   },
   ru: {
+    // StepCard navigation
+    btnNext: "Далее", btnBack: "Назад", btnSaveExit: "Сохранить и выйти",
+    // StepWelcome
+    welcomeTitleGuided: "Добро пожаловать в сопровождаемый онбординг", welcomeTitle: "Добро пожаловать на gingr",
+    welcomeDescGuided: "Вы сейчас сопровождаете эскорта через правовой онбординг. Следуйте шагам вместе.",
+    welcomeDesc: "Мы проведём вас шаг за шагом через всё, что необходимо для легальной работы в Швейцарии.",
+    welcomeStat1Title: "~15 минут", welcomeStat1Desc: "Средняя продолжительность",
+    welcomeStat2Title: "100% безопасно", welcomeStat2Desc: "Зашифрованные данные",
+    welcomeStat3Title: "Пауза в любое время", welcomeStat3Desc: "Автосохранение активно",
+    welcomeChecklist: "Что вам следует подготовить:",
+    welcomeItem1: "Удостоверение личности или паспорт",
+    welcomeItem2: "Вид на жительство (если вы не гражданин/ка Швейцарии)",
+    welcomeItem3: "Подтверждение AHV или выписка из торгового реестра (если вы самозанятый/ая)",
+    welcomeItem4: "Ваши банковские реквизиты / IBAN",
+    welcomeStart: "Начать сейчас →",
+    // ModeSelector
     title: "Правовой онбординг", subtitle: "Как вы хотите начать процесс онбординга?",
     selfTitle: "Я сделаю это сам", selfDesc: "Вы будете проходить процесс шаг за шагом — в своём собственном темпе.", selfBtn: "Начать →",
     guidedTitle: "С сотрудником gingr", guidedDesc: "Член команды gingr лично сопроводит вас через онбординг.", guidedBtn: "Записаться →",
@@ -111,6 +223,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Нужна помощь?",
   },
   pl: {
+    // StepCard navigation
+    btnNext: "Dalej", btnBack: "Wstecz", btnSaveExit: "Zapisz i zakończ",
+    // StepWelcome
+    welcomeTitleGuided: "Witamy w onboardingu z przewodnikiem", welcomeTitle: "Witamy w gingr",
+    welcomeDescGuided: "Teraz przeprowadzasz eskortę przez onboarding prawny. Postępujcie razem zgodnie z krokami.",
+    welcomeDesc: "Przeprowadzimy Cię krok po kroku przez wszystko, czego potrzebujesz, aby legalnie pracować w Szwajcarii.",
+    welcomeStat1Title: "~15 minut", welcomeStat1Desc: "Średni czas trwania",
+    welcomeStat2Title: "100% bezpieczne", welcomeStat2Desc: "Zaszyfrowane dane",
+    welcomeStat3Title: "Pauza w dowolnym momencie", welcomeStat3Desc: "Automatyczny zapis aktywny",
+    welcomeChecklist: "Co powinieneś/powinnaś mieć pod ręką:",
+    welcomeItem1: "Dowód osobisty lub paszport",
+    welcomeItem2: "Zezwolenie na pobyt (jeśli nie jesteś Szwajcarem/Szwajcarką)",
+    welcomeItem3: "Potwierdzenie AHV lub wypis z rejestru handlowego (jeśli jesteś samozatrudniony/a)",
+    welcomeItem4: "Twoje dane bankowe / IBAN",
+    welcomeStart: "Zacznij teraz →",
+    // ModeSelector
     title: "Onboarding Prawny", subtitle: "Jak chcesz rozpocząć proces onboardingu?",
     selfTitle: "Zrobię to sam", selfDesc: "Będziesz prowadzony krok po kroku przez cały proces — we własnym tempie.", selfBtn: "Zacznij →",
     guidedTitle: "Z pracownikiem gingr", guidedDesc: "Członek zespołu gingr osobiście przeprowadzi Cię przez onboarding.", guidedBtn: "Zarezerwuj spotkanie →",
@@ -125,6 +253,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Potrzebujesz pomocy?",
   },
   cs: {
+    // StepCard navigation
+    btnNext: "Další", btnBack: "Zpět", btnSaveExit: "Uložit a ukončit",
+    // StepWelcome
+    welcomeTitleGuided: "Vítejte v řízeném onboardingu", welcomeTitle: "Vítejte na gingr",
+    welcomeDescGuided: "Nyní provázíte escort právním onboardingem. Postupujte společně podle kroků.",
+    welcomeDesc: "Provedeme vás krok za krokem vším, co potřebujete k legální práci ve Švýcarsku.",
+    welcomeStat1Title: "~15 minut", welcomeStat1Desc: "Průměrná doba trvání",
+    welcomeStat2Title: "100% bezpečné", welcomeStat2Desc: "Zašifrovaná data",
+    welcomeStat3Title: "Kdykoliv pozastavit", welcomeStat3Desc: "Automatické ukládání aktivní",
+    welcomeChecklist: "Co byste měli mít připraveno:",
+    welcomeItem1: "Občanský průkaz nebo pas",
+    welcomeItem2: "Povolení k pobytu (pokud nejste Švýcar/ka)",
+    welcomeItem3: "Potvrzení AHV nebo výpis z obchodního rejstříku (pokud jste OSVČ)",
+    welcomeItem4: "Vaše bankovní údaje / IBAN",
+    welcomeStart: "Začít nyní →",
+    // ModeSelector
     title: "Právní onboarding", subtitle: "Jak chcete zahájit proces onboardingu?",
     selfTitle: "Udělám to sám", selfDesc: "Budete provázeni krok za krokem procesem — vlastním tempem.", selfBtn: "Začít →",
     guidedTitle: "S pracovníkem gingr", guidedDesc: "Člen týmu gingr vás osobně provede onboardingem.", guidedBtn: "Rezervovat schůzku →",
@@ -139,6 +283,22 @@ export const TRANSLATIONS = {
     homeNeedHelp: "Potřebujete pomoc?",
   },
   hu: {
+    // StepCard navigation
+    btnNext: "Tovább", btnBack: "Vissza", btnSaveExit: "Mentés és kilépés",
+    // StepWelcome
+    welcomeTitleGuided: "Üdvözöljük a végigvezetett onboardingban", welcomeTitle: "Üdvözöljük a gingr-en",
+    welcomeDescGuided: "Most egy eskort végigvezet a jogi onboardingon. Kövesse együtt a lépéseket.",
+    welcomeDesc: "Lépésről lépésre végigvezetjük mindenen, amire szüksége van a Svájcban való legális munkavégzéshez.",
+    welcomeStat1Title: "~15 perc", welcomeStat1Desc: "Átlagos időtartam",
+    welcomeStat2Title: "100% biztonságos", welcomeStat2Desc: "Titkosított adatok",
+    welcomeStat3Title: "Bármikor szüneteltethető", welcomeStat3Desc: "Automatikus mentés aktív",
+    welcomeChecklist: "Amire szüksége lesz:",
+    welcomeItem1: "Személyi igazolvány vagy útlevél",
+    welcomeItem2: "Tartózkodási engedély (ha nem svájci állampolgár)",
+    welcomeItem3: "AHV-igazolás vagy cégjegyzékkivonat (ha önfoglalkoztató)",
+    welcomeItem4: "Bankadatai / IBAN",
+    welcomeStart: "Kezdés most →",
+    // ModeSelector
     title: "Jogi Onboarding", subtitle: "Hogyan szeretné megkezdeni az onboarding folyamatot?",
     selfTitle: "Magam csinálom", selfDesc: "Lépésről lépésre vezet végig a folyamaton — a saját tempójában.", selfBtn: "Kezdés →",
     guidedTitle: "Egy gingr munkatárssal", guidedDesc: "A gingr csapat egyik tagja személyesen kíséri végig az onboardingon.", guidedBtn: "Időpont foglalása →",
