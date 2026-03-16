@@ -8,7 +8,7 @@ const QUALITY_CHECKS = [
   "Dokument nicht abgelaufen",
 ];
 
-export default function DocumentUpload({ label, value, onChange, hint }) {
+export default function DocumentUpload({ label, value, onChange, hint, profileId, documentType }) {
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState("");
 
@@ -17,8 +17,14 @@ export default function DocumentUpload({ label, value, onChange, hint }) {
     if (!file) return;
     setUploading(true);
     setFileName(file.name);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    onChange(file_url);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('profile_id', profileId || 'unknown');
+    formData.append('document_type', documentType || 'other');
+
+    const response = await base44.functions.invoke('uploadToGingrS3', formData);
+    onChange(response.data.s3_key);
     setUploading(false);
   };
 
