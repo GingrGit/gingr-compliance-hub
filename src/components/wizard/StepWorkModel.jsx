@@ -36,13 +36,14 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
 
   return (
     <StepCard
-      title="Wähle dein Arbeitsmodell"
-      subtitle="Das bestimmt, welche Verträge und Dokumente du benötigst."
+      title={t.workModelTitle || "Wähle dein Arbeitsmodell"}
+      subtitle={t.workModelSubtitle || "Das bestimmt, welche Verträge und Dokumente du benötigst."}
       onNext={() => onNext({ work_model: selected })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       nextDisabled={!selected}
       saving={saving}
+      t={t}
     >
       <div className="space-y-3">
         {models.map((m) => (
