@@ -345,6 +345,14 @@ export const TRANSLATIONS = {
     homeOnboardingTitle: "Zahájit onboarding", homeOnboardingDesc: "Dokončete svůj právní setup krok za krokem.", homeOnboardingBtn: "Začít",
     homeDocsTitle: "Moje dokumenty", homeDocsDesc: "Zobrazit smlouvy, stav a nahrané dokumenty.", homeDocsBtn: "Přihlásit se",
     homeNeedHelp: "Potřebujete pomoc?",
+    // StepWorkModel
+    workModelTitle: "Vyberte pracovní model", workModelSubtitle: "To určuje, jaké smlouvy a dokumenty potřebujete.",
+    workModel1Label: "Zaměstnanec (na dobu neurčitou)", workModel1Desc: "Pracujete jako zaměstnanec u gingr. Smlouva na dobu neurčitou.",
+    workModel1Pro1: "Mzda a sociální pojištění přes gingr", workModel1Pro2: "Jasná právní ochrana", workModel1Pro3: "Pro CH / EU / Permit C",
+    workModel2Label: "Zaměstnanec (max. 90 dní)", workModel2Desc: "Krátkodobé zaměstnání až 90 dní ročně.",
+    workModel2Pro1: "Vhodné pro Permit B/L", workModel2Pro2: "Flexibilní a jednoduché", workModel2Pro3: "Srážková daň zahrnuta",
+    workModel3Label: "OSVČ", workModel3Desc: "Pracujete na vlastní účet jako samostatná escort.",
+    workModel3Pro1: "Vlastní firma / UID číslo nutné", workModel3Pro2: "Více flexibility", workModel3Pro3: "Vlastní účetnictví",
   },
   hu: {
     // StepCard navigation
