@@ -231,6 +231,14 @@ export const TRANSLATIONS = {
     homeOnboardingTitle: "Începe onboardingul", homeOnboardingDesc: "Completează-ți configurarea legală pas cu pas.", homeOnboardingBtn: "Începe",
     homeDocsTitle: "Documentele mele", homeDocsDesc: "Accesează contractele, statusul și documentele încărcate.", homeDocsBtn: "Autentificare",
     homeNeedHelp: "Ai nevoie de ajutor?",
+    // StepWorkModel
+    workModelTitle: "Alege modelul tău de lucru", workModelSubtitle: "Acest lucru determină ce contracte și documente sunt necesare.",
+    workModel1Label: "Angajată (permanent)", workModel1Desc: "Lucrezi ca angajată la gingr. Contract permanent.",
+    workModel1Pro1: "Salariu și asigurări sociale gestionate de gingr", workModel1Pro2: "Protecție legală clară", workModel1Pro3: "Pentru CH / UE / Permis C",
+    workModel2Label: "Angajată (max. 90 zile)", workModel2Desc: "Angajare pe termen scurt, până la 90 de zile pe an.",
+    workModel2Pro1: "Potrivit pentru permis B/L", workModel2Pro2: "Flexibil și simplu", workModel2Pro3: "Impozit la sursă inclus",
+    workModel3Label: "Independent", workModel3Desc: "Lucrezi pe cont propriu ca escortă independentă.",
+    workModel3Pro1: "Companie proprie / număr UID necesar", workModel3Pro2: "Mai multă flexibilitate", workModel3Pro3: "Contabilitate proprie",
   },
   ru: {
     // StepCard navigation
