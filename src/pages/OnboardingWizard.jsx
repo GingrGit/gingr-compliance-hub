@@ -174,7 +174,7 @@ export default function OnboardingWizard() {
   }
 
   if (!mode) {
-    return <ModeSelector onSelect={setMode} />;
+    return <ModeSelector onSelect={setMode} onLangChange={setLang} />;
   }
 
   const stepProps = {
