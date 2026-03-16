@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import ApplicantList from "@/components/admin/ApplicantList.jsx";
 import ApplicantDetail from "@/components/admin/ApplicantDetail.jsx";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, X } from "lucide-react";
 
 export default function AdminDashboard() {
   const [profiles, setProfiles] = useState([]);
