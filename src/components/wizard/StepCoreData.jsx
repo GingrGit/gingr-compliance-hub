@@ -509,6 +509,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
                 value={profile.nationality || ""}
                 onChange={(country) => updateProfile({ nationality: country.name })}
                 citizenshipGroup={profile.citizenship_group}
+                t={t}
               />
             </div>
           )}
