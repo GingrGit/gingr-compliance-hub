@@ -95,7 +95,7 @@ export default function ModeSelector({ onSelect, onLangChange }) {
                   {LANGUAGES.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => { setSelectedLang(lang); storeLanguage(lang); setShowLangMenu(false); }}
+                      onClick={() => { setSelectedLang(lang); storeLanguage(lang); setShowLangMenu(false); if (onLangChange) onLangChange(lang); }}
                       className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-pink-50 transition-colors ${selectedLang.code === lang.code ? "bg-pink-50 text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
                     >
                       <span className="text-base">{lang.flag}</span>
