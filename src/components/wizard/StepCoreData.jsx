@@ -375,7 +375,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-gray-600 mb-1">Vorname *</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t.labelFirstName || "Vorname"} *</Label>
             <Input
               value={profile.first_name || ""}
               onChange={(e) => updateProfile({ first_name: e.target.value })}
@@ -383,7 +383,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             />
           </div>
           <div>
-            <Label className="text-xs text-gray-600 mb-1">Nachname *</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t.labelLastName || "Nachname"} *</Label>
             <Input
               value={profile.last_name || ""}
               onChange={(e) => updateProfile({ last_name: e.target.value })}
@@ -393,19 +393,19 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">Geburtsdatum *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t.labelDob || "Geburtsdatum"} *</Label>
           <Input
             type="date"
             value={profile.date_of_birth || ""}
             onChange={(e) => updateProfile({ date_of_birth: e.target.value })}
           />
           {ageError && (
-            <p className="text-red-500 text-xs mt-1">Du musst mindestens 18 Jahre alt sein, um dich anzumelden.</p>
+            <p className="text-red-500 text-xs mt-1">{t.errorAge || "Du musst mindestens 18 Jahre alt sein."}</p>
           )}
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">E-Mail-Adresse *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t.labelEmail || "E-Mail-Adresse"} *</Label>
           <Input
             type="email"
             value={profile.escort_email || ""}
@@ -415,10 +415,10 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           />
           {emailWarning && !linkSent && (
             <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
-              <p className="font-medium mb-1">Diese E-Mail ist bereits registriert.</p>
-              <p className="mb-2">Möchtest du einen Anmelde-Link an diese E-Mail senden?</p>
+              <p className="font-medium mb-1">{t.errorEmailExists || "Diese E-Mail ist bereits registriert."}</p>
+              <p className="mb-2">{t.existingAccountHint || "Du hast bereits ein Konto? Klicke hier um fortzufahren."}</p>
               <Button size="sm" variant="outline" className="text-yellow-700 border-yellow-400 hover:bg-yellow-100" onClick={() => sendMagicLink({ profile_id: emailWarning.profile_id, email: emailWarning.email })} disabled={sendingLink}>
-                {sendingLink ? "Wird gesendet…" : "Login-Link per E-Mail senden"}
+                {sendingLink ? (t.sendingLink || "Wird gesendet…") : (t.sendEmailLink || "Login-Link per E-Mail senden")}
               </Button>
             </div>
           )}
@@ -426,7 +426,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">Handynummer *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t.labelPhone || "Telefonnummer"} *</Label>
           <Input
             type="tel"
             value={profile.phone || ""}
@@ -436,17 +436,17 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           />
           {phoneWarning && !linkSent && (
             <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
-              <p className="font-medium mb-1">Diese Telefonnummer ist bereits registriert.</p>
-              <p className="mb-2">Möchtest du einen Anmelde-Link per SMS senden?</p>
+              <p className="font-medium mb-1">{t.errorPhoneExists || "Diese Telefonnummer ist bereits registriert."}</p>
+              <p className="mb-2">{t.existingAccountHint || "Du hast bereits ein Konto? Klicke hier um fortzufahren."}</p>
               <Button size="sm" variant="outline" className="text-yellow-700 border-yellow-400 hover:bg-yellow-100" onClick={() => sendMagicLink({ profile_id: phoneWarning.profile_id, phone: phoneWarning.phone })} disabled={sendingLink}>
-                {sendingLink ? "Wird gesendet…" : "Login-Link per SMS senden"}
+                {sendingLink ? (t.sendingLink || "Wird gesendet…") : (t.sendSmsLink || "Login-Link per SMS senden")}
               </Button>
             </div>
           )}
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">Adresse</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t.labelAddress || "Adresse"}</Label>
           <Input
             value={profile.address || ""}
             onChange={(e) => updateProfile({ address: e.target.value })}
@@ -456,7 +456,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-gray-600 mb-1">PLZ</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t.labelPostalCode || "PLZ"}</Label>
             <Input
               value={profile.postal_code || ""}
               onChange={(e) => updateProfile({ postal_code: e.target.value })}
@@ -464,7 +464,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             />
           </div>
           <div>
-            <Label className="text-xs text-gray-600 mb-1">Ort</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t.labelCity || "Ort"}</Label>
             <Input
               value={profile.city || ""}
               onChange={(e) => updateProfile({ city: e.target.value })}
@@ -474,12 +474,12 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">Staatsangehörigkeit *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t.labelCitizenshipGroup || "Staatsangehörigkeit"} *</Label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
             {[
-              { value: "CH", label: "🇨🇭 Schweiz" },
-              { value: "EU_EFTA", label: "🇪🇺 EU / EFTA" },
-              { value: "NON_EU", label: "🌍 Drittstaaten" },
+              { value: "CH", label: t.citizenshipCH || "🇨🇭 Schweiz" },
+              { value: "EU_EFTA", label: t.citizenshipEU || "🇪🇺 EU / EFTA" },
+              { value: "NON_EU", label: t.citizenshipNonEU || "🌍 Drittstaaten" },
             ].map((opt) => (
               <button
                 key={opt.value}
@@ -515,7 +515,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <DocumentUpload
-          label={`${isSwiss ? "Schweizer Pass oder Identitätskarte" : "Reisepass oder Personalausweis"} hochladen *`}
+          label={isSwiss ? (t.idUploadLabelSwiss || "Schweizer Pass oder Identitätskarte hochladen *") : (t.idUploadLabelForeign || "Reisepass oder Personalausweis hochladen *")}
           value={profile.id_document_url || ""}
           onChange={(url) => updateProfile({ id_document_url: url })}
           hint={true}
