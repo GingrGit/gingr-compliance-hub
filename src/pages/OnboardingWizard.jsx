@@ -186,6 +186,7 @@ export default function OnboardingWizard() {
     onSubmit: handleSubmit,
     saving,
     mode,
+    t,
   };
 
   const renderStep = () => {
