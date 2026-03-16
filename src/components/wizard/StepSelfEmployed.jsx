@@ -67,6 +67,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
           value={data.business_proof_url}
           onChange={(url) => setData((p) => ({ ...p, business_proof_url: url }))}
           hint="UID-Registerauszug, Handelsregistereintrag oder Bestätigung"
+          profileId={profileId}
+          documentType="business_proof"
         />
         {errors.business_proof_url && <p className="text-xs text-red-500">{errors.business_proof_url}</p>}
       </div>

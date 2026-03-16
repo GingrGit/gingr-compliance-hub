@@ -58,6 +58,8 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
         value={permitUrl}
         onChange={setPermitUrl}
         hint="Vorder- und Rückseite sichtbar, Text lesbar, nicht abgelaufen"
+        profileId={profileId}
+        documentType="permit"
       />
 
       {error && (
