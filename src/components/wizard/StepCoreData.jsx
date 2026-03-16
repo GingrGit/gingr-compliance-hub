@@ -215,7 +215,7 @@ const ALL_COUNTRIES = [
   { name: "Zypern (Nordzypern)", flag: "🇨🇾", group: "NON_EU" },
 ];
 
-function NationalityDropdown({ value, onChange, citizenshipGroup }) {
+function NationalityDropdown({ value, onChange, citizenshipGroup, t = {} }) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -240,7 +240,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup }) {
         className="w-full flex items-center justify-between px-3 py-2 border border-gray-200 rounded-lg bg-white text-sm hover:border-rose-300 transition-colors"
       >
         <span className={selected ? "text-gray-900" : "text-gray-400"}>
-          {selected ? `${selected.flag} ${selected.name}` : "Land auswählen…"}
+          {selected ? `${selected.flag} ${selected.name}` : (t.selectNationality || "Land auswählen…")}
         </span>
         <ChevronDown className="w-4 h-4 text-gray-400" />
       </button>
@@ -251,7 +251,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup }) {
               autoFocus
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Suchen…"
+              placeholder={t.searchNationality || "Suchen…"}
               className="h-8 text-sm"
             />
           </div>
@@ -422,7 +422,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
               </Button>
             </div>
           )}
-          {linkSent && <p className="text-green-600 text-xs mt-1">✓ Login-Link wurde gesendet.</p>}
+          {linkSent && <p className="text-green-600 text-xs mt-1">✓ {t.magicLinkSent || "Login-Link wurde gesendet."}</p>}
         </div>
 
         <div>
