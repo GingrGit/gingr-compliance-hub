@@ -383,6 +383,14 @@ export const TRANSLATIONS = {
     homeOnboardingTitle: "Onboarding indítása", homeOnboardingDesc: "Töltse ki a jogi beállítást lépésről lépésre.", homeOnboardingBtn: "Kezdés",
     homeDocsTitle: "Dokumentumaim", homeDocsDesc: "Tekintse meg szerződéseit, státuszát és feltöltött dokumentumait.", homeDocsBtn: "Bejelentkezés",
     homeNeedHelp: "Segítségre van szüksége?",
+    // StepWorkModel
+    workModelTitle: "Válaszd ki a munkamodellt", workModelSubtitle: "Ez határozza meg, milyen szerződésekre és dokumentumokra van szükség.",
+    workModel1Label: "Alkalmazott (határozatlan)", workModel1Desc: "A gingr alkalmazottjaként dolgozol. Határozatlan idejű szerződés.",
+    workModel1Pro1: "Bérszámfejtés és társadalombiztosítás a gingr által", workModel1Pro2: "Egyértelmű jogi védelem", workModel1Pro3: "CH / EU / C engedélyhez",
+    workModel2Label: "Alkalmazott (max. 90 nap)", workModel2Desc: "Rövid távú foglalkoztatás, évente legfeljebb 90 nap.",
+    workModel2Pro1: "B/L engedélyhez megfelelő", workModel2Pro2: "Rugalmas és egyszerű", workModel2Pro3: "Forrásadóval együtt",
+    workModel3Label: "Önálló vállalkozó", workModel3Desc: "Saját számlára dolgozol mint független escort.",
+    workModel3Pro1: "Saját cég / UID szám szükséges", workModel3Pro2: "Több rugalmasság", workModel3Pro3: "Saját könyvelés",
   },
 };
 
