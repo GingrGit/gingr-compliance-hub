@@ -79,6 +79,14 @@ export const TRANSLATIONS = {
     homeOnboardingTitle: "Start Legal Onboarding", homeOnboardingDesc: "Complete your compliance steps to unlock secure booking and your legal setup.", homeOnboardingBtn: "Start Onboarding",
     homeDocsTitle: "Access My Documents", homeDocsDesc: "Log in to view your contracts, status, and uploaded documents.", homeDocsBtn: "Log In",
     homeNeedHelp: "Need help?",
+    // StepWorkModel
+    workModelTitle: "Choose your work model", workModelSubtitle: "This determines which contracts and documents you need.",
+    workModel1Label: "Employee (permanent)", workModel1Desc: "You work as an employee at gingr. Permanent contract.",
+    workModel1Pro1: "Payroll & social insurance handled by gingr", workModel1Pro2: "Clear legal protection", workModel1Pro3: "For CH / EU / Permit C",
+    workModel2Label: "Employee (max. 90 days)", workModel2Desc: "Short-term employment, up to 90 days per year.",
+    workModel2Pro1: "Suitable for Permit B/L", workModel2Pro2: "Flexible & simple", workModel2Pro3: "Withholding tax included",
+    workModel3Label: "Self-employed", workModel3Desc: "You work independently as a self-employed escort.",
+    workModel3Pro1: "Own company / UID number required", workModel3Pro2: "More flexibility", workModel3Pro3: "Own accounting",
   },
   fr: {
     // StepCard navigation
