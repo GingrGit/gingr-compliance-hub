@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Trash2, ChevronDown, ChevronUp, ChevronsUpDown, Filter, X } from "lucide-react";
+import { Search, ChevronDown, ChevronUp, ChevronsUpDown, Filter, X } from "lucide-react";
 
 const MODEL_LABELS = {
   employee_unlimited: "Unbefristet",
@@ -14,10 +14,10 @@ const CITIZENSHIP_LABELS = {
 };
 
 const STATUS_CONFIG = {
-  draft:        { label: "Entwurf",       color: "bg-gray-100 text-gray-500",  dot: "bg-gray-400" },
-  submitted:    { label: "Eingereicht",   color: "bg-blue-50 text-blue-600",   dot: "bg-blue-500" },
-  needs_action: { label: "Aktion nötig", color: "bg-amber-50 text-amber-600", dot: "bg-amber-500" },
-  approved:     { label: "Genehmigt",     color: "bg-green-50 text-green-700", dot: "bg-green-500" },
+  draft:        { label: "Entwurf",       color: "bg-gray-100 text-gray-500" },
+  submitted:    { label: "Eingereicht",   color: "bg-blue-50 text-blue-600" },
+  needs_action: { label: "Aktion nötig", color: "bg-amber-50 text-amber-600" },
+  approved:     { label: "Genehmigt",     color: "bg-green-50 text-green-700" },
 };
 
 const STATUS_FILTERS = [
@@ -46,21 +46,14 @@ function ColHeader({ label, sortKey, sortBy, sortDir, onSort }) {
 }
 
 export default function ApplicantList({
-  profiles, loading, selectedId, onSelect, selectedIds, onToggleSelect, onSelectAll,
-  search, onSearch, statusFilter, onStatusFilter, onDelete,
+  profiles, loading, selectedId, onSelect,
+  search, onSearch, statusFilter, onStatusFilter,
 }) {
-  const [confirmId, setConfirmId] = useState(null);
   const [modelFilter, setModelFilter] = useState("all");
   const [citizenFilter, setCitizenFilter] = useState("all");
   const [sortBy, setSortBy] = useState("submitted_at");
   const [sortDir, setSortDir] = useState("desc");
   const [showFilters, setShowFilters] = useState(false);
-
-  const handleDelete = (e, id) => {
-    e.stopPropagation();
-    if (confirmId === id) { onDelete(id); setConfirmId(null); }
-    else setConfirmId(id);
-  };
 
   const handleSort = (key) => {
     if (sortBy === key) setSortDir(d => d === "asc" ? "desc" : "asc");
@@ -72,7 +65,6 @@ export default function ApplicantList({
     citizenFilter !== "all",
   ].filter(Boolean).length;
 
-  // Apply extra filters + sort
   let display = profiles.filter(p => {
     if (modelFilter !== "all" && p.work_model !== modelFilter) return false;
     if (citizenFilter !== "all" && p.citizenship_group !== citizenFilter) return false;
@@ -90,9 +82,6 @@ export default function ApplicantList({
     if (va > vb) return sortDir === "asc" ? 1 : -1;
     return 0;
   });
-
-  const allSelected = display.length > 0 && display.every(p => selectedIds.includes(p.id));
-  const someSelected = display.some(p => selectedIds.includes(p.id));
 
   return (
     <div className="flex flex-col h-full">
@@ -117,7 +106,6 @@ export default function ApplicantList({
           </button>
         </div>
 
-        {/* Advanced Filters */}
         {showFilters && (
           <div className="flex flex-wrap gap-2 pt-1">
             <select
@@ -179,21 +167,11 @@ export default function ApplicantList({
           <table className="w-full text-sm border-collapse">
             <thead className="sticky top-0 bg-gray-50 z-10 border-b border-gray-100">
               <tr>
-                <th className="px-4 py-3 w-8">
-                  <input
-                    type="checkbox"
-                    checked={allSelected}
-                    ref={el => { if (el) el.indeterminate = someSelected && !allSelected; }}
-                    onChange={() => onSelectAll(allSelected ? [] : display.map(p => p.id))}
-                    className="rounded accent-purple-700 cursor-pointer"
-                  />
-                </th>
                 <ColHeader label="Name" sortKey="first_name" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
                 <ColHeader label="Modell" sortKey="work_model" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
                 <ColHeader label="Herkunft" sortKey="citizenship_group" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
                 <ColHeader label="Status" sortKey="status" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
                 <ColHeader label="Eingereicht" sortKey="submitted_at" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
-                <th className="px-4 py-3 w-8" />
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -203,26 +181,17 @@ export default function ApplicantList({
                   ? `${p.first_name} ${p.last_name}`
                   : p.escort_email || "Unbekannt";
                 const isSelected = selectedId === p.id;
-                const isChecked = selectedIds.includes(p.id);
 
                 return (
                   <tr
                     key={p.id}
                     onClick={() => onSelect(p.id)}
-                    className={`group cursor-pointer transition-colors ${
+                    className={`cursor-pointer transition-colors ${
                       isSelected
                         ? "bg-purple-50 border-l-2 border-purple-500"
                         : "hover:bg-gray-50 border-l-2 border-transparent"
                     }`}
                   >
-                    <td className="px-4 py-3.5" onClick={e => e.stopPropagation()}>
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => onToggleSelect(p.id)}
-                        className="rounded accent-purple-700 cursor-pointer"
-                      />
-                    </td>
                     <td className="px-4 py-3.5">
                       <p className={`font-semibold truncate max-w-[160px] ${isSelected ? "text-purple-700" : "text-gray-900"}`}>{name}</p>
                       <p className="text-xs text-gray-400 truncate max-w-[160px]">{p.escort_email || "—"}</p>
@@ -241,17 +210,6 @@ export default function ApplicantList({
                         {p.submitted_at ? new Date(p.submitted_at).toLocaleDateString("de-CH") : "—"}
                       </span>
                     </td>
-                    <td className="px-3 py-3.5" onClick={e => e.stopPropagation()}>
-                      <button
-                        onClick={(e) => handleDelete(e, p.id)}
-                        className={`opacity-0 group-hover:opacity-100 transition-all ${
-                          confirmId === p.id ? "opacity-100 text-red-600" : "text-gray-300 hover:text-red-500"
-                        }`}
-                        title={confirmId === p.id ? "Nochmal klicken zum Bestätigen" : "Löschen"}
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </td>
                   </tr>
                 );
               })}
@@ -260,11 +218,8 @@ export default function ApplicantList({
         )}
       </div>
 
-      <div className="px-4 py-2 border-t border-gray-100 text-xs text-gray-400 bg-gray-50 flex justify-between items-center">
+      <div className="px-4 py-2 border-t border-gray-100 text-xs text-gray-400 bg-gray-50">
         <span>{display.length} {display.length === 1 ? "Eintrag" : "Einträge"}</span>
-        {selectedIds.length > 0 && (
-          <span className="text-purple-700 font-medium">{selectedIds.length} ausgewählt</span>
-        )}
       </div>
     </div>
   );
