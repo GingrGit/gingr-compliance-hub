@@ -5,7 +5,7 @@ import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving }) {
+export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [data, setData] = useState({
     business_name: profile.business_name || "",
     uid_number: profile.uid_number || "",

@@ -11,7 +11,7 @@ const PERMIT_TYPES = [
   { value: "other", label: "Anderer", desc: "Anderer Aufenthaltstitel" },
 ];
 
-export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving }) {
+export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [permitType, setPermitType] = useState(profile.permit_type || "");
   const [permitUrl, setPermitUrl] = useState(profile.permit_url || "");
   const [error, setError] = useState("");
