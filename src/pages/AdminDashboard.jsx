@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import ApplicantList from "@/components/admin/ApplicantList.jsx";
 import ApplicantDetail from "@/components/admin/ApplicantDetail.jsx";
-import { RefreshCw, Users, CheckCircle2, XCircle, Send, Trash2, X, Loader2 } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 export default function AdminDashboard() {
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
-  const [selectedIds, setSelectedIds] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [bulkLoading, setBulkLoading] = useState(false);
 
   const load = async () => {
     setLoading(true);
@@ -37,45 +35,6 @@ export default function AdminDashboard() {
     approved: profiles.filter(p => p.status === "approved").length,
     draft: profiles.filter(p => p.status === "draft").length,
   };
-
-  const toggleSelect = (id) => {
-    setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
-  };
-
-  const selectAll = (ids) => setSelectedIds(ids);
-
-  const clearSelection = () => setSelectedIds([]);
-
-  const bulkUpdateStatus = async (status) => {
-    setBulkLoading(true);
-    await Promise.all(selectedIds.map(id => base44.entities.OnboardingProfile.update(id, { status })));
-    await load();
-    clearSelection();
-    setBulkLoading(false);
-  };
-
-  const bulkSendLinks = async () => {
-    setBulkLoading(true);
-    const targets = profiles.filter(p => selectedIds.includes(p.id) && p.phone);
-    await Promise.all(targets.map(p =>
-      base44.functions.invoke("sendDashboardLink", { profile_id: p.id, phone: p.phone, app_url: window.location.origin })
-    ));
-    clearSelection();
-    setBulkLoading(false);
-    alert(`Dashboard-Link an ${targets.length} Personen gesendet.`);
-  };
-
-  const bulkDelete = async () => {
-    if (!window.confirm(`Wirklich ${selectedIds.length} Einträge löschen?`)) return;
-    setBulkLoading(true);
-    await Promise.all(selectedIds.map(id => base44.entities.OnboardingProfile.delete(id)));
-    setProfiles(prev => prev.filter(p => !selectedIds.includes(p.id)));
-    if (selectedIds.includes(selectedId)) setSelectedId(null);
-    clearSelection();
-    setBulkLoading(false);
-  };
-
-  const hasSelection = selectedIds.length > 0;
 
   return (
     <div className="min-h-screen bg-[#f8f7fa] flex flex-col">
