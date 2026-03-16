@@ -11,14 +11,14 @@ const PERMIT_TYPES = [
   { value: "other", label: "Anderer", desc: "Anderer Aufenthaltstitel" },
 ];
 
-export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId, t = {} }) {
   const [permitType, setPermitType] = useState(profile.permit_type || "");
   const [permitUrl, setPermitUrl] = useState(profile.permit_url || "");
   const [error, setError] = useState("");
 
   const handleNext = () => {
-    if (!permitType) { setError("Bitte wähle deinen Aufenthaltsausweis aus."); return; }
-    if (!permitUrl) { setError("Bitte lade deinen Ausweis hoch, um fortzufahren."); return; }
+    if (!permitType) { setError(t.errorNoPermitType || "Bitte wähle deinen Aufenthaltsausweis aus."); return; }
+    if (!permitUrl) { setError(t.errorNoPermitDoc || "Bitte lade deinen Ausweis hoch, um fortzufahren."); return; }
     setError("");
     onNext({
       permit_type: permitType,

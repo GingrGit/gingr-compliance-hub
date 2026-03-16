@@ -280,7 +280,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup }) {
   );
 }
 
-export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId, t = {} }) {
   const [emailWarning, setEmailWarning] = useState(null);
   const [phoneWarning, setPhoneWarning] = useState(null);
   const [sendingLink, setSendingLink] = useState(false);
