@@ -66,23 +66,7 @@ export default function AdminDashboard() {
         </button>
       </header>
 
-      {/* Bulk Action Bar */}
-      {hasSelection && (
-        <div className="bg-purple-700 text-white px-6 py-2.5 flex items-center gap-3 flex-wrap shadow">
-          <span className="text-sm font-semibold">{selectedIds.length} ausgewählt</span>
-          <div className="flex items-center gap-2 flex-wrap flex-1">
-            <BulkBtn icon={CheckCircle2} label="Genehmigen" onClick={() => bulkUpdateStatus("approved")} loading={bulkLoading} color="bg-green-500 hover:bg-green-600" />
-            <BulkBtn icon={XCircle} label="Aktion anfordern" onClick={() => bulkUpdateStatus("needs_action")} loading={bulkLoading} color="bg-amber-500 hover:bg-amber-600" />
-            <BulkBtn icon={Send} label="Dashboard-Link senden" onClick={bulkSendLinks} loading={bulkLoading} color="bg-white/20 hover:bg-white/30" />
-            <BulkBtn icon={Trash2} label="Löschen" onClick={bulkDelete} loading={bulkLoading} color="bg-red-500 hover:bg-red-600" />
-          </div>
-          <button onClick={clearSelection} className="ml-auto text-white/60 hover:text-white">
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      )}
-
-      <div className="flex flex-1 overflow-hidden" style={{ height: `calc(100vh - ${hasSelection ? 105 : 57}px)` }}>
+      <div className="flex flex-1 overflow-hidden" style={{ height: "calc(100vh - 57px)" }}>
         {/* List panel — wider when no detail open */}
         <div className={`border-r border-gray-200 bg-white flex flex-col flex-shrink-0 shadow-sm transition-all duration-200 ${selected ? "w-[55%]" : "w-full"}`}>
           <ApplicantList
@@ -90,19 +74,10 @@ export default function AdminDashboard() {
             loading={loading}
             selectedId={selectedId}
             onSelect={(id) => setSelectedId(prev => prev === id ? null : id)}
-            selectedIds={selectedIds}
-            onToggleSelect={toggleSelect}
-            onSelectAll={selectAll}
             search={search}
             onSearch={setSearch}
             statusFilter={statusFilter}
             onStatusFilter={setStatusFilter}
-            onDelete={async (id) => {
-              await base44.entities.OnboardingProfile.delete(id);
-              setProfiles(prev => prev.filter(p => p.id !== id));
-              if (selectedId === id) setSelectedId(null);
-              setSelectedIds(prev => prev.filter(i => i !== id));
-            }}
           />
         </div>
 
@@ -115,13 +90,7 @@ export default function AdminDashboard() {
             >
               <X className="w-3.5 h-3.5" />
             </button>
-            <ApplicantDetail
-              profile={selected}
-              onRefresh={load}
-              onUpdate={(updated) =>
-                setProfiles(prev => prev.map(p => p.id === updated.id ? updated : p))
-              }
-            />
+            <ApplicantDetail profile={selected} />
           </main>
         )}
 
@@ -140,18 +109,5 @@ function StatPill({ label, count, color }) {
       <span className="font-bold">{count}</span>
       <span>{label}</span>
     </div>
-  );
-}
-
-function BulkBtn({ icon: Icon, label, onClick, loading, color }) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={loading}
-      className={`flex items-center gap-1.5 text-xs text-white px-3 py-1.5 rounded-lg font-medium transition-colors disabled:opacity-50 ${color}`}
-    >
-      {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Icon className="w-3.5 h-3.5" />}
-      {label}
-    </button>
   );
 }
