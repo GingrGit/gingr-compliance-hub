@@ -32,6 +32,9 @@ export default function OnboardingWizard() {
     citizenship_group: "EU_EFTA",
   } : {};
 
+  const [lang, setLang] = useState(getStoredLanguage);
+  const t = TRANSLATIONS[lang.code] || TRANSLATIONS.de;
+
   const [mode, setMode] = useState(prefillMode ? "self" : null); // "self" | "guided"
   const [profile, setProfile] = useState({
     status: "draft",
