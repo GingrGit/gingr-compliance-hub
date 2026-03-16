@@ -269,6 +269,14 @@ export const TRANSLATIONS = {
     homeOnboardingTitle: "Начать онбординг", homeOnboardingDesc: "Пройдите юридическую настройку шаг за шагом.", homeOnboardingBtn: "Начать",
     homeDocsTitle: "Мои документы", homeDocsDesc: "Просматривайте контракты, статус и загруженные документы.", homeDocsBtn: "Войти",
     homeNeedHelp: "Нужна помощь?",
+    // StepWorkModel
+    workModelTitle: "Выберите модель работы", workModelSubtitle: "Это определяет, какие договоры и документы вам нужны.",
+    workModel1Label: "Сотрудник (постоянный)", workModel1Desc: "Вы работаете как сотрудник в gingr. Бессрочный контракт.",
+    workModel1Pro1: "Зарплата и соцстрахование через gingr", workModel1Pro2: "Чёткая юридическая защита", workModel1Pro3: "Для CH / ЕС / Permit C",
+    workModel2Label: "Сотрудник (макс. 90 дней)", workModel2Desc: "Краткосрочная занятость до 90 дней в год.",
+    workModel2Pro1: "Подходит для Permit B/L", workModel2Pro2: "Гибко и просто", workModel2Pro3: "Налог у источника включён",
+    workModel3Label: "Самозанятая", workModel3Desc: "Вы работаете как независимая эскорт.",
+    workModel3Pro1: "Собственная компания / номер UID обязателен", workModel3Pro2: "Больше гибкости", workModel3Pro3: "Собственная бухгалтерия",
   },
   pl: {
     // StepCard navigation
