@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Upload, CheckCircle2, X, Loader2 } from "lucide-react";
-import { appParams } from "@/lib/app-params";
+import { base44 } from "@/api/base44Client";
 
 const QUALITY_CHECKS = [
   "Alle Ecken sichtbar",
@@ -23,21 +23,8 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
     formData.append('profile_id', profileId || 'unknown');
     formData.append('document_type', documentType || 'other');
 
-    const { appId, appBaseUrl, token, functionsVersion } = appParams;
-    const version = functionsVersion || 'v1';
-    const baseUrl = appBaseUrl || '';
-    const url = `${baseUrl}/api/apps/${appId}/functions/${version}/uploadToGingrS3`;
-
-    const headers = {};
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    const res = await fetch(url, { method: 'POST', headers, body: formData });
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`Upload failed: ${err}`);
-    }
-    const data = await res.json();
-    onChange(data.s3_key);
+    const response = await base44.functions.invoke('uploadToGingrS3', formData);
+    onChange(response.data.s3_key);
     setUploading(false);
   };
 
