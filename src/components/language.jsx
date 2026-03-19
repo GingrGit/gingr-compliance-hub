@@ -14,7 +14,7 @@ export const LANGUAGES = [
 export const TRANSLATIONS = {
   de: {
     title: "Legal Onboarding", subtitle: "Wie möchtest du das Onboarding starten?",
-    selfTitle: "Ich mache es selbst YO", selfDesc: "Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.", selfBtn: "Starten →",
+    selfTitle: "Ich mache es selbst", selfDesc: "Du wirst Schritt für Schritt durch den Prozess geführt — in deinem eigenen Tempo.", selfBtn: "Starten →",
     guidedTitle: "Mit gingr-Mitarbeiter", guidedDesc: "Ein Teammitglied von gingr begleitet dich persönlich durch das Onboarding.", guidedBtn: "Termin buchen →",
     admin: "Admin-Dashboard", modalTitle: "Termin buchen", modalSubtitle: "Onboarding mit gingr-Begleitung",
     modalIntro: "Bitte halte folgende Dokumente bereit, bevor du deinen Termin buchst:",

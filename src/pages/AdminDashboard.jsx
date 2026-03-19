@@ -13,21 +13,22 @@ export default function AdminDashboard() {
 
   const load = async () => {
     setLoading(true);
-    const data = await base44.entities.OnboardingProfile.list("-created_date", 200);
+    const query = statusFilter !== "all" ? { status: statusFilter } : {};
+    const data = await base44.entities.OnboardingProfile.filter(query, "-created_date", 200);
     setProfiles(data);
     setLoading(false);
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [statusFilter]);
 
   const selected = profiles.find((p) => p.id === selectedId);
 
-  const filtered = profiles.filter((p) => {
-    const matchesStatus = statusFilter === "all" || p.status === statusFilter;
-    const name = `${p.first_name || ""} ${p.last_name || ""} ${p.escort_email || ""} ${p.phone || ""}`.toLowerCase();
-    const matchesSearch = name.includes(search.toLowerCase());
-    return matchesStatus && matchesSearch;
-  });
+  const filtered = search
+    ? profiles.filter((p) => {
+        const name = `${p.first_name || ""} ${p.last_name || ""} ${p.escort_email || ""} ${p.phone || ""}`.toLowerCase();
+        return name.includes(search.toLowerCase());
+      })
+    : profiles;
 
   const counts = {
     submitted: profiles.filter(p => p.status === "submitted").length,
