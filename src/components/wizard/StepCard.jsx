@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, LogOut, Loader2 } from "lucide-react";
+import { ChevronLeft, LogOut, Loader2, AlertCircle } from "lucide-react";
 
 export default function StepCard({
   title,
@@ -13,6 +13,7 @@ export default function StepCard({
   nextDisabled = false,
   saving = false,
   hideBack = false,
+  validationError = null,
 }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
@@ -23,7 +24,14 @@ export default function StepCard({
 
       <div className="space-y-5">{children}</div>
 
-      <div className="mt-8 pt-5 border-t border-gray-100">
+      {validationError && (
+        <div className="mt-5 flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-3 animate-in slide-in-from-top-1">
+          <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
+          <p className="text-sm text-red-600">{validationError}</p>
+        </div>
+      )}
+
+      <div className="mt-6 pt-5 border-t border-gray-100">
         <div className="flex items-center justify-between gap-2">
           <div className="flex gap-1 sm:gap-2 min-w-0">
             {!hideBack && (
@@ -37,7 +45,7 @@ export default function StepCard({
           </div>
           <Button
             onClick={onNext}
-            disabled={nextDisabled || saving}
+            disabled={saving}
             className="bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full px-5 sm:px-8 font-semibold shadow-md flex-shrink-0 text-sm"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}

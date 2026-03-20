@@ -285,6 +285,9 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   const [phoneWarning, setPhoneWarning] = useState(null);
   const [sendingLink, setSendingLink] = useState(false);
   const [linkSent, setLinkSent] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [submitError, setSubmitError] = useState(null);
+  const formRef = React.useRef(null);
 
   const calcAge = (dob) => {
     if (!dob) return null;
