@@ -1,34 +1,51 @@
 import React, { useState, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
-import InfoAccordion from "@/components/wizard/InfoAccordion";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { CheckCircle2 } from "lucide-react";
+
+const BUSINESS_TYPES = [
+  {
+    id: "freelancer",
+    title: "Freelancer / Einzelunternehmen",
+    emoji: "👤",
+    desc: "Du arbeitest auf eigene Rechnung und unter deinem eigenen Namen oder als Einzelfirma — ohne separate Gesellschaft.",
+  },
+  {
+    id: "company",
+    title: "GmbH / AG",
+    emoji: "🏢",
+    desc: "Du arbeitest über eine von dir betriebene, im Handelsregister eingetragene Gesellschaft (GmbH oder AG).",
+  },
+];
 
 export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
-  const [data, setData] = useState({
-    business_name: profile.business_name || "",
-    uid_number: profile.uid_number || "",
-    business_proof_url: profile.business_proof_url || "",
-  });
+  const [businessType, setBusinessType] = useState(profile.business_type || null);
+  const [ahvUrl, setAhvUrl] = useState(profile.ahv_confirmation_url || "");
+  const [activityProofUrl, setActivityProofUrl] = useState(profile.activity_proof_url || "");
+  const [commercialRegisterUrl, setCommercialRegisterUrl] = useState(profile.commercial_register_url || "");
+  const [invoiceProofUrl, setInvoiceProofUrl] = useState(profile.invoice_proof_url || "");
+  const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState({});
   const formRef = useRef(null);
 
-  const set = (k) => (e) => {
-    setData((p) => ({ ...p, [k]: typeof e === "string" ? e : e.target.value }));
-    setErrors((p) => ({ ...p, [k]: null }));
-  };
-
   const validate = () => {
     const e = {};
-    if (!data.business_name) e.business_name = "Firmenname ist erforderlich";
-    if (!data.uid_number) e.uid_number = "UID-Nummer ist erforderlich";
-    if (!data.business_proof_url) e.business_proof_url = "Bitte lade einen Nachweis hoch";
+    if (!businessType) e.businessType = "Bitte wähle deine Unternehmensform aus.";
+
+    if (businessType === "freelancer") {
+      if (!ahvUrl) e.ahvUrl = "Bitte lade die AHV-Bestätigung hoch.";
+      if (!activityProofUrl) e.activityProofUrl = "Bitte lade einen Tätigkeitsnachweis hoch.";
+    }
+    if (businessType === "company") {
+      if (!commercialRegisterUrl) e.commercialRegisterUrl = "Bitte lade den Handelsregisterauszug hoch.";
+      if (!invoiceProofUrl) e.invoiceProofUrl = "Bitte lade einen Abrechnungsnachweis hoch.";
+    }
+    if (businessType && !confirmed) e.confirmed = "Bitte bestätige die Erklärung, um fortzufahren.";
+
     setErrors(e);
     if (Object.keys(e).length > 0) {
       setTimeout(() => {
-        const firstKey = Object.keys(e)[0];
-        const el = formRef.current?.querySelector(`[data-field="${firstKey}"]`);
+        const el = formRef.current?.querySelector("[data-error]");
         if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 50);
       return false;
@@ -36,56 +53,159 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     return true;
   };
 
+  const handleNext = () => {
+    if (!validate()) return;
+    onNext({
+      business_type: businessType,
+      ahv_confirmation_url: ahvUrl,
+      activity_proof_url: activityProofUrl,
+      commercial_register_url: commercialRegisterUrl,
+      invoice_proof_url: invoiceProofUrl,
+      self_employed_confirmed: confirmed,
+    });
+  };
+
   return (
     <StepCard
-      title="Geschäftsdetails (Selbständig)"
-      subtitle="Wir benötigen einen Nachweis deiner selbständigen Tätigkeit."
-      onNext={() => { if (validate()) onNext(data); }}
+      title="Deine rechtliche Unternehmensform"
+      subtitle="Wähle aus, über welche Struktur du mit gingr zusammenarbeiten möchtest."
+      onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
       validationError={Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null}
     >
-      <div className="space-y-4" ref={formRef}>
-        <div data-field="business_name">
-          <Label className="text-sm font-medium text-gray-700">Name des Unternehmens / Einzelfirma *</Label>
-          <Input
-            value={data.business_name}
-            onChange={set("business_name")}
-            className={`mt-1 ${errors.business_name ? "border-red-400 focus-visible:ring-red-300" : ""}`}
-            placeholder="z.B. Maria Müller"
-          />
-          {errors.business_name && <p className="text-xs text-red-500 mt-1">{errors.business_name}</p>}
+      <div className="space-y-5" ref={formRef}>
+
+        {/* Type selection */}
+        <div data-error={errors.businessType ? "true" : undefined}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {BUSINESS_TYPES.map((bt) => (
+              <button
+                key={bt.id}
+                type="button"
+                onClick={() => { setBusinessType(bt.id); setErrors((p) => ({ ...p, businessType: null, confirmed: null })); setConfirmed(false); }}
+                className={`text-left rounded-2xl border-2 p-5 transition-all ${
+                  businessType === bt.id
+                    ? "border-[#FF3CAC] bg-pink-50"
+                    : errors.businessType
+                    ? "border-red-300 hover:border-red-400"
+                    : "border-gray-200 hover:border-pink-300"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <span className="text-2xl mb-2 block">{bt.emoji}</span>
+                    <p className="font-semibold text-gray-900 text-sm">{bt.title}</p>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{bt.desc}</p>
+                  </div>
+                  {businessType === bt.id && (
+                    <CheckCircle2 className="w-5 h-5 text-[#FF3CAC] flex-shrink-0 mt-1" />
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+          {errors.businessType && <p data-error="true" className="text-xs text-red-500 mt-2">{errors.businessType}</p>}
         </div>
 
-        <div data-field="uid_number">
-          <Label className="text-sm font-medium text-gray-700">UID-Nummer *</Label>
-          <Input
-            value={data.uid_number}
-            onChange={set("uid_number")}
-            className={`mt-1 ${errors.uid_number ? "border-red-400 focus-visible:ring-red-300" : ""}`}
-            placeholder="CHE-123.456.789"
-          />
-          {errors.uid_number && <p className="text-xs text-red-500 mt-1">{errors.uid_number}</p>}
-          <p className="text-xs text-gray-400 mt-1">
-            Deine UID findest du auf{" "}
-            <a href="https://www.uid.admin.ch" target="_blank" rel="noopener noreferrer" className="text-rose-500 hover:underline">
-              uid.admin.ch
-            </a>
-          </p>
-        </div>
+        {/* Freelancer path */}
+        {businessType === "freelancer" && (
+          <div className="space-y-4 pt-2 border-t border-gray-100">
+            <div data-error={errors.ahvUrl ? "true" : undefined}>
+              <DocumentUpload
+                label="AHV-Bestätigung der Selbständigkeit *"
+                value={ahvUrl}
+                onChange={(url) => { setAhvUrl(url); setErrors((p) => ({ ...p, ahvUrl: null })); }}
+                hint="Offizielle Bestätigung der AHV-Ausgleichskasse"
+                profileId={profileId}
+                documentType="ahv_confirmation"
+              />
+              {errors.ahvUrl && <p className="text-xs text-red-500 mt-1">{errors.ahvUrl}</p>}
+            </div>
 
-        <div data-field="business_proof_url">
-          <DocumentUpload
-            label="Nachweis der Selbständigkeit *"
-            value={data.business_proof_url}
-            onChange={(url) => { setData((p) => ({ ...p, business_proof_url: url })); setErrors((p) => ({...p, business_proof_url: null})); }}
-            hint="UID-Registerauszug, Handelsregistereintrag oder Bestätigung"
-            profileId={profileId}
-            documentType="business_proof"
-          />
-          {errors.business_proof_url && <p className="text-xs text-red-500 mt-1">{errors.business_proof_url}</p>}
-        </div>
+            <div data-error={errors.activityProofUrl ? "true" : undefined}>
+              <DocumentUpload
+                label="Nachweis selbständiger Markttätigkeit *"
+                value={activityProofUrl}
+                onChange={(url) => { setActivityProofUrl(url); setErrors((p) => ({ ...p, activityProofUrl: null })); }}
+                hint="z.B. Rechnung an Dritte, Website-Screenshot, Profil auf einer anderen Plattform o.ä."
+                profileId={profileId}
+                documentType="activity_proof"
+              />
+              {errors.activityProofUrl && <p className="text-xs text-red-500 mt-1">{errors.activityProofUrl}</p>}
+            </div>
+
+            {/* Freelancer declaration */}
+            <div className={`rounded-xl border p-4 ${errors.confirmed ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"}`} data-error={errors.confirmed ? "true" : undefined}>
+              <p className="text-sm font-semibold text-gray-800 mb-2">Selbstdeklaration</p>
+              <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                Ich bestätige hiermit, dass ich auf eigene Rechnung und auf eigenes Risiko tätig bin, selbst entscheide, ob ich Buchungen annehme, meine Arbeit eigenständig organisiere und für meine Steuern sowie meine Sozialversicherungen selbst verantwortlich bin.
+              </p>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={confirmed}
+                  onChange={(e) => { setConfirmed(e.target.checked); setErrors((p) => ({ ...p, confirmed: null })); }}
+                  className="mt-0.5 accent-[#FF3CAC] w-4 h-4 flex-shrink-0"
+                />
+                <span className="text-xs font-medium text-gray-700">
+                  Ich bestätige diese Selbstdeklaration *
+                </span>
+              </label>
+              {errors.confirmed && <p className="text-xs text-red-500 mt-2">{errors.confirmed}</p>}
+            </div>
+          </div>
+        )}
+
+        {/* Company path */}
+        {businessType === "company" && (
+          <div className="space-y-4 pt-2 border-t border-gray-100">
+            <div data-error={errors.commercialRegisterUrl ? "true" : undefined}>
+              <DocumentUpload
+                label="Handelsregisterauszug *"
+                value={commercialRegisterUrl}
+                onChange={(url) => { setCommercialRegisterUrl(url); setErrors((p) => ({ ...p, commercialRegisterUrl: null })); }}
+                hint="Aktueller Auszug aus dem Handelsregister (nicht älter als 12 Monate)"
+                profileId={profileId}
+                documentType="commercial_register"
+              />
+              {errors.commercialRegisterUrl && <p className="text-xs text-red-500 mt-1">{errors.commercialRegisterUrl}</p>}
+            </div>
+
+            <div data-error={errors.invoiceProofUrl ? "true" : undefined}>
+              <DocumentUpload
+                label="Nachweis der Abrechnung über die Gesellschaft *"
+                value={invoiceProofUrl}
+                onChange={(url) => { setInvoiceProofUrl(url); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
+                hint="z.B. Firmen-Bankkonto-Nachweis, Muster-Rechnung der Gesellschaft o.ä."
+                profileId={profileId}
+                documentType="invoice_proof"
+              />
+              {errors.invoiceProofUrl && <p className="text-xs text-red-500 mt-1">{errors.invoiceProofUrl}</p>}
+            </div>
+
+            {/* Company declaration */}
+            <div className={`rounded-xl border p-4 ${errors.confirmed ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"}`} data-error={errors.confirmed ? "true" : undefined}>
+              <p className="text-sm font-semibold text-gray-800 mb-2">Selbstdeklaration</p>
+              <p className="text-xs text-gray-600 leading-relaxed mb-3">
+                Ich bestätige hiermit, dass die Gesellschaft der Vertragspartner von gingr ist, ich berechtigt bin, für die Gesellschaft zu handeln, und die Gesellschaft für sämtliche steuerlichen, versicherungsrechtlichen und sozialversicherungsrechtlichen Verpflichtungen verantwortlich ist.
+              </p>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={confirmed}
+                  onChange={(e) => { setConfirmed(e.target.checked); setErrors((p) => ({ ...p, confirmed: null })); }}
+                  className="mt-0.5 accent-[#FF3CAC] w-4 h-4 flex-shrink-0"
+                />
+                <span className="text-xs font-medium text-gray-700">
+                  Ich bestätige diese Selbstdeklaration *
+                </span>
+              </label>
+              {errors.confirmed && <p className="text-xs text-red-500 mt-2">{errors.confirmed}</p>}
+            </div>
+          </div>
+        )}
       </div>
     </StepCard>
   );
