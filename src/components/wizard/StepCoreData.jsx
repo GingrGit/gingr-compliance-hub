@@ -453,15 +453,17 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           {linkSent && <p className="text-green-600 text-xs mt-1">✓ Login-Link wurde gesendet.</p>}
         </div>
 
-        <div>
+        <div data-field="phone">
           <Label className="text-xs text-gray-600 mb-1">Handynummer *</Label>
           <Input
             type="tel"
             value={profile.phone || ""}
-            onChange={(e) => { updateProfile({ phone: e.target.value }); setPhoneWarning(null); setLinkSent(false); }}
+            onChange={(e) => { updateProfile({ phone: e.target.value }); setPhoneWarning(null); setLinkSent(false); setFieldErrors(p => ({...p, phone: null})); }}
             onBlur={checkPhone}
             placeholder="+41 79 123 45 67"
+            className={fe.phone ? "border-red-400 focus-visible:ring-red-300" : ""}
           />
+          {fe.phone && <p className="text-xs text-red-500 mt-1">{fe.phone}</p>}
           {phoneWarning && !linkSent && (
             <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
               <p className="font-medium mb-1">Diese Telefonnummer ist bereits registriert.</p>
