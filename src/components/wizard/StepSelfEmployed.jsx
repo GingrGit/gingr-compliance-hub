@@ -68,6 +68,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       activity_proof_url: activityUrls.filter(u => u.trim()).join(", "),
       commercial_register_url: commercialRegisterUrl,
       invoice_proof_url: invoiceProofUrl,
+      invoice_proof_type: invoiceProofType,
       self_employed_confirmed: confirmed,
     });
   };
