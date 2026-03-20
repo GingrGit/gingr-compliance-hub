@@ -1,15 +1,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, LayoutDashboard, FileText, Bell, PenLine } from "lucide-react";
-import { createPageUrl } from "@/utils";
 
-function getDashboardUrl(profile, profileId) {
-  const id = profileId || profile?.id;
-  if (id) {
-    return createPageUrl("WorkModelDashboard") + `?profile_id=${id}`;
-  }
-  return createPageUrl("WorkModelDashboard");
-}
+const GINGR_URL = "https://www.gingr.ch";
 
 export default function StepCongratulations({ profile, profileId }) {
   return (
@@ -56,7 +49,7 @@ export default function StepCongratulations({ profile, profileId }) {
           <div className="w-6 h-6 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0 mt-0.5">
             <LayoutDashboard className="w-3 h-3 text-[#6B0064]" />
           </div>
-          <p className="text-sm text-gray-700">Im Dashboard kannst du jederzeit den Status deines Antrags und deine Dokumente einsehen.</p>
+          <p className="text-sm text-gray-700">Den Status deines Antrags und deine Dokumente findest du jederzeit auf <strong>gingr.ch</strong> in deinem Profil.</p>
         </div>
 
         <div className="flex items-start gap-3">
@@ -67,10 +60,10 @@ export default function StepCongratulations({ profile, profileId }) {
         </div>
       </div>
 
-      <a href={getDashboardUrl(profile, profileId)}>
+      <a href={GINGR_URL}>
         <Button className="w-full bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full py-3 text-base font-semibold shadow-md">
           <LayoutDashboard className="w-4 h-4 mr-2" />
-          Zu meinem Work Dashboard
+          Zurück zu gingr.ch
         </Button>
       </a>
     </div>

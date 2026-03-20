@@ -18,9 +18,13 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
     setUploading(true);
     setFileName(file.name);
 
-    // 🧪 TEST-MODUS: S3-Upload übersprungen — Dummy-URL wird gesetzt
-    await new Promise((r) => setTimeout(r, 600)); // kurze Verzögerung simulieren
-    onChange("https://test-dummy-upload/" + file.name);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("profile_id", profileId || "unknown");
+    formData.append("document_type", documentType || "other");
+
+    const res = await base44.functions.invoke("uploadToGingrS3", formData);
+    onChange(res.data.s3_url);
     setUploading(false);
   };
 
