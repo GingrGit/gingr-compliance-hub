@@ -28,6 +28,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
   const [newActivityUrl, setNewActivityUrl] = useState("");
   const [commercialRegisterUrl, setCommercialRegisterUrl] = useState(profile.commercial_register_url || "");
   const [invoiceProofUrl, setInvoiceProofUrl] = useState(profile.invoice_proof_url || "");
+  const [invoiceProofType, setInvoiceProofType] = useState(profile.invoice_proof_type || null);
   const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState({});
   const formRef = useRef(null);
