@@ -397,45 +397,50 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     >
       <div className="space-y-4" ref={formRef}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
+          <div data-field="first_name">
             <Label className="text-xs text-gray-600 mb-1">Vorname *</Label>
             <Input
               value={profile.first_name || ""}
-              onChange={(e) => updateProfile({ first_name: e.target.value })}
+              onChange={(e) => { updateProfile({ first_name: e.target.value }); setFieldErrors(p => ({...p, first_name: null})); }}
               placeholder="Anna"
+              className={fe.first_name ? "border-red-400 focus-visible:ring-red-300" : ""}
             />
+            {fe.first_name && <p className="text-xs text-red-500 mt-1">{fe.first_name}</p>}
           </div>
-          <div>
+          <div data-field="last_name">
             <Label className="text-xs text-gray-600 mb-1">Nachname *</Label>
             <Input
               value={profile.last_name || ""}
-              onChange={(e) => updateProfile({ last_name: e.target.value })}
+              onChange={(e) => { updateProfile({ last_name: e.target.value }); setFieldErrors(p => ({...p, last_name: null})); }}
               placeholder="Muster"
+              className={fe.last_name ? "border-red-400 focus-visible:ring-red-300" : ""}
             />
+            {fe.last_name && <p className="text-xs text-red-500 mt-1">{fe.last_name}</p>}
           </div>
         </div>
 
-        <div>
+        <div data-field="date_of_birth">
           <Label className="text-xs text-gray-600 mb-1">Geburtsdatum *</Label>
           <Input
             type="date"
             value={profile.date_of_birth || ""}
-            onChange={(e) => updateProfile({ date_of_birth: e.target.value })}
+            onChange={(e) => { updateProfile({ date_of_birth: e.target.value }); setFieldErrors(p => ({...p, date_of_birth: null})); }}
+            className={fe.date_of_birth ? "border-red-400 focus-visible:ring-red-300" : ""}
           />
-          {ageError && (
-            <p className="text-red-500 text-xs mt-1">Du musst mindestens 18 Jahre alt sein, um dich anzumelden.</p>
-          )}
+          {fe.date_of_birth && <p className="text-red-500 text-xs mt-1">{fe.date_of_birth}</p>}
         </div>
 
-        <div>
+        <div data-field="escort_email">
           <Label className="text-xs text-gray-600 mb-1">E-Mail-Adresse *</Label>
           <Input
             type="email"
             value={profile.escort_email || ""}
-            onChange={(e) => { updateProfile({ escort_email: e.target.value }); setEmailWarning(null); setLinkSent(false); }}
+            onChange={(e) => { updateProfile({ escort_email: e.target.value }); setEmailWarning(null); setLinkSent(false); setFieldErrors(p => ({...p, escort_email: null})); }}
             onBlur={checkEmail}
             placeholder="anna@beispiel.ch"
+            className={fe.escort_email ? "border-red-400 focus-visible:ring-red-300" : ""}
           />
+          {fe.escort_email && <p className="text-xs text-red-500 mt-1">{fe.escort_email}</p>}
           {emailWarning && !linkSent && (
             <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
               <p className="font-medium mb-1">Diese E-Mail ist bereits registriert.</p>
