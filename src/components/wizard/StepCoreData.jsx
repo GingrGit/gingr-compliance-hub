@@ -545,14 +545,17 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           )}
         </div>
 
-        <DocumentUpload
-          label={`${isSwiss ? "Schweizer Pass oder Identitätskarte" : "Reisepass oder Personalausweis"} hochladen *`}
-          value={profile.id_document_url || ""}
-          onChange={(url) => updateProfile({ id_document_url: url })}
-          hint={true}
-          profileId={profileId}
-          documentType="id"
-        />
+        <div data-field="id_document_url">
+          <DocumentUpload
+            label={`${isSwiss ? "Schweizer Pass oder Identitätskarte" : "Reisepass oder Personalausweis"} hochladen *`}
+            value={profile.id_document_url || ""}
+            onChange={(url) => { updateProfile({ id_document_url: url }); setFieldErrors(p => ({...p, id_document_url: null})); }}
+            hint={true}
+            profileId={profileId}
+            documentType="id"
+          />
+          {fe.id_document_url && <p className="text-xs text-red-500 mt-1">{fe.id_document_url}</p>}
+        </div>
 
         <div className="pt-2 border-t border-gray-100 text-center">
           <a
