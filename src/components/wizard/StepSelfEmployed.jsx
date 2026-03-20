@@ -7,13 +7,13 @@ const BUSINESS_TYPES = [
   {
     id: "freelancer",
     title: "Freelancer / Einzelunternehmen",
-    emoji: "👤",
+    icon: "👤",
     desc: "Du arbeitest auf eigene Rechnung und unter deinem eigenen Namen oder als Einzelfirma — ohne separate Gesellschaft.",
   },
   {
     id: "company",
     title: "GmbH / AG",
-    emoji: "🏢",
+    icon: "🏢",
     desc: "Du arbeitest über eine von dir betriebene, im Handelsregister eingetragene Gesellschaft (GmbH oder AG).",
   },
 ];
