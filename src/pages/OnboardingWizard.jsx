@@ -11,7 +11,7 @@ import StepEarnings from "@/components/wizard/StepEarnings";
 import StepSourceTax from "@/components/wizard/StepSourceTax";
 import StepSummary from "@/components/wizard/StepSummary";
 import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
-import StepSelfEmployedAgreement from "@/components/wizard/StepSelfEmployedAgreement";
+import StepSelfEmployedSummary from "@/components/wizard/StepSelfEmployedSummary";
 import StepCongratulations from "@/components/wizard/StepCongratulations";
 import StepCoreDataPrefilled from "@/components/wizard/StepCoreDataPrefilled";
 
