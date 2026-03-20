@@ -213,14 +213,41 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
             </div>
 
             <div data-error={errors.invoiceProofUrl ? "true" : undefined}>
-              <DocumentUpload
-                label="Nachweis der Abrechnung über die Gesellschaft *"
-                value={invoiceProofUrl}
-                onChange={(url) => { setInvoiceProofUrl(url); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
-                hint="z.B. Firmen-Bankkonto-Nachweis, Muster-Rechnung der Gesellschaft o.ä."
-                profileId={profileId}
-                documentType="invoice_proof"
-              />
+              <p className="text-sm font-medium text-gray-700 mb-1">Nachweis der Vertretungsberechtigung / Abrechnung *</p>
+              <p className="text-xs text-gray-500 mb-3">Bitte lade eines der folgenden Dokumente hoch:</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                {[
+                  { id: "signatory", label: "Unterschriftsberechtigung", desc: "Nachweis der Zeichnungsberechtigung" },
+                  { id: "bank", label: "Firmen-Bankkonto", desc: "Kontoauszug oder Bankbestätigung auf den Firmennamen" },
+                  { id: "invoice", label: "Rechnung im Firmennamen", desc: "Muster- oder effektive Rechnung der Gesellschaft" },
+                  { id: "declaration", label: "Unterzeichnete Gesellschaftserklärung", desc: "Offizielle Erklärung mit Unterschrift" },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => { setInvoiceProofType(opt.id); setInvoiceProofUrl(""); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
+                    className={`text-left rounded-xl border-2 p-3 transition-all ${
+                      invoiceProofType === opt.id
+                        ? "border-[#FF3CAC] bg-pink-50"
+                        : errors.invoiceProofUrl
+                        ? "border-red-200 hover:border-red-300"
+                        : "border-gray-200 hover:border-[#FF3CAC]"
+                    }`}
+                  >
+                    <p className={`text-xs font-semibold ${invoiceProofType === opt.id ? "text-[#6B0064]" : "text-gray-800"}`}>{opt.label}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{opt.desc}</p>
+                  </button>
+                ))}
+              </div>
+              {invoiceProofType && (
+                <DocumentUpload
+                  label="Dokument hochladen *"
+                  value={invoiceProofUrl}
+                  onChange={(url) => { setInvoiceProofUrl(url); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
+                  profileId={profileId}
+                  documentType={`invoice_proof_${invoiceProofType}`}
+                />
+              )}
               {errors.invoiceProofUrl && <p className="text-xs text-red-500 mt-1">{errors.invoiceProofUrl}</p>}
             </div>
 
