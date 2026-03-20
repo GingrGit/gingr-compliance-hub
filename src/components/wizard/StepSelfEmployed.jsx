@@ -95,8 +95,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 text-lg ${businessType === bt.id ? "bg-pink-100" : "bg-gray-100"}`}>
-                      {bt.icon}
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${businessType === bt.id ? "bg-pink-100" : "bg-gray-100"}`}>
+                      <bt.Icon className={`w-5 h-5 ${businessType === bt.id ? "text-[#FF3CAC]" : "text-gray-400"}`} />
                     </div>
                     <p className={`font-semibold text-sm ${businessType === bt.id ? "text-[#6B0064]" : "text-gray-900"}`}>{bt.title}</p>
                     <p className="text-xs text-gray-500 mt-1 leading-relaxed">{bt.desc}</p>
