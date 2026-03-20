@@ -161,7 +161,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
           </div>
         )}
       </div>
-      </div>
+      </div> {/* end formRef */}
     </StepCard>
   );
 }
