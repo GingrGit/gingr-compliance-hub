@@ -63,7 +63,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     onNext({
       business_type: businessType,
       ahv_confirmation_url: ahvUrl,
-      activity_proof_url: activityProofUrl,
+      activity_proof_urls: activityUrls.filter(u => u.trim()),
+      activity_proof_url: activityUrls.filter(u => u.trim()).join(", "),
       commercial_register_url: commercialRegisterUrl,
       invoice_proof_url: invoiceProofUrl,
       self_employed_confirmed: confirmed,
