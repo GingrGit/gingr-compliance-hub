@@ -1,19 +1,19 @@
 import React, { useState, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, User, Building2 } from "lucide-react";
 
 const BUSINESS_TYPES = [
   {
     id: "freelancer",
     title: "Freelancer / Einzelunternehmen",
-    icon: "👤",
+    Icon: User,
     desc: "Du arbeitest auf eigene Rechnung und unter deinem eigenen Namen oder als Einzelfirma — ohne separate Gesellschaft.",
   },
   {
     id: "company",
     title: "GmbH / AG",
-    icon: "🏢",
+    Icon: Building2,
     desc: "Du arbeitest über eine von dir betriebene, im Handelsregister eingetragene Gesellschaft (GmbH oder AG).",
   },
 ];
