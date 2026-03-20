@@ -12,16 +12,28 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     business_proof_url: profile.business_proof_url || "",
   });
   const [errors, setErrors] = useState({});
+  const formRef = useRef(null);
 
-  const set = (k) => (e) => setData((p) => ({ ...p, [k]: typeof e === "string" ? e : e.target.value }));
+  const set = (k) => (e) => {
+    setData((p) => ({ ...p, [k]: typeof e === "string" ? e : e.target.value }));
+    setErrors((p) => ({ ...p, [k]: null }));
+  };
 
   const validate = () => {
     const e = {};
-    if (!data.business_name) e.business_name = "Pflichtfeld";
-    if (!data.uid_number) e.uid_number = "Pflichtfeld";
+    if (!data.business_name) e.business_name = "Firmenname ist erforderlich";
+    if (!data.uid_number) e.uid_number = "UID-Nummer ist erforderlich";
     if (!data.business_proof_url) e.business_proof_url = "Bitte lade einen Nachweis hoch";
     setErrors(e);
-    return Object.keys(e).length === 0;
+    if (Object.keys(e).length > 0) {
+      setTimeout(() => {
+        const firstKey = Object.keys(e)[0];
+        const el = formRef.current?.querySelector(`[data-field="${firstKey}"]`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
+      return false;
+    }
+    return true;
   };
 
   return (
