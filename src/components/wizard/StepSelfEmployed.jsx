@@ -38,7 +38,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
 
     if (businessType === "freelancer") {
       if (!ahvUrl) e.ahvUrl = "Bitte lade die AHV-Bestätigung hoch.";
-      if (!activityProofUrl) e.activityProofUrl = "Bitte lade einen Tätigkeitsnachweis hoch.";
+      const validUrls = activityUrls.filter(u => u.trim());
+      if (validUrls.length === 0) e.activityUrls = "Bitte gib mindestens eine Profil-URL an.";
     }
     if (businessType === "company") {
       if (!commercialRegisterUrl) e.commercialRegisterUrl = "Bitte lade den Handelsregisterauszug hoch.";
