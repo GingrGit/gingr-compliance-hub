@@ -14,12 +14,24 @@ const PERMIT_TYPES = [
 export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [permitType, setPermitType] = useState(profile.permit_type || "");
   const [permitUrl, setPermitUrl] = useState(profile.permit_url || "");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+  const permitTypeRef = useRef(null);
+  const permitUploadRef = useRef(null);
 
   const handleNext = () => {
-    if (!permitType) { setError("Bitte wähle deinen Aufenthaltsausweis aus."); return; }
-    if (!permitUrl) { setError("Bitte lade deinen Ausweis hoch, um fortzufahren."); return; }
-    setError("");
+    const e = {};
+    if (!permitType) e.permitType = "Bitte wähle deinen Aufenthaltsausweis aus.";
+    if (!permitUrl) e.permitUrl = "Bitte lade deinen Ausweis hoch, um fortzufahren.";
+    setErrors(e);
+
+    if (Object.keys(e).length > 0) {
+      setTimeout(() => {
+        const firstRef = e.permitType ? permitTypeRef : permitUploadRef;
+        firstRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
+      return;
+    }
+
     onNext({
       permit_type: permitType,
       permit_url: permitUrl,
@@ -35,39 +47,37 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
+      validationError={Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null}
     >
-      <div>
-        <p className="text-sm font-medium text-gray-700 mb-3">Art des Ausweises</p>
+      <div ref={permitTypeRef}>
+        <p className="text-sm font-medium text-gray-700 mb-3">Art des Ausweises *</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {PERMIT_TYPES.map((p) => (
             <button
               key={p.value}
               type="button"
-              onClick={() => setPermitType(p.value)}
-              className={`rounded-xl border-2 p-3 text-left transition-all ${permitType === p.value ? "border-[#FF3CAC] bg-pink-50" : "border-gray-200 hover:border-pink-300"}`}
+              onClick={() => { setPermitType(p.value); setErrors(prev => ({...prev, permitType: null})); }}
+              className={`rounded-xl border-2 p-3 text-left transition-all ${permitType === p.value ? "border-[#FF3CAC] bg-pink-50" : errors.permitType ? "border-red-300 hover:border-red-400" : "border-gray-200 hover:border-pink-300"}`}
             >
               <p className="font-semibold text-sm text-gray-800">{p.label}</p>
               <p className="text-xs text-gray-500">{p.desc}</p>
             </button>
           ))}
         </div>
+        {errors.permitType && <p className="text-xs text-red-500 mt-2">{errors.permitType}</p>}
       </div>
 
-      <DocumentUpload
-        label="Ausweis hochladen"
-        value={permitUrl}
-        onChange={setPermitUrl}
-        hint="Vorder- und Rückseite sichtbar, Text lesbar, nicht abgelaufen"
-        profileId={profileId}
-        documentType="permit"
-      />
-
-      {error && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-3">
-          <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
-          <p className="text-sm text-red-600">{error}</p>
-        </div>
-      )}
+      <div ref={permitUploadRef}>
+        <DocumentUpload
+          label="Ausweis hochladen *"
+          value={permitUrl}
+          onChange={(url) => { setPermitUrl(url); setErrors(prev => ({...prev, permitUrl: null})); }}
+          hint="Vorder- und Rückseite sichtbar, Text lesbar, nicht abgelaufen"
+          profileId={profileId}
+          documentType="permit"
+        />
+        {errors.permitUrl && <p className="text-xs text-red-500 mt-1">{errors.permitUrl}</p>}
+      </div>
 
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-3">
         <p className="text-xs text-[#6B0064]">
