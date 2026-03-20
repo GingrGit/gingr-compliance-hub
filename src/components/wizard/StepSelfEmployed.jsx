@@ -87,16 +87,18 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 onClick={() => { setBusinessType(bt.id); setErrors((p) => ({ ...p, businessType: null, confirmed: null })); setConfirmed(false); }}
                 className={`text-left rounded-2xl border-2 p-5 transition-all ${
                   businessType === bt.id
-                    ? "border-[#FF3CAC] bg-pink-50"
+                    ? "border-[#FF3CAC] bg-pink-50 shadow-sm"
                     : errors.businessType
-                    ? "border-red-300 hover:border-red-400"
-                    : "border-gray-200 hover:border-pink-300"
+                    ? "border-red-300 bg-white hover:border-red-400"
+                    : "border-gray-200 bg-white hover:border-[#FF3CAC] hover:shadow-sm"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-2xl mb-2 block">{bt.emoji}</span>
-                    <p className="font-semibold text-gray-900 text-sm">{bt.title}</p>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 text-lg ${businessType === bt.id ? "bg-pink-100" : "bg-gray-100"}`}>
+                      {bt.icon}
+                    </div>
+                    <p className={`font-semibold text-sm ${businessType === bt.id ? "text-[#6B0064]" : "text-gray-900"}`}>{bt.title}</p>
                     <p className="text-xs text-gray-500 mt-1 leading-relaxed">{bt.desc}</p>
                   </div>
                   {businessType === bt.id && (
