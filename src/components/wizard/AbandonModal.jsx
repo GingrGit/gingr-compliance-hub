@@ -11,7 +11,7 @@ export default function AbandonModal({ onContinue, onExit }) {
         </div>
         <h3 className="text-lg font-bold text-gray-900 mb-2">Fortschritt gespeichert</h3>
         <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-          Wir haben alles gespeichert, was du eingegeben hast. Du kannst jederzeit über "Onboarding fortsetzen" weitermachen.
+          Wir haben alles gespeichert. Du kannst das Onboarding jederzeit mit dem Link aus deiner SMS fortsetzen.
         </p>
         <div className="flex flex-col gap-2">
           <Button

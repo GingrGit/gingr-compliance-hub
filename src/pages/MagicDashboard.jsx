@@ -3,6 +3,8 @@ import { base44 } from "@/api/base44Client";
 import { createPageUrl } from "@/utils";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 
+// This page handles magic link redirects back to the OnboardingWizard.
+// Dashboard access is exclusively via gingr.ch — this page only serves as a re-entry point.
 export default function MagicDashboard() {
   const [status, setStatus] = useState("loading");
 
@@ -11,12 +13,9 @@ export default function MagicDashboard() {
     const token = urlParams.get("token");
     const profileId = urlParams.get("profile_id");
 
-    // Direct redirect from wizard (no token needed)
+    // Direct profile_id link — redirect back to wizard
     if (profileId) {
-      setStatus("success");
-      setTimeout(() => {
-        window.location.href = createPageUrl("WorkModelDashboard") + `?profile_id=${profileId}`;
-      }, 1200);
+      window.location.href = createPageUrl("OnboardingWizard") + `?profile_id=${profileId}`;
       return;
     }
 
@@ -28,10 +27,7 @@ export default function MagicDashboard() {
     base44.functions.invoke("verifyMagicLink", { token }).then((res) => {
       const data = res.data;
       if (data?.success && data?.profile_id) {
-        setStatus("success");
-        setTimeout(() => {
-          window.location.href = createPageUrl("WorkModelDashboard") + `?profile_id=${data.profile_id}&token=${encodeURIComponent(token)}`;
-        }, 1200);
+        window.location.href = createPageUrl("OnboardingWizard") + `?profile_id=${data.profile_id}`;
       } else if (data?.error === "Token expired") {
         setStatus("expired");
       } else {
@@ -52,15 +48,7 @@ export default function MagicDashboard() {
         {status === "loading" && (
           <>
             <Loader2 className="w-10 h-10 text-purple-500 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600 font-medium">Dashboard wird geöffnet…</p>
-          </>
-        )}
-
-        {status === "success" && (
-          <>
-            <CheckCircle2 className="w-10 h-10 text-green-500 mx-auto mb-4" />
-            <h2 className="text-lg font-bold text-gray-800 mb-2">Willkommen zurück!</h2>
-            <p className="text-gray-500 text-sm">Du wirst zu deinem Dashboard weitergeleitet…</p>
+            <p className="text-gray-600 font-medium">Wird weitergeleitet…</p>
           </>
         )}
 
@@ -68,7 +56,7 @@ export default function MagicDashboard() {
           <>
             <XCircle className="w-10 h-10 text-amber-500 mx-auto mb-4" />
             <h2 className="text-lg font-bold text-gray-800 mb-2">Link abgelaufen</h2>
-            <p className="text-gray-500 text-sm">Bitte kontaktiere gingr für einen neuen Dashboard-Link.</p>
+            <p className="text-gray-500 text-sm">Bitte kontaktiere gingr für einen neuen Link.</p>
           </>
         )}
 
@@ -76,7 +64,7 @@ export default function MagicDashboard() {
           <>
             <XCircle className="w-10 h-10 text-red-500 mx-auto mb-4" />
             <h2 className="text-lg font-bold text-gray-800 mb-2">Ungültiger Link</h2>
-            <p className="text-gray-500 text-sm">Dieser Link ist ungültig. Bitte verwende den Link aus deiner SMS.</p>
+            <p className="text-gray-500 text-sm">Bitte verwende den Link aus deiner SMS.</p>
           </>
         )}
       </div>
