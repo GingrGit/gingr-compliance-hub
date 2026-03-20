@@ -132,16 +132,47 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
               {errors.ahvUrl && <p className="text-xs text-red-500 mt-1">{errors.ahvUrl}</p>}
             </div>
 
-            <div data-error={errors.activityProofUrl ? "true" : undefined}>
-              <DocumentUpload
-                label="Nachweis selbständiger Markttätigkeit *"
-                value={activityProofUrl}
-                onChange={(url) => { setActivityProofUrl(url); setErrors((p) => ({ ...p, activityProofUrl: null })); }}
-                hint="z.B. Rechnung an Dritte, Website-Screenshot, Profil auf einer anderen Plattform o.ä."
-                profileId={profileId}
-                documentType="activity_proof"
-              />
-              {errors.activityProofUrl && <p className="text-xs text-red-500 mt-1">{errors.activityProofUrl}</p>}
+            <div data-error={errors.activityUrls ? "true" : undefined}>
+              <p className="text-sm font-medium text-gray-700 mb-2">Nachweis selbständiger Markttätigkeit *</p>
+              <p className="text-xs text-gray-500 mb-3">Gib die URL(s) deines Profils auf einer Plattform an (z.B. eine Escort-Plattform, eigene Website o.ä.).</p>
+              <div className="space-y-2">
+                {activityUrls.map((url, idx) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <div className="flex-1 relative">
+                      <Link className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        value={url}
+                        onChange={(e) => {
+                          const updated = [...activityUrls];
+                          updated[idx] = e.target.value;
+                          setActivityUrls(updated);
+                          setErrors((p) => ({ ...p, activityUrls: null }));
+                        }}
+                        placeholder="https://beispiel.com/profil"
+                        className={`pl-9 text-sm ${errors.activityUrls && !url.trim() ? "border-red-400" : ""}`}
+                      />
+                    </div>
+                    {activityUrls.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => setActivityUrls(activityUrls.filter((_, i) => i !== idx))}
+                        className="text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setActivityUrls([...activityUrls, ""])}
+                  className="flex items-center gap-1.5 text-xs text-[#FF3CAC] hover:text-[#e030a0] font-medium mt-1 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  Weitere URL hinzufügen
+                </button>
+              </div>
+              {errors.activityUrls && <p className="text-xs text-red-500 mt-1">{errors.activityUrls}</p>}
             </div>
 
             {/* Freelancer declaration */}
