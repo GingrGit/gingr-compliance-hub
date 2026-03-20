@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
-import { CheckCircle2, User, Building2 } from "lucide-react";
+import { CheckCircle2, User, Building2, Plus, X, Link } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const BUSINESS_TYPES = [
   {
