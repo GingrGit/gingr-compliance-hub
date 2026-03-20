@@ -22,12 +22,22 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
 
   const set = (k) => (v) => setD((p) => ({ ...p, [k]: typeof v === "object" ? v.target.value : v }));
 
+  const formRef = useRef(null);
+
   const validate = () => {
     const e = {};
-    if (!d.canton) e.canton = "Pflichtfeld";
-    if (!d.marital_status) e.marital_status = "Pflichtfeld";
+    if (!d.canton) e.canton = "Bitte wähle einen Kanton aus";
+    if (!d.marital_status) e.marital_status = "Bitte wähle deinen Zivilstand aus";
     setErrors(e);
-    return Object.keys(e).length === 0;
+    if (Object.keys(e).length > 0) {
+      setTimeout(() => {
+        const firstKey = Object.keys(e)[0];
+        const el = formRef.current?.querySelector(`[data-field="${firstKey}"]`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
+      return false;
+    }
+    return true;
   };
 
   const showPartner = d.marital_status === "married" || d.marital_status === "partnership";
