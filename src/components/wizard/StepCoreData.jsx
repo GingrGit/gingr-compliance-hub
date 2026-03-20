@@ -503,8 +503,9 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           </div>
         </div>
 
-        <div>
+        <div data-field="citizenship_group">
           <Label className="text-xs text-gray-600 mb-1">Staatsangehörigkeit *</Label>
+          {fe.citizenship_group && <p className="text-xs text-red-500 mb-1">{fe.citizenship_group}</p>}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
             {[
               { value: "CH", label: "🇨🇭 Schweiz" },
