@@ -82,7 +82,7 @@ export default function OnboardingWizard() {
     if (committedStep > 1) {
       if (isSelfEmployed) {
         steps.push({ id: "self_employed", label: "Geschäft" });
-        steps.push({ id: "self_employed_agreement", label: "Abschluss" });
+        steps.push({ id: "self_employed_summary", label: "Abschluss" });
       } else if (profile.work_model) {
         steps.push({ id: "earnings", label: "Verdienst" });
         if (profile.source_tax === "yes" || profile.source_tax === "unsure") {
