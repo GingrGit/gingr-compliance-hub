@@ -22,7 +22,10 @@ const BUSINESS_TYPES = [
 export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [businessType, setBusinessType] = useState(profile.business_type || null);
   const [ahvUrl, setAhvUrl] = useState(profile.ahv_confirmation_url || "");
-  const [activityProofUrl, setActivityProofUrl] = useState(profile.activity_proof_url || "");
+  const [activityUrls, setActivityUrls] = useState(
+    profile.activity_proof_urls ? profile.activity_proof_urls : (profile.activity_proof_url ? [profile.activity_proof_url] : [""])
+  );
+  const [newActivityUrl, setNewActivityUrl] = useState("");
   const [commercialRegisterUrl, setCommercialRegisterUrl] = useState(profile.commercial_register_url || "");
   const [invoiceProofUrl, setInvoiceProofUrl] = useState(profile.invoice_proof_url || "");
   const [confirmed, setConfirmed] = useState(false);
