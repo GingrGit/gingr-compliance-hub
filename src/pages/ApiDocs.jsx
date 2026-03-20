@@ -91,7 +91,9 @@ Content-Type: application/json`} />
 
         {/* Action: get_profile */}
         <Section icon={<User className="w-4 h-4 text-pink-500" />} title="Action: get_profile">
-          <p className="text-sm text-gray-600 mb-3">Returns the full onboarding profile of an escort.</p>
+          <p className="text-sm text-gray-600 mb-3">
+            Returns the full onboarding profile of an escort. The fields <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">first_name</code>, <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">last_name</code>, <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">date_of_birth</code>, <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">nationality</code>, <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">citizenship_group</code>, and <code className="bg-gray-100 px-1.5 py-0.5 rounded text-pink-700 text-xs">phone</code> are pre-filled from the main Gingr platform (KYC data) and are read-only in the onboarding wizard.
+          </p>
           <table className="w-full mb-4">
             <thead><tr><th className="text-left text-xs text-gray-400 font-semibold pb-2">Parameter</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Type</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Status</th><th className="text-left text-xs text-gray-400 font-semibold pb-2">Description</th></tr></thead>
             <tbody>
