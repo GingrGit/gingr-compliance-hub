@@ -44,7 +44,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     }
     if (businessType === "company") {
       if (!commercialRegisterUrl) e.commercialRegisterUrl = "Bitte lade den Handelsregisterauszug hoch.";
-      if (!invoiceProofUrl) e.invoiceProofUrl = "Bitte lade einen Abrechnungsnachweis hoch.";
+      if (!invoiceProofType || !invoiceProofUrl) e.invoiceProofUrl = "Bitte wähle einen Dokumenttyp und lade das Dokument hoch.";
     }
     if (businessType && !confirmed) e.confirmed = "Bitte bestätige die Erklärung, um fortzufahren.";
 
