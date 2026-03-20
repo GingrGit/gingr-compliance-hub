@@ -44,25 +44,26 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
+      validationError={Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null}
     >
-      <div className="space-y-4">
-        <div>
+      <div className="space-y-4" ref={formRef}>
+        <div data-field="business_name">
           <Label className="text-sm font-medium text-gray-700">Name des Unternehmens / Einzelfirma *</Label>
           <Input
             value={data.business_name}
             onChange={set("business_name")}
-            className={`mt-1 ${errors.business_name ? "border-red-400" : ""}`}
+            className={`mt-1 ${errors.business_name ? "border-red-400 focus-visible:ring-red-300" : ""}`}
             placeholder="z.B. Maria Müller"
           />
           {errors.business_name && <p className="text-xs text-red-500 mt-1">{errors.business_name}</p>}
         </div>
 
-        <div>
+        <div data-field="uid_number">
           <Label className="text-sm font-medium text-gray-700">UID-Nummer *</Label>
           <Input
             value={data.uid_number}
             onChange={set("uid_number")}
-            className={`mt-1 ${errors.uid_number ? "border-red-400" : ""}`}
+            className={`mt-1 ${errors.uid_number ? "border-red-400 focus-visible:ring-red-300" : ""}`}
             placeholder="CHE-123.456.789"
           />
           {errors.uid_number && <p className="text-xs text-red-500 mt-1">{errors.uid_number}</p>}
@@ -74,15 +75,17 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
           </p>
         </div>
 
-        <DocumentUpload
-          label="Nachweis der Selbständigkeit *"
-          value={data.business_proof_url}
-          onChange={(url) => setData((p) => ({ ...p, business_proof_url: url }))}
-          hint="UID-Registerauszug, Handelsregistereintrag oder Bestätigung"
-          profileId={profileId}
-          documentType="business_proof"
-        />
-        {errors.business_proof_url && <p className="text-xs text-red-500">{errors.business_proof_url}</p>}
+        <div data-field="business_proof_url">
+          <DocumentUpload
+            label="Nachweis der Selbständigkeit *"
+            value={data.business_proof_url}
+            onChange={(url) => { setData((p) => ({ ...p, business_proof_url: url })); setErrors((p) => ({...p, business_proof_url: null})); }}
+            hint="UID-Registerauszug, Handelsregistereintrag oder Bestätigung"
+            profileId={profileId}
+            documentType="business_proof"
+          />
+          {errors.business_proof_url && <p className="text-xs text-red-500 mt-1">{errors.business_proof_url}</p>}
+        </div>
       </div>
     </StepCard>
   );
