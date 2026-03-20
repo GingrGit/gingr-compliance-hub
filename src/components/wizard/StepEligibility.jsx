@@ -53,17 +53,27 @@ function computeEligibility(profile) {
 export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const options = computeEligibility(profile);
   const [selected, setSelected] = useState(profile.work_model || null);
+  const [showError, setShowError] = useState(false);
   const availableOptions = options.filter((o) => o.available);
+
+  const handleNext = () => {
+    if (!selected || !availableOptions.find((o) => o.id === selected)) {
+      setShowError(true);
+      return;
+    }
+    setShowError(false);
+    onNext({ work_model: selected });
+  };
 
   return (
     <StepCard
       title="Deine Optionen"
       subtitle="Basierend auf deinen Angaben stehen dir folgende Modelle zur Verfügung."
-      onNext={() => onNext({ work_model: selected })}
+      onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!selected || !availableOptions.find((o) => o.id === selected)}
       saving={saving}
+      validationError={showError ? "Bitte wähle ein verfügbares Modell aus, um fortzufahren." : null}
     >
       <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2">
         <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
