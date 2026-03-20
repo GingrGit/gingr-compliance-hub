@@ -35,15 +35,23 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
     updateProfile({ work_model: id });
   };
 
+  const [showError, setShowError] = useState(false);
+
+  const handleNext = () => {
+    if (!selected) { setShowError(true); return; }
+    setShowError(false);
+    onNext({ work_model: selected });
+  };
+
   return (
     <StepCard
       title="Wähle dein Arbeitsmodell"
       subtitle="Das bestimmt, welche Verträge und Dokumente du benötigst."
-      onNext={() => onNext({ work_model: selected })}
+      onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!selected}
       saving={saving}
+      validationError={showError ? "Bitte wähle ein Arbeitsmodell aus, um fortzufahren." : null}
     >
       <div className="space-y-3">
         {models.map((m) => (
