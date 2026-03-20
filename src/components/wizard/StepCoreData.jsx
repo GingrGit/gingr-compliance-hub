@@ -383,41 +383,19 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
   const isSwiss = profile.citizenship_group === "CH";
 
-  const canProceed =
-    profile.first_name &&
-    profile.last_name &&
-    profile.date_of_birth &&
-    profile.escort_email &&
-    profile.phone &&
-    profile.citizenship_group &&
-    profile.id_document_url &&
-    !ageError;
+  const fe = fieldErrors;
 
   return (
     <StepCard
       title="Deine persönlichen Daten"
       subtitle="Diese Angaben werden für deinen Vertrag und die Lohnabrechnung benötigt."
-      onNext={() => onNext({
-        first_name: profile.first_name,
-        last_name: profile.last_name,
-        date_of_birth: profile.date_of_birth,
-        escort_email: profile.escort_email,
-        phone: profile.phone,
-        address: profile.address,
-        city: profile.city,
-        postal_code: profile.postal_code,
-        citizenship_group: profile.citizenship_group,
-        nationality: profile.nationality,
-        id_document_url: profile.id_document_url,
-        permit_type: isSwiss ? "none" : profile.permit_type,
-        permit_status: isSwiss ? "not_required" : profile.permit_status,
-      })}
+      onNext={validateAndNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!canProceed}
       saving={saving}
+      validationError={submitError}
     >
-      <div className="space-y-4">
+      <div className="space-y-4" ref={formRef}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <Label className="text-xs text-gray-600 mb-1">Vorname *</Label>
