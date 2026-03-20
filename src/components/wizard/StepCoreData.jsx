@@ -302,6 +302,49 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   const age = calcAge(profile.date_of_birth);
   const ageError = profile.date_of_birth && age !== null && age < 18;
 
+  const validateAndNext = () => {
+    const errors = {};
+    if (!profile.first_name?.trim()) errors.first_name = "Vorname ist erforderlich";
+    if (!profile.last_name?.trim()) errors.last_name = "Nachname ist erforderlich";
+    if (!profile.date_of_birth) errors.date_of_birth = "Geburtsdatum ist erforderlich";
+    else if (ageError) errors.date_of_birth = "Du musst mindestens 18 Jahre alt sein";
+    if (!profile.escort_email?.trim()) errors.escort_email = "E-Mail-Adresse ist erforderlich";
+    if (!profile.phone?.trim()) errors.phone = "Handynummer ist erforderlich";
+    if (!profile.citizenship_group) errors.citizenship_group = "Bitte wähle deine Staatsangehörigkeit";
+    if (!profile.id_document_url) errors.id_document_url = "Bitte lade dein Ausweisdokument hoch";
+
+    setFieldErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      // Scroll to first error
+      const firstKey = Object.keys(errors)[0];
+      setTimeout(() => {
+        const el = formRef.current?.querySelector(`[data-field="${firstKey}"]`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
+      setSubmitError("Bitte fülle alle markierten Felder aus.");
+      return;
+    }
+
+    setSubmitError(null);
+    const isSwiss = profile.citizenship_group === "CH";
+    onNext({
+      first_name: profile.first_name,
+      last_name: profile.last_name,
+      date_of_birth: profile.date_of_birth,
+      escort_email: profile.escort_email,
+      phone: profile.phone,
+      address: profile.address,
+      city: profile.city,
+      postal_code: profile.postal_code,
+      citizenship_group: profile.citizenship_group,
+      nationality: profile.nationality,
+      id_document_url: profile.id_document_url,
+      permit_type: isSwiss ? "none" : profile.permit_type,
+      permit_status: isSwiss ? "not_required" : profile.permit_status,
+    });
+  };
+
   const checkEmail = async () => {
     const email = profile.escort_email?.trim();
     if (!email) return;
