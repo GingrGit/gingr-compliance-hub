@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { User, Users, ShieldCheck, X, Calendar, FileText, CreditCard, Briefcase, Globe } from "lucide-react";
-import { createPageUrl } from "@/utils";
+import { User, Users, X, Calendar, FileText, CreditCard, Briefcase, Globe } from "lucide-react";
 import { LANGUAGES, TRANSLATIONS, getStoredLanguage, storeLanguage } from "@/components/language";
 
 export default function ModeSelector({ onSelect }) {
