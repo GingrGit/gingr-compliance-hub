@@ -76,7 +76,9 @@ const AuthenticatedApp = () => {
 
 function App() {
   initializeEnv();
-  initializeToken();
+  if (window.location.pathname !== '/invalid-token') {
+    initializeToken();
+  }
 
   return (
     <I18nProvider>
