@@ -26,13 +26,12 @@ export function initializeToken() {
   const queryToken = urlParams.get("token");
 
   if (queryToken) {
-    localStorage.setItem(TOKEN_STORAGE_KEY, queryToken);
-    return queryToken;
+    return { token: queryToken, source: "query" };
   }
 
   const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
   if (storedToken) {
-    return storedToken;
+    return { token: storedToken, source: "storage" };
   }
 
   window.location.href = "/invalid-token";
@@ -66,21 +65,27 @@ export function getLegalOnboardingStartUrl() {
 }
 
 export async function validateStoredToken() {
-  const token = initializeToken();
-  if (!token) return null;
+  const tokenState = initializeToken();
+  if (!tokenState?.token) return null;
 
   const response = await fetch(getLegalOnboardingStartUrl(), {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${tokenState.token}`,
     },
   });
 
   if (!response.ok) {
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    if (tokenState.source === "storage") {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
     window.location.href = "/invalid-token";
     return null;
   }
 
-  return token;
+  if (tokenState.source === "query") {
+    localStorage.setItem(TOKEN_STORAGE_KEY, tokenState.token);
+  }
+
+  return tokenState.token;
 }
