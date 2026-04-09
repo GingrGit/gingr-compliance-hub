@@ -14,9 +14,8 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
     setUploading(true);
     setFileName(file.name);
 
-    // 🧪 TEST-MODUS: S3-Upload übersprungen — Dummy-URL wird gesetzt
     await new Promise((r) => setTimeout(r, 800));
-    onChange("https://test-dummy-upload/" + file.name);
+    onChange(file);
     setUploading(false);
   };
 
@@ -46,7 +45,7 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
         <div className="border border-green-200 bg-green-50 rounded-xl p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-5 h-5 text-green-500" />
-            <span className="text-sm font-medium text-green-800">{fileName || t("document_upload.uploaded_label")}</span>
+            <span className="text-sm font-medium text-green-800">{fileName || value?.name || t("document_upload.uploaded_label")}</span>
           </div>
           <button
             onClick={() => { onChange(""); setFileName(""); }}

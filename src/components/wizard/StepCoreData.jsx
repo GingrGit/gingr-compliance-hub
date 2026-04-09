@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
+import { savePersonalDataProgress } from "@/lib/gingrOnboardingApi";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
@@ -302,7 +303,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   const age = calcAge(profile.date_of_birth);
   const ageError = profile.date_of_birth && age !== null && age < 18;
 
-  const validateAndNext = () => {
+  const validateAndNext = async () => {
     const errors = {};
     if (!profile.first_name?.trim()) errors.first_name = "Vorname ist erforderlich";
     if (!profile.last_name?.trim()) errors.last_name = "Nachname ist erforderlich";
@@ -316,7 +317,6 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     setFieldErrors(errors);
 
     if (Object.keys(errors).length > 0) {
-      // Scroll to first error
       const firstKey = Object.keys(errors)[0];
       setTimeout(() => {
         const el = formRef.current?.querySelector(`[data-field="${firstKey}"]`);
@@ -328,7 +328,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
     setSubmitError(null);
     const isSwiss = profile.citizenship_group === "CH";
-    onNext({
+    const nextData = {
       first_name: profile.first_name,
       last_name: profile.last_name,
       date_of_birth: profile.date_of_birth,
@@ -342,7 +342,10 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       id_document_url: profile.id_document_url,
       permit_type: isSwiss ? "none" : profile.permit_type,
       permit_status: isSwiss ? "not_required" : profile.permit_status,
-    });
+    };
+
+    await savePersonalDataProgress(nextData);
+    onNext(nextData);
   };
 
   const checkEmail = async () => {

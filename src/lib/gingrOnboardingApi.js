@@ -65,7 +65,7 @@ export function mapLegalOnboardingDataToProfile(data) {
     address: data.address,
     postal_code: data.postalCode,
     city: data.city,
-    nationality: data.countryCode,
+    nationality: data.countryCode || data.nationality,
     work_model: API_EMPLOYMENT_TYPE_MAP[data.employmentType],
     hourly_rate: data.hourlyRate,
     hours_per_month: data.hoursPerMonth,
@@ -124,6 +124,39 @@ export function getLastIncompleteStepIndex(profile) {
   if (isSelfEmployed) return 6;
   if (needsSourceTaxStep) return 7;
   return 6;
+}
+
+export async function savePersonalDataProgress(profile) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token || !profile?.id_document_url) {
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("FirstName", profile.first_name || "");
+  formData.append("LastName", profile.last_name || "");
+  formData.append("DateOfBirth", profile.date_of_birth || "");
+  formData.append("EmailAddress", profile.escort_email || "");
+  formData.append("Mobile", profile.phone || "");
+  formData.append("Address", profile.address || "");
+  formData.append("PostalCode", profile.postal_code || "");
+  formData.append("City", profile.city || "");
+  formData.append("CountryCode", profile.nationality || "");
+  formData.append("Identity", profile.id_document_url);
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/personal-data`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save personal data progress");
+  }
 }
 
 export async function saveWorkModelProgress(workModel) {
