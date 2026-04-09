@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { savePersonalDataProgress } from "@/lib/gingrOnboardingApi";
+import { fetchCountries, savePersonalDataProgress } from "@/lib/gingrOnboardingApi";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
@@ -8,221 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 
-const EU_EFTA = [
-  "Belgien","Bulgarien","Dänemark","Deutschland","Estland","Finnland","Frankreich",
-  "Griechenland","Grossbritannien","Irland","Island","Italien","Kroatien","Lettland",
-  "Liechtenstein","Litauen","Luxemburg","Malta","Niederlande","Norwegen","Österreich",
-  "Polen","Portugal","Rumänien","Schweden","Slowakei","Slowenien","Spanien",
-  "Tschechische Republik","Ungarn","Zypern"
-];
-
-const ALL_COUNTRIES = [
-  { name: "Schweiz", flag: "🇨🇭", group: "CH" },
-  { name: "Belgien", flag: "🇧🇪", group: "EU_EFTA" },
-  { name: "Bulgarien", flag: "🇧🇬", group: "EU_EFTA" },
-  { name: "Dänemark", flag: "🇩🇰", group: "EU_EFTA" },
-  { name: "Deutschland", flag: "🇩🇪", group: "EU_EFTA" },
-  { name: "Estland", flag: "🇪🇪", group: "EU_EFTA" },
-  { name: "Finnland", flag: "🇫🇮", group: "EU_EFTA" },
-  { name: "Frankreich", flag: "🇫🇷", group: "EU_EFTA" },
-  { name: "Griechenland", flag: "🇬🇷", group: "EU_EFTA" },
-  { name: "Grossbritannien", flag: "🇬🇧", group: "EU_EFTA" },
-  { name: "Irland", flag: "🇮🇪", group: "EU_EFTA" },
-  { name: "Island", flag: "🇮🇸", group: "EU_EFTA" },
-  { name: "Italien", flag: "🇮🇹", group: "EU_EFTA" },
-  { name: "Kroatien", flag: "🇭🇷", group: "EU_EFTA" },
-  { name: "Lettland", flag: "🇱🇻", group: "EU_EFTA" },
-  { name: "Liechtenstein", flag: "🇱🇮", group: "EU_EFTA" },
-  { name: "Litauen", flag: "🇱🇹", group: "EU_EFTA" },
-  { name: "Luxemburg", flag: "🇱🇺", group: "EU_EFTA" },
-  { name: "Malta", flag: "🇲🇹", group: "EU_EFTA" },
-  { name: "Niederlande", flag: "🇳🇱", group: "EU_EFTA" },
-  { name: "Norwegen", flag: "🇳🇴", group: "EU_EFTA" },
-  { name: "Österreich", flag: "🇦🇹", group: "EU_EFTA" },
-  { name: "Polen", flag: "🇵🇱", group: "EU_EFTA" },
-  { name: "Portugal", flag: "🇵🇹", group: "EU_EFTA" },
-  { name: "Rumänien", flag: "🇷🇴", group: "EU_EFTA" },
-  { name: "Schweden", flag: "🇸🇪", group: "EU_EFTA" },
-  { name: "Slowakei", flag: "🇸🇰", group: "EU_EFTA" },
-  { name: "Slowenien", flag: "🇸🇮", group: "EU_EFTA" },
-  { name: "Spanien", flag: "🇪🇸", group: "EU_EFTA" },
-  { name: "Tschechische Republik", flag: "🇨🇿", group: "EU_EFTA" },
-  { name: "Ungarn", flag: "🇭🇺", group: "EU_EFTA" },
-  { name: "Zypern", flag: "🇨🇾", group: "EU_EFTA" },
-  { name: "Afghanistan", flag: "🇦🇫", group: "NON_EU" },
-  { name: "Ägypten", flag: "🇪🇬", group: "NON_EU" },
-  { name: "Albanien", flag: "🇦🇱", group: "NON_EU" },
-  { name: "Algerien", flag: "🇩🇿", group: "NON_EU" },
-  { name: "Andorra", flag: "🇦🇩", group: "NON_EU" },
-  { name: "Angola", flag: "🇦🇴", group: "NON_EU" },
-  { name: "Antigua und Barbuda", flag: "🇦🇬", group: "NON_EU" },
-  { name: "Äquatorialguinea", flag: "🇬🇶", group: "NON_EU" },
-  { name: "Argentinien", flag: "🇦🇷", group: "NON_EU" },
-  { name: "Armenien", flag: "🇦🇲", group: "NON_EU" },
-  { name: "Aserbaidschan", flag: "🇦🇿", group: "NON_EU" },
-  { name: "Äthiopien", flag: "🇪🇹", group: "NON_EU" },
-  { name: "Australien", flag: "🇦🇺", group: "NON_EU" },
-  { name: "Bahamas", flag: "🇧🇸", group: "NON_EU" },
-  { name: "Bahrain", flag: "🇧🇭", group: "NON_EU" },
-  { name: "Bangladesch", flag: "🇧🇩", group: "NON_EU" },
-  { name: "Barbados", flag: "🇧🇧", group: "NON_EU" },
-  { name: "Belarus", flag: "🇧🇾", group: "NON_EU" },
-  { name: "Belize", flag: "🇧🇿", group: "NON_EU" },
-  { name: "Benin", flag: "🇧🇯", group: "NON_EU" },
-  { name: "Bhutan", flag: "🇧🇹", group: "NON_EU" },
-  { name: "Bolivien", flag: "🇧🇴", group: "NON_EU" },
-  { name: "Bosnien und Herzegowina", flag: "🇧🇦", group: "NON_EU" },
-  { name: "Botswana", flag: "🇧🇼", group: "NON_EU" },
-  { name: "Brasilien", flag: "🇧🇷", group: "NON_EU" },
-  { name: "Brunei", flag: "🇧🇳", group: "NON_EU" },
-  { name: "Burkina Faso", flag: "🇧🇫", group: "NON_EU" },
-  { name: "Burundi", flag: "🇧🇮", group: "NON_EU" },
-  { name: "Chile", flag: "🇨🇱", group: "NON_EU" },
-  { name: "China", flag: "🇨🇳", group: "NON_EU" },
-  { name: "Costa Rica", flag: "🇨🇷", group: "NON_EU" },
-  { name: "Demokratische Republik Kongo", flag: "🇨🇩", group: "NON_EU" },
-  { name: "Dominica", flag: "🇩🇲", group: "NON_EU" },
-  { name: "Dominikanische Republik", flag: "🇩🇴", group: "NON_EU" },
-  { name: "Dschibuti", flag: "🇩🇯", group: "NON_EU" },
-  { name: "Ecuador", flag: "🇪🇨", group: "NON_EU" },
-  { name: "El Salvador", flag: "🇸🇻", group: "NON_EU" },
-  { name: "Elfenbeinküste", flag: "🇨🇮", group: "NON_EU" },
-  { name: "Eritrea", flag: "🇪🇷", group: "NON_EU" },
-  { name: "Eswatini", flag: "🇸🇿", group: "NON_EU" },
-  { name: "Fidschi", flag: "🇫🇯", group: "NON_EU" },
-  { name: "Gabun", flag: "🇬🇦", group: "NON_EU" },
-  { name: "Gambia", flag: "🇬🇲", group: "NON_EU" },
-  { name: "Georgien", flag: "🇬🇪", group: "NON_EU" },
-  { name: "Ghana", flag: "🇬🇭", group: "NON_EU" },
-  { name: "Grenada", flag: "🇬🇩", group: "NON_EU" },
-  { name: "Guatemala", flag: "🇬🇹", group: "NON_EU" },
-  { name: "Guinea", flag: "🇬🇳", group: "NON_EU" },
-  { name: "Guinea-Bissau", flag: "🇬🇼", group: "NON_EU" },
-  { name: "Guyana", flag: "🇬🇾", group: "NON_EU" },
-  { name: "Haiti", flag: "🇭🇹", group: "NON_EU" },
-  { name: "Honduras", flag: "🇭🇳", group: "NON_EU" },
-  { name: "Indien", flag: "🇮🇳", group: "NON_EU" },
-  { name: "Indonesien", flag: "🇮🇩", group: "NON_EU" },
-  { name: "Irak", flag: "🇮🇶", group: "NON_EU" },
-  { name: "Iran", flag: "🇮🇷", group: "NON_EU" },
-  { name: "Israel", flag: "🇮🇱", group: "NON_EU" },
-  { name: "Jamaika", flag: "🇯🇲", group: "NON_EU" },
-  { name: "Japan", flag: "🇯🇵", group: "NON_EU" },
-  { name: "Jemen", flag: "🇾🇪", group: "NON_EU" },
-  { name: "Jordanien", flag: "🇯🇴", group: "NON_EU" },
-  { name: "Kambodscha", flag: "🇰🇭", group: "NON_EU" },
-  { name: "Kamerun", flag: "🇨🇲", group: "NON_EU" },
-  { name: "Kanada", flag: "🇨🇦", group: "NON_EU" },
-  { name: "Kap Verde", flag: "🇨🇻", group: "NON_EU" },
-  { name: "Kasachstan", flag: "🇰🇿", group: "NON_EU" },
-  { name: "Katar", flag: "🇶🇦", group: "NON_EU" },
-  { name: "Kenia", flag: "🇰🇪", group: "NON_EU" },
-  { name: "Kirgisistan", flag: "🇰🇬", group: "NON_EU" },
-  { name: "Kiribati", flag: "🇰🇮", group: "NON_EU" },
-  { name: "Kolumbien", flag: "🇨🇴", group: "NON_EU" },
-  { name: "Komoren", flag: "🇰🇲", group: "NON_EU" },
-  { name: "Kongo", flag: "🇨🇬", group: "NON_EU" },
-  { name: "Kosovo", flag: "🇽🇰", group: "NON_EU" },
-  { name: "Kuba", flag: "🇨🇺", group: "NON_EU" },
-  { name: "Kuwait", flag: "🇰🇼", group: "NON_EU" },
-  { name: "Laos", flag: "🇱🇦", group: "NON_EU" },
-  { name: "Lesotho", flag: "🇱🇸", group: "NON_EU" },
-  { name: "Libanon", flag: "🇱🇧", group: "NON_EU" },
-  { name: "Liberia", flag: "🇱🇷", group: "NON_EU" },
-  { name: "Libyen", flag: "🇱🇾", group: "NON_EU" },
-  { name: "Madagaskar", flag: "🇲🇬", group: "NON_EU" },
-  { name: "Malawi", flag: "🇲🇼", group: "NON_EU" },
-  { name: "Malediven", flag: "🇲🇻", group: "NON_EU" },
-  { name: "Malaysia", flag: "🇲🇾", group: "NON_EU" },
-  { name: "Mali", flag: "🇲🇱", group: "NON_EU" },
-  { name: "Marokko", flag: "🇲🇦", group: "NON_EU" },
-  { name: "Marshallinseln", flag: "🇲🇭", group: "NON_EU" },
-  { name: "Mauretanien", flag: "🇲🇷", group: "NON_EU" },
-  { name: "Mauritius", flag: "🇲🇺", group: "NON_EU" },
-  { name: "Mazedonien", flag: "🇲🇰", group: "NON_EU" },
-  { name: "Mexiko", flag: "🇲🇽", group: "NON_EU" },
-  { name: "Mikronesien", flag: "🇫🇲", group: "NON_EU" },
-  { name: "Moldau", flag: "🇲🇩", group: "NON_EU" },
-  { name: "Monaco", flag: "🇲🇨", group: "NON_EU" },
-  { name: "Mongolei", flag: "🇲🇳", group: "NON_EU" },
-  { name: "Montenegro", flag: "🇲🇪", group: "NON_EU" },
-  { name: "Mosambik", flag: "🇲🇿", group: "NON_EU" },
-  { name: "Myanmar", flag: "🇲🇲", group: "NON_EU" },
-  { name: "Namibia", flag: "🇳🇦", group: "NON_EU" },
-  { name: "Nauru", flag: "🇳🇷", group: "NON_EU" },
-  { name: "Nepal", flag: "🇳🇵", group: "NON_EU" },
-  { name: "Neuseeland", flag: "🇳🇿", group: "NON_EU" },
-  { name: "Nicaragua", flag: "🇳🇮", group: "NON_EU" },
-  { name: "Niger", flag: "🇳🇪", group: "NON_EU" },
-  { name: "Nigeria", flag: "🇳🇬", group: "NON_EU" },
-  { name: "Nordkorea", flag: "🇰🇵", group: "NON_EU" },
-  { name: "Oman", flag: "🇴🇲", group: "NON_EU" },
-  { name: "Pakistan", flag: "🇵🇰", group: "NON_EU" },
-  { name: "Palau", flag: "🇵🇼", group: "NON_EU" },
-  { name: "Panama", flag: "🇵🇦", group: "NON_EU" },
-  { name: "Papua-Neuguinea", flag: "🇵🇬", group: "NON_EU" },
-  { name: "Paraguay", flag: "🇵🇾", group: "NON_EU" },
-  { name: "Peru", flag: "🇵🇪", group: "NON_EU" },
-  { name: "Philippinen", flag: "🇵🇭", group: "NON_EU" },
-  { name: "Ruanda", flag: "🇷🇼", group: "NON_EU" },
-  { name: "Russland", flag: "🇷🇺", group: "NON_EU" },
-  { name: "Salomonen", flag: "🇸🇧", group: "NON_EU" },
-  { name: "Sambia", flag: "🇿🇲", group: "NON_EU" },
-  { name: "Samoa", flag: "🇼🇸", group: "NON_EU" },
-  { name: "San Marino", flag: "🇸🇲", group: "NON_EU" },
-  { name: "São Tomé und Príncipe", flag: "🇸🇹", group: "NON_EU" },
-  { name: "Saudi-Arabien", flag: "🇸🇦", group: "NON_EU" },
-  { name: "Senegal", flag: "🇸🇳", group: "NON_EU" },
-  { name: "Serbien", flag: "🇷🇸", group: "NON_EU" },
-  { name: "Seychellen", flag: "🇸🇨", group: "NON_EU" },
-  { name: "Sierra Leone", flag: "🇸🇱", group: "NON_EU" },
-  { name: "Simbabwe", flag: "🇿🇼", group: "NON_EU" },
-  { name: "Singapur", flag: "🇸🇬", group: "NON_EU" },
-  { name: "Somalia", flag: "🇸🇴", group: "NON_EU" },
-  { name: "Sri Lanka", flag: "🇱🇰", group: "NON_EU" },
-  { name: "St. Kitts und Nevis", flag: "🇰🇳", group: "NON_EU" },
-  { name: "St. Lucia", flag: "🇱🇨", group: "NON_EU" },
-  { name: "St. Vincent und die Grenadinen", flag: "🇻🇨", group: "NON_EU" },
-  { name: "Südafrika", flag: "🇿🇦", group: "NON_EU" },
-  { name: "Sudan", flag: "🇸🇩", group: "NON_EU" },
-  { name: "Südkorea", flag: "🇰🇷", group: "NON_EU" },
-  { name: "Südsudan", flag: "🇸🇸", group: "NON_EU" },
-  { name: "Suriname", flag: "🇸🇷", group: "NON_EU" },
-  { name: "Syrien", flag: "🇸🇾", group: "NON_EU" },
-  { name: "Tadschikistan", flag: "🇹🇯", group: "NON_EU" },
-  { name: "Tansania", flag: "🇹🇿", group: "NON_EU" },
-  { name: "Thailand", flag: "🇹🇭", group: "NON_EU" },
-  { name: "Timor-Leste", flag: "🇹🇱", group: "NON_EU" },
-  { name: "Togo", flag: "🇹🇬", group: "NON_EU" },
-  { name: "Tonga", flag: "🇹🇴", group: "NON_EU" },
-  { name: "Trinidad und Tobago", flag: "🇹🇹", group: "NON_EU" },
-  { name: "Tschad", flag: "🇹🇩", group: "NON_EU" },
-  { name: "Tunesien", flag: "🇹🇳", group: "NON_EU" },
-  { name: "Türkei", flag: "🇹🇷", group: "NON_EU" },
-  { name: "Turkmenistan", flag: "🇹🇲", group: "NON_EU" },
-  { name: "Tuvalu", flag: "🇹🇻", group: "NON_EU" },
-  { name: "Uganda", flag: "🇺🇬", group: "NON_EU" },
-  { name: "Ukraine", flag: "🇺🇦", group: "NON_EU" },
-  { name: "Vereinigte Arabische Emirate", flag: "🇦🇪", group: "NON_EU" },
-  { name: "Vereinigtes Königreich", flag: "🇬🇧", group: "NON_EU" },
-  { name: "USA", flag: "🇺🇸", group: "NON_EU" },
-  { name: "Uruguay", flag: "🇺🇾", group: "NON_EU" },
-  { name: "Usbekistan", flag: "🇺🇿", group: "NON_EU" },
-  { name: "Vanuatu", flag: "🇻🇺", group: "NON_EU" },
-  { name: "Vatikanstadt", flag: "🇻🇦", group: "NON_EU" },
-  { name: "Venezuela", flag: "🇻🇪", group: "NON_EU" },
-  { name: "Vietnam", flag: "🇻🇳", group: "NON_EU" },
-  { name: "Zentralafrikanische Republik", flag: "🇨🇫", group: "NON_EU" },
-  { name: "Zypern (Nordzypern)", flag: "🇨🇾", group: "NON_EU" },
-];
-
-function NationalityDropdown({ value, onChange, citizenshipGroup }) {
+function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  const selected = ALL_COUNTRIES.find(c => c.name === value);
-  const filtered = ALL_COUNTRIES.filter(c =>
+  const selected = countries.find((c) => c.code === value);
+  const filtered = countries.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase()) &&
     (citizenshipGroup ? c.group === citizenshipGroup : true)
   );
@@ -241,7 +33,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup }) {
         className="w-full flex items-center justify-between px-3 py-2 border border-gray-200 rounded-lg bg-white text-sm hover:border-rose-300 transition-colors"
       >
         <span className={selected ? "text-gray-900" : "text-gray-400"}>
-          {selected ? `${selected.flag} ${selected.name}` : "Land auswählen…"}
+          {selected ? selected.name : "Land auswählen…"}
         </span>
         <ChevronDown className="w-4 h-4 text-gray-400" />
       </button>
@@ -267,7 +59,6 @@ function NationalityDropdown({ value, onChange, citizenshipGroup }) {
                 onClick={() => { onChange(c); setOpen(false); setSearch(""); }}
                 className={`w-full text-left flex items-center gap-2 px-3 py-2 text-sm hover:bg-rose-50 transition-colors ${value === c.name ? "bg-rose-50 text-rose-700 font-medium" : "text-gray-800"}`}
               >
-                <span className="text-base">{c.flag}</span>
                 <span>{c.name}</span>
                 <span className="ml-auto text-xs text-gray-400">
                   {c.group === "CH" ? "CH" : c.group === "EU_EFTA" ? "EU/EFTA" : "Drittstaat"}
@@ -282,6 +73,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup }) {
 }
 
 export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+  const [countries, setCountries] = useState([]);
   const [emailWarning, setEmailWarning] = useState(null);
   const [phoneWarning, setPhoneWarning] = useState(null);
   const [sendingLink, setSendingLink] = useState(false);
@@ -302,6 +94,10 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
   const age = calcAge(profile.date_of_birth);
   const ageError = profile.date_of_birth && age !== null && age < 18;
+
+  useEffect(() => {
+    fetchCountries().then(setCountries);
+  }, []);
 
   const validateAndNext = async () => {
     const errors = {};
@@ -521,7 +317,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
                 onClick={() => {
                   updateProfile({
                     citizenship_group: opt.value,
-                    nationality: opt.value === "CH" ? "Schweiz" : "",
+                    nationality: opt.value === "CH" ? "CHE" : "",
                   });
                 }}
                 className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
@@ -541,8 +337,9 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             <div className="mt-2">
               <NationalityDropdown
                 value={profile.nationality || ""}
-                onChange={(country) => updateProfile({ nationality: country.name })}
+                onChange={(country) => updateProfile({ nationality: country.code })}
                 citizenshipGroup={profile.citizenship_group}
+                countries={countries}
               />
             </div>
           )}

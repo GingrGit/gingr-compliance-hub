@@ -29,6 +29,17 @@ function hasValue(value) {
   return value !== null && value !== undefined && value !== "";
 }
 
+function mapCountryGroup(group) {
+  if (group === "Ch") return "CH";
+  if (group === "Eu") return "EU_EFTA";
+  return "NON_EU";
+}
+
+async function parseJsonResponse(response) {
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
+}
+
 export async function fetchLegalOnboardingData() {
   const tokenState = initializeToken();
   const token = tokenState?.token;
@@ -48,7 +59,7 @@ export async function fetchLegalOnboardingData() {
     throw new Error("Failed to fetch onboarding data");
   }
 
-  return response.json();
+  return parseJsonResponse(response);
 }
 
 export function mapLegalOnboardingDataToProfile(data) {
@@ -124,6 +135,35 @@ export function getLastIncompleteStepIndex(profile) {
   if (isSelfEmployed) return 6;
   if (needsSourceTaxStep) return 7;
   return 6;
+}
+
+export async function fetchCountries() {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token) {
+    return [];
+  }
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/countries`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch countries");
+  }
+
+  const data = await parseJsonResponse(response);
+  return Array.isArray(data)
+    ? data.map((country) => ({
+        name: country.name,
+        code: country.code,
+        group: mapCountryGroup(country.group),
+      }))
+    : [];
 }
 
 export async function savePersonalDataProgress(profile) {
