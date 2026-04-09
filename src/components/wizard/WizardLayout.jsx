@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { CheckCircle2, Save, ShieldCheck, Info, Sparkles, Briefcase, Calendar, Lightbulb, Lock, Home, CircleDollarSign, BarChart2, FileText, Building2, PenLine, Trophy, User } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { CheckCircle2, Save, ShieldCheck, Info, Sparkles, Briefcase, Calendar, Lightbulb, Lock, Home, CircleDollarSign, BarChart2, FileText, Building2, PenLine, Trophy, User, Globe } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { LANGUAGES } from "@/components/language";
 
 const PHASE_KEYS = [
   "wizard_layout.phase_start",
@@ -24,6 +25,45 @@ const STEP_TO_PHASE = {
   self_employed_agreement: 4,
   congratulations: 5,
 };
+
+function LanguagePicker() {
+  const { lang, setLang } = useI18n();
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const current = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-800 transition-colors px-2 py-1 rounded-lg hover:bg-gray-100"
+      >
+        <span className="text-base leading-none">{current.flag}</span>
+        <Globe className="w-3 h-3" />
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1 min-w-[140px]">
+          {LANGUAGES.map(l => (
+            <button
+              key={l.code}
+              onClick={() => { setLang(l.code); setOpen(false); }}
+              className={`w-full flex items-center gap-2 px-3 py-1.5 text-xs hover:bg-pink-50 transition-colors text-left ${l.code === lang ? "text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
+            >
+              <span>{l.flag}</span>
+              <span>{l.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children, currentStepId, profile }) {
   const { t } = useI18n();
@@ -50,11 +90,14 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
             className="h-7 object-contain"
           />
           <span className="text-xs text-gray-400 font-medium mt-1">{t("wizard_layout.legal_onboarding_label")}</span>
-          {saving && (
-            <span className="absolute right-4 top-0 text-xs text-gray-400 flex items-center gap-1">
-              <Save className="w-3 h-3" /> {t("wizard_layout.saving")}
-            </span>
-          )}
+          <div className="absolute right-4 top-0 flex items-center gap-2">
+            {saving && (
+              <span className="text-xs text-gray-400 flex items-center gap-1">
+                <Save className="w-3 h-3" /> {t("wizard_layout.saving")}
+              </span>
+            )}
+            <LanguagePicker />
+          </div>
         </div>
 
         {/* Step indicators — Desktop (fixed phases) */}
