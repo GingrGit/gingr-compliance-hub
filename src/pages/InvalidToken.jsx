@@ -1,5 +1,6 @@
 import React from "react";
 import { ShieldAlert } from "lucide-react";
+import { getGingrBaseUrl } from "@/lib/env";
 
 export default function InvalidToken() {
   return (
@@ -15,7 +16,7 @@ export default function InvalidToken() {
         </p>
 
         <a
-          href="https://gingr.app"
+          href={getGingrBaseUrl()}
           className="w-full inline-flex items-center justify-center bg-[#FF3CAC] hover:bg-[#e0309a] text-white text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
         >
           Back to Gingr
