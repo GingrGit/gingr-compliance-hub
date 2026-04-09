@@ -161,6 +161,7 @@ export async function fetchCountries() {
     ? data.map((country) => ({
         name: country.name,
         code: country.code,
+        iso2: country.code?.slice(0, 2) || "",
         group: mapCountryGroup(country.group),
       }))
     : [];

@@ -13,7 +13,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  const selected = countries.find((c) => c.code === value);
+  const selected = countries.find((c) => c.iso2 === value);
   const filtered = countries.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase()) &&
     (citizenshipGroup ? c.group === citizenshipGroup : true)
@@ -317,8 +317,8 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
                 onClick={() => {
                   updateProfile({
                     citizenship_group: opt.value,
-                    nationality: opt.value === "CH" ? "CHE" : "",
-                  });
+                    nationality: opt.value === "CH" ? "CH" : "",
+                    });
                 }}
                 className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
                   profile.citizenship_group === opt.value
@@ -337,7 +337,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             <div className="mt-2">
               <NationalityDropdown
                 value={profile.nationality || ""}
-                onChange={(country) => updateProfile({ nationality: country.code })}
+                onChange={(country) => updateProfile({ nationality: country.iso2 })}
                 citizenshipGroup={profile.citizenship_group}
                 countries={countries}
               />
