@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { validateStoredToken } from "@/lib/env";
-import { saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
+import { fetchLegalOnboardingData, getLastIncompleteStepIndex, mapLegalOnboardingDataToProfile, saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -44,6 +44,15 @@ export default function OnboardingWizard() {
     source_tax: null,
     ...PREFILL_DEMO_DATA,
   });
+
+  useEffect(() => {
+    setProfile((prev) => {
+      if (prev.citizenship_group) return prev;
+      if (prev.nationality === "CH") return { ...prev, citizenship_group: "CH" };
+      if (prev.nationality) return { ...prev, citizenship_group: "NON_EU" };
+      return prev;
+    });
+  }, [profile.nationality, profile.citizenship_group]);
   const [profileId, setProfileId] = useState(null);
   const [showAbandonModal, setShowAbandonModal] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -51,7 +60,23 @@ export default function OnboardingWizard() {
   const [checkingToken, setCheckingToken] = useState(true);
 
   useEffect(() => {
-    validateStoredToken().finally(() => setCheckingToken(false));
+    validateStoredToken()
+      .then(async () => {
+        const apiData = await fetchLegalOnboardingData();
+        const mappedProfile = mapLegalOnboardingDataToProfile(apiData);
+
+        if (Object.keys(mappedProfile).length > 0) {
+          setMode("self");
+          setProfile((prev) => {
+            const nextProfile = { ...prev, ...mappedProfile };
+            return {
+              ...nextProfile,
+              current_step: getLastIncompleteStepIndex(nextProfile),
+            };
+          });
+        }
+      })
+      .finally(() => setCheckingToken(false));
   }, []);
 
   // Load profile from magic link if present
