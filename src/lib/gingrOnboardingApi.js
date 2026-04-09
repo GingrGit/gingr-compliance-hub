@@ -62,10 +62,12 @@ export async function fetchLegalOnboardingData() {
   return parseJsonResponse(response);
 }
 
-export function mapLegalOnboardingDataToProfile(data) {
+export function mapLegalOnboardingDataToProfile(data, countries = []) {
   if (!data) {
     return {};
   }
+
+  const matchedCountry = countries.find((country) => country.code === data.countryCode);
 
   const mapped = {
     first_name: data.firstName,
@@ -77,6 +79,8 @@ export function mapLegalOnboardingDataToProfile(data) {
     postal_code: data.postalCode,
     city: data.city,
     nationality: data.countryCode || data.nationality,
+    country_code: data.countryCode,
+    citizenship_group: matchedCountry?.group,
     work_model: API_EMPLOYMENT_TYPE_MAP[data.employmentType],
     hourly_rate: data.hourlyRate,
     hours_per_month: data.hoursPerMonth,

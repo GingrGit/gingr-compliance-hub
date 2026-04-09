@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { validateStoredToken } from "@/lib/env";
-import { fetchLegalOnboardingData, getLastIncompleteStepIndex, mapLegalOnboardingDataToProfile, saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
+import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepIndex, mapLegalOnboardingDataToProfile, saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -62,8 +62,11 @@ export default function OnboardingWizard() {
   useEffect(() => {
     validateStoredToken()
       .then(async () => {
-        const apiData = await fetchLegalOnboardingData();
-        const mappedProfile = mapLegalOnboardingDataToProfile(apiData);
+        const [apiData, countries] = await Promise.all([
+          fetchLegalOnboardingData(),
+          fetchCountries(),
+        ]);
+        const mappedProfile = mapLegalOnboardingDataToProfile(apiData, countries);
 
         if (Object.keys(mappedProfile).length > 0) {
           setMode("self");
