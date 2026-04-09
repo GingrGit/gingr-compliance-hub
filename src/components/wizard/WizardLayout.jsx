@@ -73,9 +73,9 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
       {/* Top Header */}
-      <div className="bg-white/90 backdrop-blur-md border border-gray-100 shadow-lg overflow-hidden sticky top-0 z-30 sm:sticky sm:top-4 sm:mx-4 sm:rounded-2xl">
+      <div className="bg-white/90 backdrop-blur-md border border-gray-100 shadow-lg sticky top-0 z-30 sm:sticky sm:top-4 sm:mx-4 sm:rounded-2xl">
         {/* Gradient progress bar at very top */}
-        <div className="h-1 bg-gray-100">
+        <div className="h-1 bg-gray-100 overflow-hidden sm:rounded-t-2xl">
           <div
             className="h-full bg-gradient-to-r from-[#FF3CAC] to-[#6B0064] transition-all duration-500 ease-out"
             style={{ width: `${((currentPhase + 1) / FIXED_PHASES.length) * 100}%` }}
