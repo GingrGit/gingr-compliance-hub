@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { savePersonalDataProgress, saveResidencePermitProgress } from "@/lib/gingrOnboardingApi";
+import { savePersonalDataProgress } from "@/lib/gingrOnboardingApi";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
@@ -343,10 +343,6 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       permit_type: isSwiss ? "none" : profile.permit_type,
       permit_status: isSwiss ? "not_required" : profile.permit_status,
     };
-
-    if (profile.id_document_url instanceof File) {
-      await saveResidencePermitProgress(profile.id_document_url, isSwiss ? "Other" : "Other");
-    }
 
     await savePersonalDataProgress(nextData);
     onNext(nextData);

@@ -126,56 +126,32 @@ export function getLastIncompleteStepIndex(profile) {
   return 6;
 }
 
-export async function saveResidencePermitProgress(file, permitType = "Other") {
-  const tokenState = initializeToken();
-  const token = tokenState?.token;
-
-  if (!token || !file) {
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("ResidencePermit", file);
-  formData.append("PermitType", permitType);
-
-  const response = await fetch(`${getLegalOnboardingBaseUrl()}/residence-permit`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to save residence permit progress");
-  }
-}
-
 export async function savePersonalDataProgress(profile) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
 
-  if (!token) {
+  if (!token || !profile?.id_document_url) {
     return;
   }
+
+  const formData = new FormData();
+  formData.append("FirstName", profile.first_name || "");
+  formData.append("LastName", profile.last_name || "");
+  formData.append("DateOfBirth", profile.date_of_birth || "");
+  formData.append("EmailAddress", profile.escort_email || "");
+  formData.append("Mobile", profile.phone || "");
+  formData.append("Address", profile.address || "");
+  formData.append("PostalCode", profile.postal_code || "");
+  formData.append("City", profile.city || "");
+  formData.append("CountryCode", profile.nationality || "");
+  formData.append("Identity", profile.id_document_url);
 
   const response = await fetch(`${getLegalOnboardingBaseUrl()}/personal-data`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      firstName: profile.first_name || "",
-      lastName: profile.last_name || "",
-      dateOfBirth: profile.date_of_birth || "",
-      emailAddress: profile.escort_email || "",
-      mobile: profile.phone || "",
-      address: profile.address || null,
-      postalCode: profile.postal_code || null,
-      city: profile.city || null,
-      countryCode: profile.nationality || "",
-    }),
+    body: formData,
   });
 
   if (!response.ok) {
