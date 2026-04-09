@@ -70,7 +70,7 @@ export function mapLegalOnboardingDataToProfile(data) {
   const mapped = {
     first_name: data.firstName,
     last_name: data.lastName,
-    date_of_birth: data.dateOfBirth,
+    date_of_birth: data.dateOfBirth ? data.dateOfBirth.split("T")[0] : undefined,
     escort_email: data.emailAddress,
     phone: data.mobile,
     address: data.address,
