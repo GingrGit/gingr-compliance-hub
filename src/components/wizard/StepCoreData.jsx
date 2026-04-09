@@ -135,6 +135,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       postal_code: profile.postal_code,
       citizenship_group: profile.citizenship_group,
       nationality: profile.nationality,
+      country_code: profile.country_code,
       id_document_url: profile.id_document_url,
       permit_type: isSwiss ? "none" : profile.permit_type,
       permit_status: isSwiss ? "not_required" : profile.permit_status,
@@ -318,6 +319,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
                   updateProfile({
                     citizenship_group: opt.value,
                     nationality: opt.value === "CH" ? "CHE" : "",
+                    country_code: opt.value === "CH" ? "CHE" : "",
                   });
                 }}
                 className={`px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
@@ -336,8 +338,8 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           {profile.citizenship_group && profile.citizenship_group !== "CH" && (
             <div className="mt-2">
               <NationalityDropdown
-                value={profile.nationality || ""}
-                onChange={(country) => updateProfile({ nationality: country.code })}
+                value={profile.country_code || profile.nationality || ""}
+                onChange={(country) => updateProfile({ nationality: country.code, country_code: country.code })}
                 citizenshipGroup={profile.citizenship_group}
                 countries={countries}
               />
