@@ -55,10 +55,10 @@ export function getLegalOnboardingStartUrl() {
   const env = initializeEnv();
 
   const envUrls = {
-    test: "https://www-test-api3.gingr.com/legal-onboarding/start",
-    uat: "https://www-uat-api3.gingr.com/legal-onboarding/start",
-    staging: "https://www-staging-api3.gingr.com/legal-onboarding/start",
-    production: "https://api3.gingr.com/legal-onboarding/start",
+    test: "https://www-test-api3.gingr.com/legal-onboarding",
+    uat: "https://www-uat-api3.gingr.com/legal-onboarding",
+    staging: "https://www-staging-api3.gingr.com/legal-onboarding",
+    production: "https://api3.gingr.com/legal-onboarding",
   };
 
   return envUrls[env] || envUrls.production;
