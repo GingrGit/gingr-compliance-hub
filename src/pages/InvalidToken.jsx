@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldAlert, ArrowLeft, RefreshCw } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 
 export default function InvalidToken() {
   return (
@@ -14,23 +14,12 @@ export default function InvalidToken() {
           This access link is no longer valid. Please request a new link or go back and try again.
         </p>
 
-        <div className="space-y-3">
-          <a
-            href="/MagicLinkLogin"
-            className="w-full inline-flex items-center justify-center gap-2 bg-[#FF3CAC] hover:bg-[#e0309a] text-white text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Request new link
-          </a>
-
-          <button
-            onClick={() => window.history.back()}
-            className="w-full inline-flex items-center justify-center gap-2 border border-gray-200 hover:border-gray-300 text-gray-700 text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Go back
-          </button>
-        </div>
+        <a
+          href="https://gingr.app"
+          className="w-full inline-flex items-center justify-center bg-[#FF3CAC] hover:bg-[#e0309a] text-white text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
+        >
+          Back to Gingr
+        </a>
       </div>
     </div>
   );
