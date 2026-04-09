@@ -2,56 +2,30 @@ import React, { useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, AlertCircle } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
-function computeEligibility(profile) {
-  const { citizenship_group, permit_type, permit_status } = profile;
+function computeEligibility(profile, t) {
+  const { citizenship_group, permit_type } = profile;
   const options = [];
 
   if (citizenship_group === "CH" || citizenship_group === "EU_EFTA" || permit_type === "C") {
-    options.push({
-      id: "employee_unlimited",
-      label: "Angestellte (unbefristet)",
-      emoji: "📋",
-      desc: "Du bist berechtigt für ein unbefristetes Anstellungsverhältnis.",
-      available: true,
-    });
+    options.push({ id: "employee_unlimited", label: t("step_eligibility.model_unlimited_label"), emoji: "📋", desc: t("step_eligibility.model_unlimited_desc"), available: true });
   }
-
   if (permit_type === "B" || permit_type === "L" || citizenship_group === "EU_EFTA") {
-    options.push({
-      id: "employee_90days",
-      label: "Angestellte (max. 90 Tage)",
-      emoji: "📅",
-      desc: "Kurzfristiger Vertrag, ideal für deine Situation.",
-      available: true,
-    });
+    options.push({ id: "employee_90days", label: t("step_eligibility.model_90days_label"), emoji: "📅", desc: t("step_eligibility.model_90days_desc"), available: true });
   }
-
   if (citizenship_group === "CH" || citizenship_group === "EU_EFTA" || permit_type === "C") {
-    options.push({
-      id: "self_employed",
-      label: "Selbständig",
-      emoji: "🏢",
-      desc: "Du kannst auf eigene Rechnung arbeiten. UID-Nachweis erforderlich.",
-      available: true,
-    });
+    options.push({ id: "self_employed", label: t("step_eligibility.model_self_employed_label"), emoji: "🏢", desc: t("step_eligibility.model_self_employed_desc"), available: true });
   }
-
   if (options.length === 0) {
-    options.push({
-      id: "none",
-      label: "Kein Modell verfügbar",
-      emoji: "⚠️",
-      desc: "Aufgrund deiner aktuellen Situation ist derzeit kein Arbeitsmodell möglich. Bitte kontaktiere uns.",
-      available: false,
-    });
+    options.push({ id: "none", label: t("step_eligibility.model_none_label"), emoji: "⚠️", desc: t("step_eligibility.model_none_desc"), available: false });
   }
-
   return options;
 }
 
 export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit, saving }) {
-  const options = computeEligibility(profile);
+  const { t } = useI18n();
+  const options = computeEligibility(profile, t);
   const [selected, setSelected] = useState(profile.work_model || null);
   const [showError, setShowError] = useState(false);
   const availableOptions = options.filter((o) => o.available);
@@ -67,17 +41,17 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
 
   return (
     <StepCard
-      title="Deine Optionen"
-      subtitle="Basierend auf deinen Angaben stehen dir folgende Modelle zur Verfügung."
+      title={t("step_eligibility.title")}
+      subtitle={t("step_eligibility.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
-      validationError={showError ? "Bitte wähle ein verfügbares Modell aus, um fortzufahren." : null}
+      validationError={showError ? t("step_eligibility.error_select") : null}
     >
       <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2">
         <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-        <p className="text-sm text-green-700">Deine Daten wurden geprüft. Wähle jetzt dein bevorzugtes Modell.</p>
+        <p className="text-sm text-green-700">{t("step_eligibility.verified_notice")}</p>
       </div>
 
       <div className="space-y-3">
@@ -112,7 +86,7 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
         <div className="flex items-start gap-2 bg-pink-50 border border-pink-100 rounded-xl p-3">
           <AlertCircle className="w-4 h-4 text-[#FF3CAC] flex-shrink-0 mt-0.5" />
           <p className="text-xs text-[#6B0064]">
-            Dein Ausweis wird noch geprüft. Du kannst trotzdem weitermachen — die endgültige Aktivierung erfolgt nach der Prüfung.
+            {t("step_eligibility.permit_pending_notice")}
           </p>
         </div>
       )}

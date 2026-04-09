@@ -3,15 +3,16 @@ import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { AlertCircle } from "lucide-react";
-
-const PERMIT_TYPES = [
-  { value: "B", label: "Ausweis B", desc: "Aufenthaltsbewilligung" },
-  { value: "C", label: "Ausweis C", desc: "Niederlassungsbewilligung" },
-  { value: "L", label: "Ausweis L", desc: "Kurzaufenthaltsbewilligung" },
-  { value: "other", label: "Anderer", desc: "Anderer Aufenthaltstitel" },
-];
+import { useI18n } from "@/lib/i18n";
 
 export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+  const { t } = useI18n();
+  const PERMIT_TYPES = [
+    { value: "B", label: t("step_residency.permit_b_label"), desc: t("step_residency.permit_b_desc") },
+    { value: "C", label: t("step_residency.permit_c_label"), desc: t("step_residency.permit_c_desc") },
+    { value: "L", label: t("step_residency.permit_l_label"), desc: t("step_residency.permit_l_desc") },
+    { value: "other", label: t("step_residency.permit_other_label"), desc: t("step_residency.permit_other_desc") },
+  ];
   const [permitType, setPermitType] = useState(profile.permit_type || "");
   const [permitUrl, setPermitUrl] = useState(profile.permit_url || "");
   const [errors, setErrors] = useState({});
@@ -20,8 +21,8 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
 
   const handleNext = () => {
     const e = {};
-    if (!permitType) e.permitType = "Bitte wähle deinen Aufenthaltsausweis aus.";
-    if (!permitUrl) e.permitUrl = "Bitte lade deinen Ausweis hoch, um fortzufahren.";
+    if (!permitType) e.permitType = t("step_residency.error_permit_type");
+    if (!permitUrl) e.permitUrl = t("step_residency.error_upload");
     setErrors(e);
 
     if (Object.keys(e).length > 0) {
@@ -41,16 +42,16 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
 
   return (
     <StepCard
-      title="Aufenthaltsbewilligung"
-      subtitle="Da du keine Schweizer Bürgerin bist, benötigen wir deinen Aufenthaltsausweis."
+      title={t("step_residency.title")}
+      subtitle={t("step_residency.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
-      validationError={Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null}
+      validationError={Object.keys(errors).length > 0 ? t("step_residency.error_all_fields") : null}
     >
       <div ref={permitTypeRef}>
-        <p className="text-sm font-medium text-gray-700 mb-3">Art des Ausweises *</p>
+        <p className="text-sm font-medium text-gray-700 mb-3">{t("step_residency.label_permit_type")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {PERMIT_TYPES.map((p) => (
             <button
@@ -69,10 +70,10 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
 
       <div ref={permitUploadRef}>
         <DocumentUpload
-          label="Ausweis hochladen *"
+          label={t("step_residency.label_upload")}
           value={permitUrl}
           onChange={(url) => { setPermitUrl(url); setErrors(prev => ({...prev, permitUrl: null})); }}
-          hint="Vorder- und Rückseite sichtbar, Text lesbar, nicht abgelaufen"
+          hint={t("step_residency.upload_hint")}
           profileId={profileId}
           documentType="permit"
         />
@@ -81,7 +82,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
 
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-3">
         <p className="text-xs text-[#6B0064]">
-          ⏳ Nach dem Upload wird dein Ausweis von unserem Team geprüft. Du kannst in der Zwischenzeit mit dem Onboarding fortfahren.
+          {t("step_residency.review_notice")}
         </p>
       </div>
     </StepCard>

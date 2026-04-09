@@ -3,15 +3,17 @@ import { base44 } from "@/api/base44Client";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, Loader2 } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAndExit, saving }) {
+  const { t } = useI18n();
   const [contractSigned, setContractSigned] = useState(profile.contract_signed || false);
   const [payrollConsent, setPayrollConsent] = useState(false);
   const [slug, setSlug] = useState(null);
   const [loadingSlug, setLoadingSlug] = useState(false);
   const [slugError, setSlugError] = useState(null);
 
-  const contractType = profile.work_model === "employee_90days" ? "Kurzarbeitsvertrag (max. 90 Tage)" : "Unbefristeter Arbeitsvertrag";
+  const contractType = profile.work_model === "employee_90days" ? t("step_employment_setup.contract_90days_label") : t("step_employment_setup.contract_unlimited_label");
 
   // Create a new DocuSeal submission for this escort
   useEffect(() => {
@@ -46,38 +48,38 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
 
   return (
     <StepCard
-      title="Arbeitsvertrag & Einwilligungen"
-      subtitle="Bitte lies und unterzeichne deinen Vertrag, um das Onboarding abzuschliessen."
+      title={t("step_employment_setup.title")}
+      subtitle={t("step_employment_setup.subtitle")}
       onNext={() => onNext({ contract_signed: contractSigned, contract_signed_at: contractSigned ? new Date().toISOString() : null })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       nextDisabled={!payrollConsent}
-      nextLabel="Abschliessen & Einreichen"
+      nextLabel={t("step_employment_setup.btn_submit")}
       saving={saving}
     >
       <div className="bg-rose-50 border border-rose-200 rounded-xl p-4">
         <p className="text-sm font-semibold text-gray-800 mb-1">📄 {contractType}</p>
-        <p className="text-xs text-gray-500">Dieser Vertrag regelt deine Tätigkeit als Escort bei gingr.ch</p>
+        <p className="text-xs text-gray-500">{t("step_employment_setup.contract_desc")}</p>
       </div>
 
-      <InfoAccordion title="Was steht im Vertrag?">
-        Der Vertrag regelt deine Arbeitsbedingungen, die Lohnzahlung, die Dienstleistungsgebühr von gingr sowie deine Rechte und Pflichten. Du erhältst nach der Unterzeichnung eine Kopie per E-Mail.
+      <InfoAccordion title={t("step_employment_setup.accordion_title")}>
+        {t("step_employment_setup.accordion_body")}
       </InfoAccordion>
 
       {/* DocuSeal Embed */}
       <div className="border border-gray-200 rounded-xl overflow-hidden">
         <div className="bg-gray-50 px-4 py-3">
-          <p className="text-sm font-medium text-gray-700">Digitale Signatur via DocuSeal</p>
+          <p className="text-sm font-medium text-gray-700">{t("step_employment_setup.docuseal_label")}</p>
         </div>
         <div className="bg-white min-h-[400px] flex items-center justify-center">
           {loadingSlug && (
             <div className="flex flex-col items-center gap-2 text-gray-400 py-12">
               <Loader2 className="w-6 h-6 animate-spin" />
-              <p className="text-sm">Vertrag wird vorbereitet…</p>
+              <p className="text-sm">{t("step_employment_setup.loading_contract")}</p>
             </div>
           )}
           {slugError && (
-            <p className="text-sm text-red-500 p-4">{slugError}</p>
+            <p className="text-sm text-red-500 p-4">{slugError || t("step_employment_setup.error_contract")}</p>
           )}
           {slug && !loadingSlug && (
             <docuseal-form
@@ -92,7 +94,7 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
       {contractSigned && (
         <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl p-3">
           <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-          <p className="text-sm text-green-700 font-medium">Vertrag erfolgreich unterzeichnet!</p>
+          <p className="text-sm text-green-700 font-medium">{t("step_employment_setup.signed_success")}</p>
         </div>
       )}
 
@@ -104,13 +106,13 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
           {payrollConsent && <CheckCircle2 className="w-3 h-3 text-white" />}
         </div>
         <p className="text-sm text-gray-700">
-          Ich bin einverstanden, dass gingr.ch meine Lohndaten für die Lohnabrechnung und Sozialversicherung verarbeitet.
+          {t("step_employment_setup.payroll_consent_label")}
         </p>
       </label>
 
       <div className="bg-amber-50 border border-amber-100 rounded-xl p-3">
         <p className="text-xs text-amber-700">
-          💰 <strong>Dienstleistungsgebühr:</strong> gingr erhebt eine monatliche Servicepauschale. Details findest du in deinem Vertrag.
+          {t("step_employment_setup.service_fee_notice")}
         </p>
       </div>
     </StepCard>

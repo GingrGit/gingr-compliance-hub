@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { createPageUrl } from "@/utils";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export default function Magic() {
+  const { t } = useI18n();
   const [status, setStatus] = useState("loading"); // loading | success | error | expired
 
   useEffect(() => {
@@ -45,31 +47,31 @@ export default function Magic() {
         {status === "loading" && (
           <>
             <Loader2 className="w-10 h-10 text-purple-500 animate-spin mx-auto mb-4" />
-            <p className="text-gray-600 font-medium">Link wird überprüft…</p>
+            <p className="text-gray-600 font-medium">{t("magic_link.verifying")}</p>
           </>
         )}
 
         {status === "success" && (
           <>
             <CheckCircle2 className="w-10 h-10 text-green-500 mx-auto mb-4" />
-            <h2 className="text-lg font-bold text-gray-800 mb-2">Willkommen zurück!</h2>
-            <p className="text-gray-500 text-sm">Du wirst gleich weitergeleitet…</p>
+            <h2 className="text-lg font-bold text-gray-800 mb-2">{t("magic_link.welcome_back")}</h2>
+            <p className="text-gray-500 text-sm">{t("magic_link.redirecting")}</p>
           </>
         )}
 
         {status === "expired" && (
           <>
             <XCircle className="w-10 h-10 text-amber-500 mx-auto mb-4" />
-            <h2 className="text-lg font-bold text-gray-800 mb-2">Link abgelaufen</h2>
-            <p className="text-gray-500 text-sm">Dieser Link ist leider nicht mehr gültig. Bitte kontaktiere gingr für einen neuen Link.</p>
+            <h2 className="text-lg font-bold text-gray-800 mb-2">{t("magic_link.expired_title")}</h2>
+            <p className="text-gray-500 text-sm">{t("magic_link.expired_desc")}</p>
           </>
         )}
 
         {status === "error" && (
           <>
             <XCircle className="w-10 h-10 text-red-500 mx-auto mb-4" />
-            <h2 className="text-lg font-bold text-gray-800 mb-2">Ungültiger Link</h2>
-            <p className="text-gray-500 text-sm">Dieser Link ist ungültig. Bitte verwende den Link aus deiner SMS.</p>
+            <h2 className="text-lg font-bold text-gray-800 mb-2">{t("magic_link.error_title")}</h2>
+            <p className="text-gray-500 text-sm">{t("magic_link.error_desc")}</p>
           </>
         )}
       </div>

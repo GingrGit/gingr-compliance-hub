@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { User, Users, X, Calendar, FileText, CreditCard, Briefcase, Globe } from "lucide-react";
-import { LANGUAGES, TRANSLATIONS, getStoredLanguage, storeLanguage } from "@/components/language";
+import { LANGUAGES } from "@/components/language";
+import { useI18n } from "@/lib/i18n";
 
 export default function ModeSelector({ onSelect }) {
+  const { t, lang, setLang } = useI18n();
   const [showGuidedInfo, setShowGuidedInfo] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(getStoredLanguage);
+  const selectedLang = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
   const [showLangMenu, setShowLangMenu] = useState(false);
-  const t = TRANSLATIONS[selectedLang.code] || TRANSLATIONS.de;
   const [rotatingIdx, setRotatingIdx] = useState(0);
   const [fade, setFade] = useState(true);
 
@@ -29,8 +30,8 @@ export default function ModeSelector({ onSelect }) {
           alt="gingr"
           className="h-12 object-contain mx-auto"
         />
-        <h1 className="text-2xl font-bold text-gray-800 mt-4">{t.title}</h1>
-        <p className="text-gray-500 mt-2 max-w-sm text-sm">{t.subtitle}</p>
+        <h1 className="text-2xl font-bold text-gray-800 mt-4">{t("mode_selector.title")}</h1>
+        <p className="text-gray-500 mt-2 max-w-sm text-sm">{t("mode_selector.subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
@@ -42,10 +43,10 @@ export default function ModeSelector({ onSelect }) {
           <div className="w-12 h-12 rounded-full bg-pink-100 group-hover:bg-pink-200 flex items-center justify-center mb-4 transition-colors">
             <User className="w-6 h-6 text-[#FF3CAC]" />
           </div>
-          <h3 className="text-lg font-bold text-gray-800 mb-1">{t.selfTitle}</h3>
-          <p className="text-sm text-gray-500 leading-relaxed">{t.selfDesc}</p>
+          <h3 className="text-lg font-bold text-gray-800 mb-1">{t("mode_selector.self_title")}</h3>
+          <p className="text-sm text-gray-500 leading-relaxed">{t("mode_selector.self_desc")}</p>
           <span className="inline-block mt-5 bg-[#FF3CAC] hover:bg-[#e030a0] text-white text-sm font-semibold rounded-full px-5 py-2 transition-colors shadow-sm">
-            {t.selfBtn}
+            {t("mode_selector.self_btn")}
           </span>
         </button>
 
@@ -57,10 +58,10 @@ export default function ModeSelector({ onSelect }) {
           <div className="w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 flex items-center justify-center mb-4 transition-colors">
             <Users className="w-6 h-6 text-gray-500" />
           </div>
-          <h3 className="text-lg font-bold text-gray-800 mb-1">{t.guidedTitle}</h3>
-          <p className="text-sm text-gray-500 leading-relaxed">{t.guidedDesc}</p>
+          <h3 className="text-lg font-bold text-gray-800 mb-1">{t("mode_selector.guided_title")}</h3>
+          <p className="text-sm text-gray-500 leading-relaxed">{t("mode_selector.guided_desc")}</p>
           <span className="inline-block mt-5 bg-white border-2 border-gray-300 text-gray-700 text-sm font-semibold rounded-full px-5 py-2 transition-colors group-hover:border-gray-400">
-            {t.guidedBtn}
+            {t("mode_selector.guided_btn")}
           </span>
         </button>
       </div>
@@ -89,16 +90,16 @@ export default function ModeSelector({ onSelect }) {
             <>
               <div className="fixed inset-0 z-10" onClick={() => setShowLangMenu(false)} />
               <div className="absolute left-1/2 -translate-x-1/2 bottom-12 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 min-w-[200px] overflow-hidden">
-                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider px-4 pt-1 pb-2">{t.langLabel}</p>
+                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider px-4 pt-1 pb-2">{t("mode_selector.lang_label")}</p>
                 <div className="grid grid-cols-2 gap-0">
-                  {LANGUAGES.map((lang) => (
+                  {LANGUAGES.map((l) => (
                     <button
-                      key={lang.code}
-                      onClick={() => { setSelectedLang(lang); storeLanguage(lang); setShowLangMenu(false); }}
-                      className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-pink-50 transition-colors ${selectedLang.code === lang.code ? "bg-pink-50 text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
+                      key={l.code}
+                      onClick={() => { setLang(l.code); setShowLangMenu(false); }}
+                      className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-pink-50 transition-colors ${selectedLang.code === l.code ? "bg-pink-50 text-[#FF3CAC] font-semibold" : "text-gray-700"}`}
                     >
-                      <span className="text-base">{lang.flag}</span>
-                      <span>{lang.name}</span>
+                      <span className="text-base">{l.flag}</span>
+                      <span>{l.name}</span>
                     </button>
                   ))}
                 </div>
@@ -126,12 +127,12 @@ export default function ModeSelector({ onSelect }) {
                 <Calendar className="w-5 h-5 text-[#FF3CAC]" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-800">{t.modalTitle}</h2>
-                <p className="text-sm text-gray-500">{t.modalSubtitle}</p>
+                <h2 className="text-lg font-bold text-gray-800">{t("mode_selector.modal_title")}</h2>
+                <p className="text-sm text-gray-500">{t("mode_selector.modal_subtitle")}</p>
               </div>
             </div>
 
-            <p className="text-sm text-gray-600 mb-5">{t.modalIntro}</p>
+            <p className="text-sm text-gray-600 mb-5">{t("mode_selector.modal_intro")}</p>
 
             <ul className="space-y-3 mb-6">
               <li className="flex items-start gap-3">
@@ -139,8 +140,8 @@ export default function ModeSelector({ onSelect }) {
                   <FileText className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">{t.doc1Title}</p>
-                  <p className="text-xs text-gray-500">{t.doc1Desc}</p>
+                  <p className="text-sm font-semibold text-gray-800">{t("mode_selector.doc1_title")}</p>
+                  <p className="text-xs text-gray-500">{t("mode_selector.doc1_desc")}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -148,8 +149,8 @@ export default function ModeSelector({ onSelect }) {
                   <CreditCard className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">{t.doc2Title}</p>
-                  <p className="text-xs text-gray-500">{t.doc2Desc}</p>
+                  <p className="text-sm font-semibold text-gray-800">{t("mode_selector.doc2_title")}</p>
+                  <p className="text-xs text-gray-500">{t("mode_selector.doc2_desc")}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -157,8 +158,8 @@ export default function ModeSelector({ onSelect }) {
                   <Briefcase className="w-4 h-4 text-[#FF3CAC]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">{t.doc3Title}</p>
-                  <p className="text-xs text-gray-500">{t.doc3Desc}</p>
+                  <p className="text-sm font-semibold text-gray-800">{t("mode_selector.doc3_title")}</p>
+                  <p className="text-xs text-gray-500">{t("mode_selector.doc3_desc")}</p>
                 </div>
               </li>
             </ul>
@@ -169,7 +170,7 @@ export default function ModeSelector({ onSelect }) {
               rel="noopener noreferrer"
               className="block w-full text-center bg-[#FF3CAC] hover:bg-[#e030a0] text-white font-semibold rounded-full py-3 transition-colors shadow-md"
             >
-              {t.bookBtn}
+              {t("mode_selector.book_btn")}
             </a>
           </div>
         </div>

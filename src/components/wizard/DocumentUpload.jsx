@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { Upload, CheckCircle2, X, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-
-const QUALITY_CHECKS = [
-  "Alle Ecken sichtbar",
-  "Text gut lesbar",
-  "Dokument nicht abgelaufen",
-];
+import { useI18n } from "@/lib/i18n";
 
 export default function DocumentUpload({ label, value, onChange, hint, profileId, documentType }) {
+  const { t } = useI18n();
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState("");
 
@@ -34,13 +30,13 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
             {uploading ? (
               <div className="flex flex-col items-center gap-2">
                 <Loader2 className="w-8 h-8 text-rose-400 animate-spin" />
-                <p className="text-sm text-gray-500">Wird hochgeladen…</p>
+                <p className="text-sm text-gray-500">{t("document_upload.uploading")}</p>
               </div>
             ) : (
               <>
                 <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm font-medium text-gray-700">Datei auswählen oder hier ablegen</p>
-                <p className="text-xs text-gray-400 mt-1">PDF, JPG oder PNG</p>
+                <p className="text-sm font-medium text-gray-700">{t("document_upload.select_file")}</p>
+                <p className="text-xs text-gray-400 mt-1">{t("document_upload.file_types")}</p>
               </>
             )}
           </div>
@@ -50,7 +46,7 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
         <div className="border border-green-200 bg-green-50 rounded-xl p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-5 h-5 text-green-500" />
-            <span className="text-sm font-medium text-green-800">{fileName || "Dokument hochgeladen"}</span>
+            <span className="text-sm font-medium text-green-800">{fileName || t("document_upload.uploaded_label")}</span>
           </div>
           <button
             onClick={() => { onChange(""); setFileName(""); }}
@@ -63,7 +59,7 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
 
       {hint && (
         <div className="mt-2 space-y-1">
-          {QUALITY_CHECKS.map((c) => (
+          {[t("document_upload.quality_check1"), t("document_upload.quality_check2"), t("document_upload.quality_check3")].map((c) => (
             <p key={c} className="text-xs text-gray-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0" /> {c}
             </p>

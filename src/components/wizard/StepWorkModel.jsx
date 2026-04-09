@@ -2,33 +2,35 @@ import React, { useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, ShieldCheck, Calendar, Briefcase } from "lucide-react";
-
-const models = [
-  {
-    id: "employee_unlimited",
-    label: "Angestellte (unbefristet)",
-    icon: ShieldCheck,
-    desc: "Du arbeitest als Angestellte bei gingr. Unbefristeter Vertrag.",
-    pros: ["Lohnabrechnung & Sozialversicherung durch gingr", "Klare rechtliche Absicherung", "Für CH / EU / Permit C"],
-  },
-  {
-    id: "employee_90days",
-    label: "Angestellte (max. 90 Tage)",
-    icon: Calendar,
-    desc: "Kurzfristiges Anstellungsverhältnis, bis 90 Tage pro Jahr.",
-    pros: ["Für Permit B/L geeignet", "Flexibel & unkompliziert", "Quellensteuer inklusive"],
-  },
-  {
-    id: "self_employed",
-    label: "Selbständig",
-    icon: Briefcase,
-    desc: "Du arbeitest auf eigene Rechnung als selbständige Escort.",
-    pros: ["Eigenes Unternehmen / UID-Nummer erforderlich", "Mehr Flexibilität", "Eigene Buchhaltung"],
-  },
-];
+import { useI18n } from "@/lib/i18n";
 
 export default function StepWorkModel({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
+  const { t } = useI18n();
   const [selected, setSelected] = useState(profile.work_model || null);
+
+  const models = [
+    {
+      id: "employee_unlimited",
+      label: t("step_work_model.model_unlimited_label"),
+      icon: ShieldCheck,
+      desc: t("step_work_model.model_unlimited_desc"),
+      pros: [t("step_work_model.model_unlimited_pro1"), t("step_work_model.model_unlimited_pro2"), t("step_work_model.model_unlimited_pro3")],
+    },
+    {
+      id: "employee_90days",
+      label: t("step_work_model.model_90days_label"),
+      icon: Calendar,
+      desc: t("step_work_model.model_90days_desc"),
+      pros: [t("step_work_model.model_90days_pro1"), t("step_work_model.model_90days_pro2"), t("step_work_model.model_90days_pro3")],
+    },
+    {
+      id: "self_employed",
+      label: t("step_work_model.model_self_employed_label"),
+      icon: Briefcase,
+      desc: t("step_work_model.model_self_employed_desc"),
+      pros: [t("step_work_model.model_self_employed_pro1"), t("step_work_model.model_self_employed_pro2"), t("step_work_model.model_self_employed_pro3")],
+    },
+  ];
 
   const handleSelect = (id) => {
     setSelected(id);
@@ -45,13 +47,13 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
 
   return (
     <StepCard
-      title="Wähle dein Arbeitsmodell"
-      subtitle="Das bestimmt, welche Verträge und Dokumente du benötigst."
+      title={t("step_work_model.title")}
+      subtitle={t("step_work_model.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
-      validationError={showError ? "Bitte wähle ein Arbeitsmodell aus, um fortzufahren." : null}
+      validationError={showError ? t("step_work_model.error_select") : null}
     >
       <div className="space-y-3">
         {models.map((m) => (

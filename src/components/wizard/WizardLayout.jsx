@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { CheckCircle2, Save, ShieldCheck, Info, Sparkles, Briefcase, Calendar, Lightbulb, Lock, Home, CircleDollarSign, BarChart2, FileText, Building2, PenLine, Trophy, User } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
-const FIXED_PHASES = [
-  { label: "Start" },
-  { label: "Modell" },
-  { label: "Daten" },
-  { label: "Berechtigung" },
-  { label: "Setup" },
-  { label: "Abschluss" },
+const PHASE_KEYS = [
+  "wizard_layout.phase_start",
+  "wizard_layout.phase_model",
+  "wizard_layout.phase_data",
+  "wizard_layout.phase_eligibility",
+  "wizard_layout.phase_setup",
+  "wizard_layout.phase_finish",
 ];
 
 const STEP_TO_PHASE = {
@@ -25,7 +26,9 @@ const STEP_TO_PHASE = {
 };
 
 export default function WizardLayout({ steps, currentStep, onStepClick, mode, saving, children, currentStepId, profile }) {
+  const { t } = useI18n();
   const currentPhase = STEP_TO_PHASE[currentStepId] ?? 0;
+  const FIXED_PHASES = PHASE_KEYS.map(key => ({ label: t(key) }));
 
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
@@ -46,10 +49,10 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
             alt="Gingr"
             className="h-7 object-contain"
           />
-          <span className="text-xs text-gray-400 font-medium mt-1">Legal Onboarding</span>
+          <span className="text-xs text-gray-400 font-medium mt-1">{t("wizard_layout.legal_onboarding_label")}</span>
           {saving && (
             <span className="absolute right-4 top-0 text-xs text-gray-400 flex items-center gap-1">
-              <Save className="w-3 h-3" /> Speichert…
+              <Save className="w-3 h-3" /> {t("wizard_layout.saving")}
             </span>
           )}
         </div>

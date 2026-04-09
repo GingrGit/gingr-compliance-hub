@@ -3,6 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 const SOCIAL_RATE = 0.1098;   // 10.98% employee social + pension
 const PLATFORM_RATE = 0.15;   // 15% platform + employer costs
@@ -35,6 +36,7 @@ function fmt(n) {
 }
 
 export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, saving }) {
+  const { t } = useI18n();
   const defaultST = computeDefaultSourceTax(profile);
   const [hourlyRate, setHourlyRate] = useState(profile.hourly_rate || "");
   const [hoursPerMonth, setHoursPerMonth] = useState(profile.hours_per_month || "");
@@ -47,8 +49,8 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
 
   return (
     <StepCard
-      title="Verdienstschätzung"
-      subtitle="Gib deinen Stundensatz ein und sieh, wie sich dein Nettolohn zusammensetzt."
+      title={t("step_earnings.title")}
+      subtitle={t("step_earnings.subtitle")}
       onNext={() => onNext({ hourly_rate: hourlyRate, hours_per_month: hoursPerMonth, source_tax: sourceTax })}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
@@ -57,7 +59,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
       {/* Inputs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <Label className="text-sm font-medium text-gray-700">Stundensatz (CHF)</Label>
+          <Label className="text-sm font-medium text-gray-700">{t("step_earnings.label_hourly_rate")}</Label>
           <div className="relative mt-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">CHF</span>
             <Input
@@ -65,33 +67,33 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
               value={hourlyRate}
               onChange={(e) => setHourlyRate(e.target.value)}
               className="pl-12"
-              placeholder="z.B. 250"
+              placeholder={t("step_earnings.placeholder_rate")}
             />
           </div>
-          <p className="text-xs text-gray-400 mt-1">Preis, den der Kunde zahlt</p>
+          <p className="text-xs text-gray-400 mt-1">{t("step_earnings.hint_rate")}</p>
         </div>
         <div>
-          <Label className="text-sm font-medium text-gray-700">Stunden pro Monat (Schätzung)</Label>
+          <Label className="text-sm font-medium text-gray-700">{t("step_earnings.label_hours_per_month")}</Label>
           <div className="relative mt-1">
             <Input
               type="number"
               value={hoursPerMonth}
               onChange={(e) => setHoursPerMonth(e.target.value)}
-              placeholder="z.B. 20"
+              placeholder={t("step_earnings.placeholder_hours")}
             />
           </div>
-          <p className="text-xs text-gray-400 mt-1">Für die Monatsschätzung</p>
+          <p className="text-xs text-gray-400 mt-1">{t("step_earnings.hint_hours")}</p>
         </div>
       </div>
 
       {/* Source Tax toggle */}
       <div>
-        <p className="text-sm font-medium text-gray-700 mb-2">Quellensteuer</p>
+        <p className="text-sm font-medium text-gray-700 mb-2">{t("step_earnings.source_tax_label")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {[
-            { v: "yes", l: "Ja", d: "~10% Abzug" },
-            { v: "no", l: "Nein", d: "Kein Abzug" },
-            { v: "unsure", l: "Nicht sicher", d: "Schätzung ~10%" },
+            { v: "yes", l: t("step_earnings.source_tax_yes"), d: t("step_earnings.source_tax_yes_sub") },
+            { v: "no", l: t("step_earnings.source_tax_no"), d: t("step_earnings.source_tax_no_sub") },
+            { v: "unsure", l: t("step_earnings.source_tax_unsure"), d: t("step_earnings.source_tax_unsure_sub") },
           ].map((opt) => (
             <button
               key={opt.v}
@@ -118,15 +120,15 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
           <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-4 sm:p-5">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="text-center sm:text-left">
-                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Netto pro Stunde</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{t("step_earnings.net_hourly_label")}</p>
                 <p className="text-3xl font-bold text-[#6B0064]">CHF {fmt(c.netHourly)}</p>
-                <p className="text-xs text-gray-500 mt-0.5">nach allen Abzügen</p>
+                <p className="text-xs text-gray-500 mt-0.5">{t("step_earnings.net_hourly_sub")}</p>
               </div>
               {c.hours > 0 && (
                 <div className="text-center sm:text-right">
-                  <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Erwartetes Netto/Monat</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{t("step_earnings.net_monthly_label")}</p>
                   <p className="text-3xl font-bold text-[#FF3CAC]">CHF {fmt(c.netMonthly)}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">inkl. CHF 50 QUITT-Gebühr</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{t("step_earnings.net_monthly_sub")}</p>
                 </div>
               )}
             </div>
@@ -138,7 +140,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
             onClick={() => setExpanded(!expanded)}
             className="w-full flex items-center justify-between px-4 py-3 bg-white border-t border-pink-100 text-sm font-medium text-[#6B0064] hover:bg-pink-50 transition-colors"
           >
-            <span>Detaillierte Berechnung</span>
+            <span>{t("step_earnings.breakdown_toggle")}</span>
             {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
 
@@ -207,7 +209,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
       )}
 
       <p className="text-xs text-gray-400 text-center">
-        Nur Schätzung. Der finale Betrag hängt von deinem bestätigten Quellensteuersatz und den Lohnregeln ab.
+        {t("step_earnings.footnote")}
       </p>
     </StepCard>
   );
