@@ -7,7 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { I18nProvider } from '@/lib/i18n.jsx';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
-import { initializeEnv } from '@/lib/env';
+import { initializeEnv, initializeToken } from '@/lib/env';
 import InvalidToken from './pages/InvalidToken';
 
 const { Pages, Layout, mainPage } = pagesConfig;
@@ -76,6 +76,7 @@ const AuthenticatedApp = () => {
 
 function App() {
   initializeEnv();
+  initializeToken();
 
   return (
     <I18nProvider>

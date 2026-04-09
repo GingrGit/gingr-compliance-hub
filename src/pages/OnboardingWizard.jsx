@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
+import { validateStoredToken } from "@/lib/env";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -46,6 +47,11 @@ export default function OnboardingWizard() {
   const [showAbandonModal, setShowAbandonModal] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
+  const [checkingToken, setCheckingToken] = useState(true);
+
+  useEffect(() => {
+    validateStoredToken().finally(() => setCheckingToken(false));
+  }, []);
 
   // Load profile from magic link if present
   useEffect(() => {
@@ -158,7 +164,7 @@ export default function OnboardingWizard() {
     } catch (_) {}
   };
 
-  if (loadingProfile) {
+  if (checkingToken || loadingProfile) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50">
         <div className="text-center">
