@@ -99,37 +99,46 @@ export function getLastIncompleteStepIndex(profile) {
   const needsSourceTaxStep = profile.source_tax === "yes" || profile.source_tax === "unsure";
 
   const checks = [
-    { step: 1, complete: hasValue(profile.work_model) },
+    { step: 1, requiredFields: [profile.work_model] },
     {
       step: 2,
-      complete: [profile.first_name, profile.last_name, profile.date_of_birth, profile.escort_email, profile.phone, profile.citizenship_group, profile.id_document_url].some(hasValue),
+      requiredFields: [
+        profile.first_name,
+        profile.last_name,
+        profile.date_of_birth,
+        profile.escort_email,
+        profile.phone,
+        profile.citizenship_group,
+        profile.id_document_url,
+      ],
     },
     {
       step: 3,
       enabled: !isSwiss,
-      complete: [profile.permit_type, profile.permit_url].some(hasValue),
+      requiredFields: [profile.permit_type, profile.permit_url],
     },
-    { step: 4, complete: hasValue(profile.work_model) },
+    { step: 4, requiredFields: [profile.work_model] },
     {
       step: 5,
       enabled: !isSelfEmployed,
-      complete: [profile.hourly_rate, profile.hours_per_month, profile.source_tax].some(hasValue),
+      requiredFields: [profile.hourly_rate, profile.hours_per_month, profile.source_tax],
     },
     {
       step: 5,
       enabled: isSelfEmployed,
-      complete: [profile.business_name, profile.prostitution_permit_url].some(hasValue),
+      requiredFields: [profile.business_name, profile.prostitution_permit_url],
     },
     {
       step: 6,
       enabled: !isSelfEmployed && needsSourceTaxStep,
-      complete: [profile.canton, profile.marital_status].some(hasValue),
+      requiredFields: [profile.canton, profile.marital_status],
     },
   ];
 
   for (const check of checks) {
     if (check.enabled === false) continue;
-    if (!check.complete) return check.step;
+    const isComplete = check.requiredFields.every(hasValue);
+    if (!isComplete) return check.step;
   }
 
   if (isSelfEmployed) return 6;
