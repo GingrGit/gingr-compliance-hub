@@ -29,7 +29,7 @@ export async function saveWorkModelProgress(workModel) {
   }
 
   const response = await fetch(`${getLegalOnboardingBaseUrl()}/work-model/${employmentType}`, {
-    method: "GET",
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
