@@ -126,32 +126,56 @@ export function getLastIncompleteStepIndex(profile) {
   return 6;
 }
 
-export async function savePersonalDataProgress(profile) {
+export async function saveResidencePermitProgress(file, permitType = "Other") {
   const tokenState = initializeToken();
   const token = tokenState?.token;
 
-  if (!token || !profile?.id_document_url) {
+  if (!token || !file) {
     return;
   }
 
   const formData = new FormData();
-  formData.append("FirstName", profile.first_name || "");
-  formData.append("LastName", profile.last_name || "");
-  formData.append("DateOfBirth", profile.date_of_birth || "");
-  formData.append("EmailAddress", profile.escort_email || "");
-  formData.append("Mobile", profile.phone || "");
-  formData.append("Address", profile.address || "");
-  formData.append("PostalCode", profile.postal_code || "");
-  formData.append("City", profile.city || "");
-  formData.append("CountryCode", profile.nationality || "");
-  formData.append("Identity", profile.id_document_url);
+  formData.append("ResidencePermit", file);
+  formData.append("PermitType", permitType);
 
-  const response = await fetch(`${getLegalOnboardingBaseUrl()}/personal-data`, {
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/residence-permit`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
     body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save residence permit progress");
+  }
+}
+
+export async function savePersonalDataProgress(profile) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token) {
+    return;
+  }
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/personal-data`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      FirstName: profile.first_name || "",
+      LastName: profile.last_name || "",
+      DateOfBirth: profile.date_of_birth || "",
+      EmailAddress: profile.escort_email || "",
+      Mobile: profile.phone || "",
+      Address: profile.address || null,
+      PostalCode: profile.postal_code || null,
+      City: profile.city || null,
+      CountryCode: profile.nationality || "",
+    }),
   });
 
   if (!response.ok) {
