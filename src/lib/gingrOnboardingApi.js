@@ -12,6 +12,12 @@ const API_EMPLOYMENT_TYPE_MAP = {
   SelfEmployed: "self_employed",
 };
 
+const TAX_ESTIMATE_MAP = {
+  yes: "And",
+  no: "No",
+  unsure: "NotSure",
+};
+
 function getLegalOnboardingBaseUrl() {
   const env = initializeEnv();
 
@@ -266,6 +272,33 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
 
   if (!response.ok) {
     throw new Error("Failed to save residence permit progress");
+  }
+}
+
+export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax }) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+  const taxEstimate = TAX_ESTIMATE_MAP[sourceTax];
+
+  if (!token || !hasValue(hourlyRate) || !hasValue(hoursPerMonth) || !taxEstimate) {
+    return;
+  }
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/earnings`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      hourlyRate: Number(hourlyRate),
+      hoursPerMonth: Number(hoursPerMonth),
+      taxEstimate,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save earnings progress");
   }
 }
 

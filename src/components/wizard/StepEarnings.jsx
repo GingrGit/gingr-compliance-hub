@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { saveEarningsProgress } from "@/lib/gingrOnboardingApi";
 
 const SOCIAL_RATE = 0.1098;   // 10.98% employee social + pension
 const PLATFORM_RATE = 0.15;   // 15% platform + employer costs
@@ -47,11 +48,16 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
   const c = calcEarnings(hourlyRate, hoursPerMonth, sourceTax);
   const applySourceTax = sourceTax === "yes" || sourceTax === "unsure";
 
+  const handleNext = async () => {
+    await saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax });
+    onNext({ hourly_rate: hourlyRate, hours_per_month: hoursPerMonth, source_tax: sourceTax });
+  };
+
   return (
     <StepCard
       title={t("step_earnings.title")}
       subtitle={t("step_earnings.subtitle")}
-      onNext={() => onNext({ hourly_rate: hourlyRate, hours_per_month: hoursPerMonth, source_tax: sourceTax })}
+      onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
