@@ -2,8 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, LayoutDashboard, FileText, Bell, PenLine } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-
-const GINGR_URL = "https://www.gingr.ch";
+import { getGingrBaseUrl } from "@/lib/env";
 
 export default function StepCongratulations({ profile, profileId }) {
   const { t } = useI18n();
@@ -57,7 +56,7 @@ export default function StepCongratulations({ profile, profileId }) {
         </div>
       </div>
 
-      <a href={GINGR_URL}>
+      <a href={getGingrBaseUrl()}>
         <Button className="w-full bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full py-3 text-base font-semibold shadow-md">
           <LayoutDashboard className="w-4 h-4 mr-2" />
           {t("step_congratulations.btn_back_to_gingr")}
