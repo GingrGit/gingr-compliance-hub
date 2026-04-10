@@ -75,6 +75,20 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
 
   const matchedCountry = countries.find((country) => country.code === data.countryCode);
 
+  const businessFormMap = {
+    Freelancer: "freelancer",
+    Company: "company",
+  };
+
+  const maritalStatusMap = {
+    Single: "single",
+    Married: "married",
+    RegisteredPartnership: "partnership",
+    Divorced: "divorced",
+    Widowed: "widowed",
+    NotSure: "unsure",
+  };
+
   const mapped = {
     first_name: data.firstName,
     last_name: data.lastName,
@@ -84,20 +98,38 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     address: data.address,
     postal_code: data.postalCode,
     city: data.city,
-    nationality: data.countryCode || data.nationality,
+    nationality: data.countryCode,
     country_code: data.countryCode,
     citizenship_group: matchedCountry?.group,
     work_model: API_EMPLOYMENT_TYPE_MAP[data.employmentType],
+    business_type: businessFormMap[data.businessForm],
     hourly_rate: data.hourlyRate,
     hours_per_month: data.hoursPerMonth,
-    source_tax: hasValue(data.taxEstimate) ? String(data.taxEstimate) : undefined,
-    employment_start_date: data.startEmployment,
-    permit_type: data.residencePermitType,
-    permit_status: data.residencePermitStatus,
-    permit_url: data.residencePermit ? "completed" : undefined,
-    id_document_url: data.identityDocument ? "completed" : undefined,
-    business_name: data.businessForm,
-    prostitution_permit_url: data.authorizationProof ? "completed" : undefined,
+    source_tax: hasValue(data.taxEstimate) ? String(data.taxEstimate).toLowerCase() : undefined,
+    employment_start_date: data.startEmployment ? data.startEmployment.split("T")[0] : undefined,
+    permit_type: data.residencePermitType ? String(data.residencePermitType).toLowerCase() : undefined,
+    permit_status: data.residencePermitStatus ? String(data.residencePermitStatus).toLowerCase() : undefined,
+    permit_url: data.residencePermitUrl,
+    id_document_url: data.identityDocumentUrl,
+    ahv_confirmation_url: data.selfEmploymentConfirmationUrl,
+    commercial_register_url: data.commercialRegisterExtractUrl,
+    invoice_proof_url: data.authorizationProofUrl,
+    prostitution_permit_url: data.authorizationProofUrl,
+    self_employment_confirmation_status: data.selfEmploymentConfirmationStatus ? String(data.selfEmploymentConfirmationStatus).toLowerCase() : undefined,
+    commercial_register_status: data.commercialRegisterExtractStatus ? String(data.commercialRegisterExtractStatus).toLowerCase() : undefined,
+    authorization_proof_status: data.authorizationProofStatus ? String(data.authorizationProofStatus).toLowerCase() : undefined,
+    id_document_status: data.identityDocumentStatus ? String(data.identityDocumentStatus).toLowerCase() : undefined,
+    has_children: typeof data.children === "boolean" ? (data.children ? "yes" : "no") : undefined,
+    marital_status: maritalStatusMap[data.maritalStatus],
+    canton: data.canton,
+    municipality: data.municipality,
+    activity_proof_url: data.profileUrls,
+    activity_proof_urls: data.profileUrls
+      ? String(data.profileUrls)
+          .split(/[,\n]/)
+          .map((url) => url.trim())
+          .filter(Boolean)
+      : undefined,
   };
 
   return Object.fromEntries(Object.entries(mapped).filter(([, value]) => hasValue(value)));
