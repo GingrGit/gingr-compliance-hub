@@ -13,7 +13,7 @@ const API_EMPLOYMENT_TYPE_MAP = {
 };
 
 const TAX_ESTIMATE_MAP = {
-  yes: "And",
+  yes: "Yes",
   no: "No",
   unsure: "NotSure",
 };
