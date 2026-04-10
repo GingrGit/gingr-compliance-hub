@@ -70,7 +70,32 @@ export default function OnboardingWizard() {
 
         if (Object.keys(mappedProfile).length > 0) {
           setMode("self");
-          setProfile((prev) => ({ ...prev, ...mappedProfile }));
+          setProfile((prev) => {
+            const nextProfile = { ...prev, ...mappedProfile };
+            const baseSteps = [
+              { id: "welcome" },
+              { id: "work_model" },
+              { id: "core_data" },
+            ];
+            if (nextProfile.citizenship_group !== "CH") baseSteps.push({ id: "residency" });
+            if (!nextProfile.work_model) baseSteps.push({ id: "eligibility" });
+            if (nextProfile.work_model === "self_employed") {
+              baseSteps.push({ id: "self_employed" }, { id: "self_employed_summary" });
+            } else if (nextProfile.work_model) {
+              baseSteps.push({ id: "earnings" });
+              if (nextProfile.source_tax === "yes" || nextProfile.source_tax === "unsure") {
+                baseSteps.push({ id: "source_tax" });
+              }
+              baseSteps.push({ id: "summary" });
+            }
+            baseSteps.push({ id: "congratulations" });
+            const resumeStepId = getLastIncompleteStepId(nextProfile);
+            const resumeStepIndex = Math.max(0, baseSteps.findIndex((step) => step.id === resumeStepId));
+            return {
+              ...nextProfile,
+              current_step: resumeStepIndex,
+            };
+          });
         }
       })
       .finally(() => setCheckingToken(false));
@@ -130,9 +155,7 @@ export default function OnboardingWizard() {
   };
 
   const steps = buildSteps();
-  const resolvedStepId = getLastIncompleteStepId(profile);
-  const resolvedStepIndex = Math.max(0, steps.findIndex((step) => step.id === resolvedStepId));
-  const currentStep = Math.min(profile.current_step ?? resolvedStepIndex, steps.length - 1);
+  const currentStep = profile.current_step || 0;
   const currentStepId = steps[currentStep]?.id;
 
   const updateProfile = (updates) => {
@@ -141,7 +164,7 @@ export default function OnboardingWizard() {
 
   const saveToDb = async (data) => {
     setSaving(true);
-    const payload = { ...profile, ...data, current_step: currentStep };
+    const payload = { ...profile, ...data, current_step: profile.current_step };
     let savedId = profileId;
     if (profileId) {
       await base44.entities.OnboardingProfile.update(profileId, payload);
