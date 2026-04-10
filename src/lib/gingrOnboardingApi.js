@@ -98,8 +98,8 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     NotSure: "unsure",
   };
 
-  const taxEstimateMap = {
-    And: "yes",
+  const yesNoNotSureMap = {
+    Yes: "yes",
     No: "no",
     NotSure: "unsure",
   };
@@ -120,7 +120,9 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     business_type: businessFormMap[data.businessForm],
     hourly_rate: data.hourlyRate,
     hours_per_month: data.hoursPerMonth,
-    source_tax: taxEstimateMap[data.taxEstimate],
+    source_tax: yesNoNotSureMap[data.taxEstimate],
+    partner_in_household: yesNoNotSureMap[data.partnerSameHousehold],
+    partner_income_ch: yesNoNotSureMap[data.partnerIncomeCh],
     employment_start_date: data.startEmployment ? data.startEmployment.split("T")[0] : undefined,
     permit_type: data.residencePermitType ? String(data.residencePermitType).toLowerCase() : undefined,
     permit_status: data.residencePermitStatus ? String(data.residencePermitStatus).toLowerCase() : undefined,
