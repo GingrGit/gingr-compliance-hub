@@ -232,3 +232,35 @@ export async function saveWorkModelProgress(workModel) {
     throw new Error("Failed to save work model progress");
   }
 }
+
+export async function saveResidencePermitProgress({ permitFile, permitType }) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token || !permitFile || !permitType) {
+    return;
+  }
+
+  const permitTypeMap = {
+    B: "B",
+    C: "C",
+    L: "L",
+    other: "Other",
+  };
+
+  const formData = new FormData();
+  formData.append("ResidencePermit", permitFile);
+  formData.append("PermitType", permitTypeMap[permitType] || permitType);
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/residence-permit`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save residence permit progress");
+  }
+}

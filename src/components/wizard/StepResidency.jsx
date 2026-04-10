@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
-import InfoAccordion from "@/components/wizard/InfoAccordion";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
-import { AlertCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { saveResidencePermitProgress } from "@/lib/gingrOnboardingApi";
 
 export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const { t } = useI18n();
@@ -19,7 +18,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const e = {};
     if (!permitType) e.permitType = t("step_residency.error_permit_type");
     if (!permitUrl) e.permitUrl = t("step_residency.error_upload");
@@ -32,6 +31,11 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
       }, 50);
       return;
     }
+
+    await saveResidencePermitProgress({
+      permitFile: permitUrl,
+      permitType,
+    });
 
     onNext({
       permit_type: permitType,
