@@ -18,6 +18,19 @@ const TAX_ESTIMATE_MAP = {
   unsure: "NotSure",
 };
 
+const API_TAX_ESTIMATE_MAP = {
+  And: "yes",
+  No: "no",
+  NotSure: "unsure",
+};
+
+const API_RESIDENCE_PERMIT_STATUS_MAP = {
+  Pending: "uploaded_review_pending",
+  Approved: "approved",
+  Missing: "missing",
+  Expired: "expired",
+};
+
 function getLegalOnboardingBaseUrl() {
   const env = initializeEnv();
 
@@ -90,14 +103,22 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     work_model: API_EMPLOYMENT_TYPE_MAP[data.employmentType],
     hourly_rate: data.hourlyRate,
     hours_per_month: data.hoursPerMonth,
-    source_tax: hasValue(data.taxEstimate) ? String(data.taxEstimate) : undefined,
+    source_tax: API_TAX_ESTIMATE_MAP[data.taxEstimate],
     employment_start_date: data.startEmployment,
     permit_type: data.residencePermitType,
-    permit_status: data.residencePermitStatus,
-    permit_url: data.residencePermit ? "completed" : undefined,
-    id_document_url: data.identityDocument ? "completed" : undefined,
+    permit_status: API_RESIDENCE_PERMIT_STATUS_MAP[data.residencePermitStatus],
+    permit_url: data.residencePermitUrl,
+    id_document_url: data.identityDocumentUrl,
     business_name: data.businessForm,
-    prostitution_permit_url: data.authorizationProof ? "completed" : undefined,
+    prostitution_permit_url: data.authorizationProofUrl,
+    prostitution_permit_status: data.authorizationProofStatus,
+    canton: data.canton,
+    municipality: data.municipality,
+    marital_status: data.maritalStatus,
+    has_children: typeof data.children === "boolean" ? (data.children ? "yes" : "no") : undefined,
+    business_proof_url: data.commercialRegisterExtractUrl,
+    self_employment_confirmation_url: data.selfEmploymentConfirmationUrl,
+    profile_urls: data.profileUrls,
   };
 
   return Object.fromEntries(Object.entries(mapped).filter(([, value]) => hasValue(value)));
