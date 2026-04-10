@@ -275,6 +275,27 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
   }
 }
 
+export async function saveWorkModelSelection(workModel) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+  const employmentType = EMPLOYMENT_TYPE_MAP[workModel];
+
+  if (!token || employmentType === undefined) {
+    return;
+  }
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/work-model/${employmentType}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save work model progress");
+  }
+}
+
 export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;

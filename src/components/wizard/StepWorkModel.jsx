@@ -3,6 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, ShieldCheck, Calendar, Briefcase } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { saveWorkModelSelection } from "@/lib/gingrOnboardingApi";
 
 export default function StepWorkModel({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
   const { t } = useI18n();
@@ -39,9 +40,10 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
 
   const [showError, setShowError] = useState(false);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!selected) { setShowError(true); return; }
     setShowError(false);
+    await saveWorkModelSelection(selected);
     onNext({ work_model: selected });
   };
 
