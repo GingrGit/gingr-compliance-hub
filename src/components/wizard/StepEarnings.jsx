@@ -39,9 +39,12 @@ function fmt(n) {
 export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const { t } = useI18n();
   const defaultST = computeDefaultSourceTax(profile);
+  const normalizedSourceTax = typeof profile.source_tax === "string"
+    ? profile.source_tax.toLowerCase()
+    : profile.source_tax;
   const [hourlyRate, setHourlyRate] = useState(profile.hourly_rate || "");
   const [hoursPerMonth, setHoursPerMonth] = useState(profile.hours_per_month || "");
-  const [sourceTax, setSourceTax] = useState(profile.source_tax || defaultST);
+  const [sourceTax, setSourceTax] = useState(normalizedSourceTax || defaultST);
   const [expanded, setExpanded] = useState(false);
 
   const hasRate = parseFloat(hourlyRate) > 0;
