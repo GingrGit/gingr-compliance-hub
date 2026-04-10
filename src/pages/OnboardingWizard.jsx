@@ -126,7 +126,8 @@ export default function OnboardingWizard() {
   const buildSteps = () => {
     const committedStep = profile.current_step || 0;
     const needsSourceTaxStep = profile.source_tax === "yes" || profile.source_tax === "unsure";
-    const needsEligibilityStep = !profile.work_model;
+    const hasPassedEligibility = committedStep > 4;
+    const needsEligibilityStep = !profile.work_model || !hasPassedEligibility;
     const needsModelSpecificStep = isSelfEmployed || Boolean(profile.work_model);
     const steps = [
       { id: "welcome", label: "Willkommen" },
@@ -134,7 +135,7 @@ export default function OnboardingWizard() {
       { id: "core_data", label: "Deine Daten" },
     ];
     if (!isSwiss) steps.push({ id: "residency", label: "Aufenthalt" });
-    if (needsEligibilityStep || !needsModelSpecificStep) {
+    if (needsEligibilityStep) {
       steps.push({ id: "eligibility", label: "Berechtigung" });
     }
     // Only expand model-specific steps after work_model step is committed (step > 1)
