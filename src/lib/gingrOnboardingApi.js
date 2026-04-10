@@ -27,6 +27,12 @@ const MARITAL_STATUS_API_MAP = {
   unsure: "NotSure",
 };
 
+const YES_NO_NOT_SURE_API_MAP = {
+  yes: "Yes",
+  no: "No",
+  unsure: "NotSure",
+};
+
 function getLegalOnboardingBaseUrl() {
   const env = initializeEnv();
 
@@ -372,7 +378,7 @@ export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTa
   }
 }
 
-export async function saveTaxInfoProgress({ canton, municipality, marital_status, has_children }) {
+export async function saveTaxInfoProgress({ canton, municipality, marital_status, partner_in_household, partner_income_ch, has_children }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
   const maritalStatus = MARITAL_STATUS_API_MAP[marital_status];
@@ -391,6 +397,8 @@ export async function saveTaxInfoProgress({ canton, municipality, marital_status
       canton,
       municipality: municipality || null,
       maritalStatus,
+      partnerSameHousehold: YES_NO_NOT_SURE_API_MAP[partner_in_household] || null,
+      partnerIncomeCh: YES_NO_NOT_SURE_API_MAP[partner_income_ch] || null,
       children: has_children === "yes",
     }),
   });
