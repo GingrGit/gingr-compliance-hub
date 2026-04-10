@@ -4,6 +4,7 @@ import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useI18n } from "@/lib/i18n";
+import { saveTaxInfoProgress } from "@/lib/gingrOnboardingApi";
 
 const CANTONS = ["AG","AI","AR","BE","BL","BS","FR","GE","GL","GR","JU","LU","NE","NW","OW","SG","SH","SO","SZ","TG","TI","UR","VD","VS","ZG","ZH"];
 
@@ -44,11 +45,17 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
 
   const showPartner = d.marital_status === "married" || d.marital_status === "partnership";
 
+  const handleNext = async () => {
+    if (!validate()) return;
+    await saveTaxInfoProgress(d);
+    onNext(d);
+  };
+
   return (
     <StepCard
       title={t("step_source_tax.title")}
       subtitle={t("step_source_tax.subtitle")}
-      onNext={() => { if (validate()) onNext(d); }}
+      onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}

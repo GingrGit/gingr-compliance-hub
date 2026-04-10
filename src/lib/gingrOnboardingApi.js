@@ -18,6 +18,15 @@ const TAX_ESTIMATE_MAP = {
   unsure: "NotSure",
 };
 
+const MARITAL_STATUS_API_MAP = {
+  single: "Single",
+  married: "Married",
+  partnership: "RegisteredPartnership",
+  divorced: "Divorced",
+  widowed: "Widowed",
+  unsure: "NotSure",
+};
+
 function getLegalOnboardingBaseUrl() {
   const env = initializeEnv();
 
@@ -89,6 +98,12 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     NotSure: "unsure",
   };
 
+  const taxEstimateMap = {
+    And: "yes",
+    No: "no",
+    NotSure: "unsure",
+  };
+
   const mapped = {
     first_name: data.firstName,
     last_name: data.lastName,
@@ -105,7 +120,7 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     business_type: businessFormMap[data.businessForm],
     hourly_rate: data.hourlyRate,
     hours_per_month: data.hoursPerMonth,
-    source_tax: hasValue(data.taxEstimate) ? String(data.taxEstimate).toLowerCase() : undefined,
+    source_tax: taxEstimateMap[data.taxEstimate],
     employment_start_date: data.startEmployment ? data.startEmployment.split("T")[0] : undefined,
     permit_type: data.residencePermitType ? String(data.residencePermitType).toLowerCase() : undefined,
     permit_status: data.residencePermitStatus ? String(data.residencePermitStatus).toLowerCase() : undefined,
@@ -352,6 +367,34 @@ export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTa
 
   if (!response.ok) {
     throw new Error("Failed to save earnings progress");
+  }
+}
+
+export async function saveTaxInfoProgress({ canton, municipality, marital_status, has_children }) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+  const maritalStatus = MARITAL_STATUS_API_MAP[marital_status];
+
+  if (!token || !hasValue(canton) || !maritalStatus) {
+    return;
+  }
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/tax-info`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      canton,
+      municipality: municipality || null,
+      maritalStatus,
+      children: has_children === "yes",
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save tax info progress");
   }
 }
 
