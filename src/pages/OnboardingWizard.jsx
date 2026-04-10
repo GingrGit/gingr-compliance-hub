@@ -155,8 +155,8 @@ export default function OnboardingWizard() {
   };
 
   const steps = buildSteps();
-  const currentStep = profile.current_step || 0;
-  const currentStepId = steps[currentStep]?.id;
+  const currentStepId = steps[profile.current_step || 0]?.id || steps[0]?.id;
+  const currentStep = Math.max(0, steps.findIndex((step) => step.id === currentStepId));
 
   const updateProfile = (updates) => {
     setProfile((prev) => ({ ...prev, ...updates }));
@@ -178,7 +178,8 @@ export default function OnboardingWizard() {
   };
 
   const goNext = async (stepData = {}, afterSaveCallback = null) => {
-    const updates = { ...stepData, current_step: currentStep + 1 };
+    const nextStepIndex = Math.min(steps.length - 1, currentStep + 1);
+    const updates = { ...stepData, current_step: nextStepIndex };
     updateProfile(updates);
 
     if (currentStepId === "work_model" && stepData.work_model) {
@@ -192,8 +193,7 @@ export default function OnboardingWizard() {
   };
 
   const goBack = () => {
-    const previousStepIndex = Math.max(0, steps.findIndex((step) => step.id === currentStepId) - 1);
-    updateProfile({ current_step: previousStepIndex });
+    updateProfile({ current_step: Math.max(0, currentStep - 1) });
   };
 
   const goToStep = (idx) => {
