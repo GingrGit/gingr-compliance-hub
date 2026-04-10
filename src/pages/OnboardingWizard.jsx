@@ -192,7 +192,8 @@ export default function OnboardingWizard() {
   };
 
   const goBack = () => {
-    updateProfile({ current_step: Math.max(0, currentStep - 1) });
+    const previousStepIndex = Math.max(0, steps.findIndex((step) => step.id === currentStepId) - 1);
+    updateProfile({ current_step: previousStepIndex });
   };
 
   const goToStep = (idx) => {
