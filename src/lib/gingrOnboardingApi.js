@@ -268,3 +268,29 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
     throw new Error("Failed to save residence permit progress");
   }
 }
+
+export async function submitLegalOnboarding(startDate) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token) {
+    return;
+  }
+
+  const url = new URL(`${getLegalOnboardingBaseUrl()}/submit`);
+
+  if (startDate) {
+    url.searchParams.set("start", String(new Date(startDate).getTime()));
+  }
+
+  const response = await fetch(url.toString(), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to submit legal onboarding");
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { validateStoredToken } from "@/lib/env";
-import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile } from "@/lib/gingrOnboardingApi";
+import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, submitLegalOnboarding } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -204,8 +204,14 @@ export default function OnboardingWizard() {
     setShowAbandonModal(true);
   };
 
-  const handleSubmit = async () => {
-    const updates = { status: "submitted", submitted_at: new Date().toISOString() };
+  const handleSubmit = async (startDate) => {
+    await submitLegalOnboarding(startDate);
+
+    const updates = {
+      status: "submitted",
+      submitted_at: new Date().toISOString(),
+      employment_start_date: startDate || profile.employment_start_date,
+    };
     updateProfile(updates);
     await saveToDb(updates);
 
