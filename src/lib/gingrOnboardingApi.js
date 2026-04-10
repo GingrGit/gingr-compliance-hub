@@ -97,15 +97,15 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
   return Object.fromEntries(Object.entries(mapped).filter(([, value]) => hasValue(value)));
 }
 
-export function getLastIncompleteStepIndex(profile) {
+export function getLastIncompleteStepId(profile) {
   const isSwiss = profile.citizenship_group === "CH";
   const isSelfEmployed = profile.work_model === "self_employed";
   const needsSourceTaxStep = profile.source_tax === "yes" || profile.source_tax === "unsure";
 
   const checks = [
-    { step: 1, requiredFields: [profile.work_model] },
+    { stepId: "work_model", requiredFields: [profile.work_model] },
     {
-      step: 2,
+      stepId: "core_data",
       requiredFields: [
         profile.first_name,
         profile.last_name,
@@ -117,23 +117,27 @@ export function getLastIncompleteStepIndex(profile) {
       ],
     },
     {
-      step: 3,
+      stepId: "residency",
       enabled: !isSwiss,
       requiredFields: [profile.permit_type, profile.permit_url],
     },
-    { step: 4, requiredFields: [profile.work_model] },
     {
-      step: 5,
+      stepId: "eligibility",
+      enabled: !profile.work_model,
+      requiredFields: [profile.work_model],
+    },
+    {
+      stepId: "earnings",
       enabled: !isSelfEmployed,
       requiredFields: [profile.hourly_rate, profile.hours_per_month, profile.source_tax],
     },
     {
-      step: 5,
+      stepId: "self_employed",
       enabled: isSelfEmployed,
       requiredFields: [profile.business_name, profile.prostitution_permit_url],
     },
     {
-      step: 6,
+      stepId: "source_tax",
       enabled: !isSelfEmployed && needsSourceTaxStep,
       requiredFields: [profile.canton, profile.marital_status],
     },
@@ -142,12 +146,12 @@ export function getLastIncompleteStepIndex(profile) {
   for (const check of checks) {
     if (check.enabled === false) continue;
     const isComplete = check.requiredFields.every(hasValue);
-    if (!isComplete) return check.step;
+    if (!isComplete) return check.stepId;
   }
 
-  if (isSelfEmployed) return 6;
-  if (needsSourceTaxStep) return 7;
-  return 6;
+  if (isSelfEmployed) return "self_employed_summary";
+  if (needsSourceTaxStep) return "summary";
+  return "summary";
 }
 
 export async function fetchCountries() {

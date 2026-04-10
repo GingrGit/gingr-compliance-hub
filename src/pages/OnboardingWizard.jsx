@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { validateStoredToken } from "@/lib/env";
-import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepIndex, mapLegalOnboardingDataToProfile, saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
+import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -70,13 +70,7 @@ export default function OnboardingWizard() {
 
         if (Object.keys(mappedProfile).length > 0) {
           setMode("self");
-          setProfile((prev) => {
-            const nextProfile = { ...prev, ...mappedProfile };
-            return {
-              ...nextProfile,
-              current_step: getLastIncompleteStepIndex(nextProfile),
-            };
-          });
+          setProfile((prev) => ({ ...prev, ...mappedProfile }));
         }
       })
       .finally(() => setCheckingToken(false));
@@ -136,7 +130,9 @@ export default function OnboardingWizard() {
   };
 
   const steps = buildSteps();
-  const currentStep = profile.current_step || 0;
+  const resolvedStepId = getLastIncompleteStepId(profile);
+  const resolvedStepIndex = Math.max(0, steps.findIndex((step) => step.id === resolvedStepId));
+  const currentStep = Math.min(profile.current_step ?? resolvedStepIndex, steps.length - 1);
   const currentStepId = steps[currentStep]?.id;
 
   const updateProfile = (updates) => {
@@ -145,7 +141,7 @@ export default function OnboardingWizard() {
 
   const saveToDb = async (data) => {
     setSaving(true);
-    const payload = { ...profile, ...data, current_step: profile.current_step };
+    const payload = { ...profile, ...data, current_step: currentStep };
     let savedId = profileId;
     if (profileId) {
       await base44.entities.OnboardingProfile.update(profileId, payload);
