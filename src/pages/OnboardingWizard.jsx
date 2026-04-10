@@ -124,33 +124,30 @@ export default function OnboardingWizard() {
 
   // Build dynamic steps based on path
   const buildSteps = () => {
-    const committedStep = profile.current_step || 0;
     const needsSourceTaxStep = profile.source_tax === "yes" || profile.source_tax === "unsure";
-    const hasPassedEligibility = committedStep > 4;
-    const needsEligibilityStep = !profile.work_model || !hasPassedEligibility;
-    const needsModelSpecificStep = isSelfEmployed || Boolean(profile.work_model);
     const steps = [
       { id: "welcome", label: "Willkommen" },
       { id: "work_model", label: "Arbeitsmodell" },
       { id: "core_data", label: "Deine Daten" },
     ];
-    if (!isSwiss) steps.push({ id: "residency", label: "Aufenthalt" });
-    if (needsEligibilityStep) {
-      steps.push({ id: "eligibility", label: "Berechtigung" });
+
+    if (!isSwiss) {
+      steps.push({ id: "residency", label: "Aufenthalt" });
     }
-    // Only expand model-specific steps after work_model step is committed (step > 1)
-    if (committedStep > 1) {
-      if (isSelfEmployed) {
-        steps.push({ id: "self_employed", label: "Geschäft" });
-        steps.push({ id: "self_employed_summary", label: "Abschluss" });
-      } else if (profile.work_model) {
-        steps.push({ id: "earnings", label: "Verdienst" });
-        if (needsSourceTaxStep) {
-          steps.push({ id: "source_tax", label: "Quellensteuer" });
-        }
-        steps.push({ id: "summary", label: "Abschluss" });
+
+    steps.push({ id: "eligibility", label: "Berechtigung" });
+
+    if (profile.work_model === "self_employed") {
+      steps.push({ id: "self_employed", label: "Geschäft" });
+      steps.push({ id: "self_employed_summary", label: "Abschluss" });
+    } else {
+      steps.push({ id: "earnings", label: "Verdienst" });
+      if (needsSourceTaxStep) {
+        steps.push({ id: "source_tax", label: "Quellensteuer" });
       }
+      steps.push({ id: "summary", label: "Abschluss" });
     }
+
     steps.push({ id: "congratulations", label: "Fertig" });
     return steps;
   };
