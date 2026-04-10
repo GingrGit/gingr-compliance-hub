@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { validateStoredToken } from "@/lib/env";
-import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
+import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -182,10 +182,6 @@ export default function OnboardingWizard() {
     const nextStepIndex = Math.min(steps.length - 1, currentStep + 1);
     const updates = { ...stepData, current_step: nextStepIndex };
     updateProfile(updates);
-
-    if (currentStepId === "work_model" && stepData.work_model) {
-      await saveWorkModelProgress(stepData.work_model);
-    }
 
     const savedId = await saveToDb(updates);
     if (afterSaveCallback) {

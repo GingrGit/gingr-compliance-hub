@@ -3,6 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { saveWorkModelProgress } from "@/lib/gingrOnboardingApi";
 
 function computeEligibility(profile, t) {
   const { citizenship_group, permit_type } = profile;
@@ -30,12 +31,13 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
   const [showError, setShowError] = useState(false);
   const availableOptions = options.filter((o) => o.available);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!selected || !availableOptions.find((o) => o.id === selected)) {
       setShowError(true);
       return;
     }
     setShowError(false);
+    await saveWorkModelProgress(selected);
     onNext({ work_model: selected });
   };
 
