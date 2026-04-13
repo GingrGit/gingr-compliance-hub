@@ -130,8 +130,12 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     partner_in_household: yesNoNotSureMap[data.partnerSameHousehold],
     partner_income_ch: yesNoNotSureMap[data.partnerIncomeCh],
     employment_start_date: data.startEmployment ? data.startEmployment.split("T")[0] : undefined,
-    permit_type: data.residencePermitType ? String(data.residencePermitType).toLowerCase() : undefined,
-    permit_status: data.residencePermitStatus ? String(data.residencePermitStatus).toLowerCase() : undefined,
+    permit_type: data.residencePermitType ? String(data.residencePermitType) : undefined,
+    permit_status: data.residencePermitStatus === "Pending"
+      ? "uploaded_review_pending"
+      : data.residencePermitStatus
+      ? String(data.residencePermitStatus).toLowerCase()
+      : undefined,
     permit_url: data.residencePermitUrl,
     id_document_url: data.identityDocumentUrl,
     ahv_confirmation_url: data.selfEmploymentConfirmationUrl,

@@ -21,6 +21,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
   useEffect(() => {
     setPermitType(profile.permit_type || "");
     setPermitUrl(profile.permit_url || "");
+    setErrors({});
   }, [profile.permit_type, profile.permit_url]);
 
   const handleNext = async () => {
