@@ -184,7 +184,6 @@ export function getLastIncompleteStepId(profile) {
     },
     {
       stepId: "eligibility",
-      enabled: !profile.work_model,
       requiredFields: [profile.work_model],
     },
     {

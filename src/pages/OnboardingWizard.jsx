@@ -78,7 +78,7 @@ export default function OnboardingWizard() {
               { id: "core_data" },
             ];
             if (nextProfile.citizenship_group !== "CH") baseSteps.push({ id: "residency" });
-            if (!nextProfile.work_model) baseSteps.push({ id: "eligibility" });
+            baseSteps.push({ id: "eligibility" });
             if (nextProfile.work_model === "self_employed") {
               baseSteps.push({ id: "self_employed" }, { id: "self_employed_summary" });
             } else if (nextProfile.work_model) {

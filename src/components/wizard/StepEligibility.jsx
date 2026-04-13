@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, AlertCircle } from "lucide-react";
@@ -30,6 +30,11 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
   const [selected, setSelected] = useState(profile.work_model || null);
   const [showError, setShowError] = useState(false);
   const availableOptions = options.filter((o) => o.available);
+  const hasAvailableOptions = availableOptions.length > 0;
+
+  useEffect(() => {
+    setSelected(profile.work_model || null);
+  }, [profile.work_model]);
 
   const handleNext = async () => {
     if (!selected || !availableOptions.find((o) => o.id === selected)) {
@@ -57,7 +62,11 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
       </div>
 
       <div className="space-y-3">
-        {options.map((opt) => (
+        {!hasAvailableOptions ? (
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <p className="text-sm text-amber-800">{t("step_eligibility.model_none_desc")}</p>
+          </div>
+        ) : options.map((opt) => (
           <button
             key={opt.id}
             disabled={!opt.available}
