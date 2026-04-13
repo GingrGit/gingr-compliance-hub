@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { useI18n } from "@/lib/i18n";
@@ -17,6 +17,11 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
   const [errors, setErrors] = useState({});
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
+
+  useEffect(() => {
+    setPermitType(profile.permit_type || "");
+    setPermitUrl(profile.permit_url || "");
+  }, [profile.permit_type, profile.permit_url]);
 
   const handleNext = async () => {
     const e = {};
@@ -61,7 +66,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
             <button
               key={p.value}
               type="button"
-              onClick={() => { setPermitType(p.value); setErrors(prev => ({...prev, permitType: null})); }}
+              onClick={() => { setPermitType(p.value); setErrors(prev => ({ ...prev, permitType: null })); }}
               className={`rounded-xl border-2 p-3 text-left transition-all ${permitType === p.value ? "border-[#FF3CAC] bg-pink-50" : errors.permitType ? "border-red-300 hover:border-red-400" : "border-gray-200 hover:border-pink-300"}`}
             >
               <p className="font-semibold text-sm text-gray-800">{p.label}</p>
@@ -76,7 +81,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
         <DocumentUpload
           label={t("step_residency.label_upload")}
           value={permitUrl}
-          onChange={(url) => { setPermitUrl(url); setErrors(prev => ({...prev, permitUrl: null})); }}
+          onChange={(url) => { setPermitUrl(url); setErrors(prev => ({ ...prev, permitUrl: null })); }}
           hint={t("step_residency.upload_hint")}
           profileId={profileId}
           documentType="permit"
