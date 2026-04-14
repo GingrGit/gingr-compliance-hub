@@ -31,6 +31,11 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
     const e = {};
     if (!d.canton) e.canton = t("step_source_tax.error_canton");
     if (!d.marital_status) e.marital_status = t("step_source_tax.error_marital_status");
+    if (!d.has_children) e.has_children = t("step_source_tax.error_all_fields");
+    if (showPartner && !d.partner_in_household) e.partner_in_household = t("step_source_tax.error_all_fields");
+    if (showPartner && !d.partner_income_ch) e.partner_income_ch = t("step_source_tax.error_all_fields");
+    if (d.has_children === "yes" && !d.children_in_household) e.children_in_household = t("step_source_tax.error_all_fields");
+    if (d.has_children === "yes" && !d.receives_child_allowance) e.receives_child_allowance = t("step_source_tax.error_all_fields");
     setErrors(e);
     if (Object.keys(e).length > 0) {
       setTimeout(() => {
@@ -99,13 +104,13 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
       </div>
 
       {showPartner && (
-        <div className="space-y-3 p-4 bg-gray-50 rounded-xl">
+        <div data-field="partner_in_household" className="space-y-3 p-4 bg-gray-50 rounded-xl">
           <p className="text-sm font-medium text-gray-700">{t("step_source_tax.partner_section_title")}</p>
           <div>
             <Label className="text-xs text-gray-600">{t("step_source_tax.label_partner_in_household")}</Label>
             <div className="flex gap-2 mt-1">
               {[["yes", t("step_source_tax.btn_yes")],["no", t("step_source_tax.btn_no")],["unsure", t("step_source_tax.btn_unsure")]].map(([v,l]) => (
-                <button key={v} type="button" onClick={() => set("partner_in_household")(v)}
+                <button key={v} type="button" onClick={() => { set("partner_in_household")(v); setErrors(p => ({ ...p, partner_in_household: null })); }}
                   className={`flex-1 rounded-lg border p-2 text-xs font-medium transition-all ${d.partner_in_household === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
                   {l}
                 </button>
@@ -116,7 +121,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
             <Label className="text-xs text-gray-600">{t("step_source_tax.label_partner_income_ch")}</Label>
             <div className="flex gap-2 mt-1">
               {[["yes", t("step_source_tax.btn_yes")],["no", t("step_source_tax.btn_no")],["unsure", t("step_source_tax.btn_unsure")]].map(([v,l]) => (
-                <button key={v} type="button" onClick={() => set("partner_income_ch")(v)}
+                <button key={v} type="button" onClick={() => { set("partner_income_ch")(v); setErrors(p => ({ ...p, partner_income_ch: null })); }}
                   className={`flex-1 rounded-lg border p-2 text-xs font-medium transition-all ${d.partner_income_ch === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
                   {l}
                 </button>
@@ -127,11 +132,11 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
       )}
 
       <div className="space-y-3">
-        <div>
+        <div data-field="has_children">
           <Label className="text-sm font-medium text-gray-700">{t("step_source_tax.label_has_children")}</Label>
             <div className="flex gap-2 mt-1">
               {[["yes", t("step_source_tax.btn_yes")],["no", t("step_source_tax.btn_no")]].map(([v,l]) => (
-              <button key={v} type="button" onClick={() => set("has_children")(v)}
+              <button key={v} type="button" onClick={() => { set("has_children")(v); setErrors(p => ({ ...p, has_children: null, children_in_household: null, receives_child_allowance: null })); }}
                 className={`flex-1 rounded-lg border p-2 text-sm font-medium transition-all ${d.has_children === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
                 {l}
               </button>
@@ -140,7 +145,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
         </div>
 
         {d.has_children === "yes" && (
-          <div className="p-4 bg-gray-50 rounded-xl space-y-3">
+          <div data-field="children_in_household" className="p-4 bg-gray-50 rounded-xl space-y-3">
             <div>
               <Label className="text-xs text-gray-600">{t("step_source_tax.label_children_count")}</Label>
               <Input type="number" value={d.children_count} onChange={(e) => setD((p) => ({ ...p, children_count: parseInt(e.target.value) || 0 }))} className="mt-1 w-24" placeholder="1" />
@@ -149,7 +154,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
               <Label className="text-xs text-gray-600">{t("step_source_tax.label_children_in_household")}</Label>
               <div className="flex gap-2 mt-1">
                 {[["yes", t("step_source_tax.btn_yes")],["no", t("step_source_tax.btn_no")]].map(([v,l]) => (
-                  <button key={v} type="button" onClick={() => set("children_in_household")(v)}
+                  <button key={v} type="button" onClick={() => { set("children_in_household")(v); setErrors(p => ({ ...p, children_in_household: null })); }}
                     className={`flex-1 rounded-lg border p-2 text-xs font-medium transition-all ${d.children_in_household === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
                     {l}
                   </button>
@@ -160,7 +165,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
               <Label className="text-xs text-gray-600">{t("step_source_tax.label_receives_child_allowance")}</Label>
               <div className="flex gap-2 mt-1">
                 {[["yes", t("step_source_tax.btn_yes")],["no", t("step_source_tax.btn_no")],["unsure", t("step_source_tax.btn_unsure")]].map(([v,l]) => (
-                  <button key={v} type="button" onClick={() => set("receives_child_allowance")(v)}
+                  <button key={v} type="button" onClick={() => { set("receives_child_allowance")(v); setErrors(p => ({ ...p, receives_child_allowance: null })); }}
                     className={`flex-1 rounded-lg border p-2 text-xs font-medium transition-all ${d.receives_child_allowance === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
                     {l}
                   </button>
