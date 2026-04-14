@@ -292,8 +292,10 @@ export async function savePersonalDataProgress(profile) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to save personal data progress");
+    return false;
   }
+
+  return true;
 }
 
 export async function saveWorkModelProgress(workModel) {

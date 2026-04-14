@@ -143,7 +143,12 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       permit_status: isSwiss ? "not_required" : profile.permit_status,
     };
 
-    await savePersonalDataProgress(nextData);
+    const saveResult = await savePersonalDataProgress(nextData);
+    if (saveResult === false) {
+      setSubmitError("Saving your personal data failed. Please try again.");
+      return;
+    }
+
     onNext(nextData, null, { skipDbSave: true });
   };
 
