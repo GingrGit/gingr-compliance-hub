@@ -17,6 +17,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
   const [permitUrl, setPermitUrl] = useState(profile.permit_url || "");
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
   const showRejectedPermitAsEmpty = profile.permit_status === "rejected";
@@ -43,6 +44,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
     }
 
     setSubmitError(null);
+    setIsSubmitting(true);
 
     const saveResult = await saveResidencePermitProgress({
       permitFile: permitUrl,
@@ -51,9 +53,11 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
 
     if (saveResult === false || !saveResult) {
       setSubmitError("Saving your residence permit failed. Please try again.");
+      setIsSubmitting(false);
       return;
     }
 
+    setIsSubmitting(false);
     onNext({
       permit_type: permitType,
       permit_url: permitUrl,
@@ -68,7 +72,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
+      saving={saving || isSubmitting}
       validationError={submitError}
     >
       <div ref={permitTypeRef}>

@@ -80,6 +80,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   const [linkSent, setLinkSent] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = React.useRef(null);
 
   const calcAge = (dob) => {
@@ -125,6 +126,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     }
 
     setSubmitError(null);
+    setIsSubmitting(true);
     const isSwiss = profile.citizenship_group === "CH";
     const nextData = {
       first_name: profile.first_name,
@@ -146,14 +148,17 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     const saveResult = await savePersonalDataProgress(nextData);
     if (saveResult === false) {
       setSubmitError("Saving your personal data failed. Please try again.");
+      setIsSubmitting(false);
       return;
     }
 
     if (!saveResult) {
       setSubmitError("Saving your personal data failed. Please try again.");
+      setIsSubmitting(false);
       return;
     }
 
+    setIsSubmitting(false);
     onNext(nextData, null, { skipDbSave: true });
   };
 
@@ -192,7 +197,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       onNext={validateAndNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
+      saving={saving || isSubmitting}
       validationError={submitError}
     >
       <div className="space-y-4" ref={formRef}>
