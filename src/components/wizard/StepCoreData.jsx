@@ -342,6 +342,9 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             profileId={profileId}
             documentType="id"
           />
+          {profile.id_document_status === "rejected" && (
+            <p className="text-xs text-red-600 mt-2">Please upload a new document.</p>
+          )}
           {fe.id_document_url && <p className="text-xs text-red-500 mt-1">{fe.id_document_url}</p>}
         </div>
 
