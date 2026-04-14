@@ -74,7 +74,6 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
 
 export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [countries, setCountries] = useState([]);
-  const [emailWarning, setEmailWarning] = useState(null);
   const [phoneWarning, setPhoneWarning] = useState(null);
   const [sendingLink, setSendingLink] = useState(false);
   const [linkSent, setLinkSent] = useState(false);
@@ -145,18 +144,6 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     onNext(nextData);
   };
 
-  const checkEmail = async () => {
-    const email = profile.escort_email?.trim();
-    if (!email) return;
-    const results = await base44.entities.OnboardingProfile.filter({ escort_email: email });
-    const existing = results.filter((r) => r.id !== profileId);
-    if (existing.length > 0) {
-      setEmailWarning({ profile_id: existing[0].id, email });
-    } else {
-      setEmailWarning(null);
-    }
-  };
-
   const checkPhone = async () => {
     const phone = profile.phone?.trim();
     if (!phone) return;
@@ -169,11 +156,10 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     }
   };
 
-  const sendMagicLink = async ({ profile_id, email, phone }) => {
+  const sendMagicLink = async ({ profile_id, phone }) => {
     setSendingLink(true);
     await base44.functions.invoke("sendMagicLink", {
       profile_id,
-      email: email || undefined,
       phone: phone || undefined,
       app_url: window.location.origin,
     });
@@ -235,22 +221,11 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           <Input
             type="email"
             value={profile.escort_email || ""}
-            onChange={(e) => { updateProfile({ escort_email: e.target.value }); setEmailWarning(null); setLinkSent(false); setFieldErrors(p => ({...p, escort_email: null})); }}
-            onBlur={checkEmail}
+            onChange={(e) => { updateProfile({ escort_email: e.target.value }); setLinkSent(false); setFieldErrors(p => ({...p, escort_email: null})); }}
             placeholder="anna@beispiel.ch"
             className={fe.escort_email ? "border-red-400 focus-visible:ring-red-300" : ""}
           />
           {fe.escort_email && <p className="text-xs text-red-500 mt-1">{fe.escort_email}</p>}
-          {emailWarning && !linkSent && (
-            <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
-              <p className="font-medium mb-1">Diese E-Mail ist bereits registriert.</p>
-              <p className="mb-2">Möchtest du einen Anmelde-Link an diese E-Mail senden?</p>
-              <Button size="sm" variant="outline" className="text-yellow-700 border-yellow-400 hover:bg-yellow-100" onClick={() => sendMagicLink({ profile_id: emailWarning.profile_id, email: emailWarning.email })} disabled={sendingLink}>
-                {sendingLink ? "Wird gesendet…" : "Login-Link per E-Mail senden"}
-              </Button>
-            </div>
-          )}
-          {linkSent && <p className="text-green-600 text-xs mt-1">✓ Login-Link wurde gesendet.</p>}
         </div>
 
         <div data-field="phone">
