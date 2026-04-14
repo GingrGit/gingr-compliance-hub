@@ -48,7 +48,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
   const handleNext = async () => {
     if (!validate()) return;
     await saveTaxInfoProgress(d);
-    onNext(d);
+    onNext(d, null, { skipDbSave: true });
   };
 
   return (
