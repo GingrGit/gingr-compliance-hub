@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/lib/i18n";
 import { saveResidencePermitProgress } from "@/lib/gingrOnboardingApi";
 
-export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+export default function StepResidency({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const { t } = useI18n();
   const PERMIT_TYPES = [
     { value: "B", label: t("step_residency.permit_b_label"), desc: t("step_residency.permit_b_desc") },
@@ -92,7 +92,13 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
         <DocumentUpload
           label=""
           value={showRejectedPermitAsEmpty ? "" : permitUrl}
-          onChange={(url) => { setPermitUrl(url); setErrors(prev => ({ ...prev, permitUrl: null })); }}
+          onChange={(url) => {
+            setPermitUrl(url);
+            setErrors(prev => ({ ...prev, permitUrl: null }));
+            if (url) {
+              updateProfile({ permit_url: url, permit_status: null });
+            }
+          }}
           hint={t("step_residency.upload_hint")}
           profileId={profileId}
           documentType="permit"
