@@ -47,7 +47,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
       permit_type: permitType,
       permit_url: permitUrl,
       permit_status: "uploaded_review_pending",
-    });
+    }, null, { skipDbSave: true });
   };
 
   return (
