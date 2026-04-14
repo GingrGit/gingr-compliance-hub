@@ -95,7 +95,15 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
         <Label className="text-sm font-medium text-gray-700 mb-2 block">{t("step_source_tax.label_marital_status")}</Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {[["single", t("step_source_tax.marital_single")], ["married", t("step_source_tax.marital_married")], ["partnership", t("step_source_tax.marital_partnership")], ["divorced", t("step_source_tax.marital_divorced")], ["widowed", t("step_source_tax.marital_widowed")], ["unsure", t("step_source_tax.marital_unsure")]].map(([v, l]) => (
-            <button key={v} type="button" onClick={() => { set("marital_status")(v); setErrors(p => ({...p, marital_status: null})); }}
+            <button key={v} type="button" onClick={() => {
+              set("marital_status")(v);
+              setErrors(p => ({
+                ...p,
+                marital_status: null,
+                partner_in_household: null,
+                partner_income_ch: null,
+              }));
+            }}
               className={`rounded-lg border p-2 text-xs font-medium transition-all ${d.marital_status === v ? "border-[#FF3CAC] bg-pink-50 text-[#6B0064]" : errors.marital_status ? "border-red-300 text-gray-600" : "border-gray-200 text-gray-600 hover:border-pink-300"}`}>
               {l}
             </button>
