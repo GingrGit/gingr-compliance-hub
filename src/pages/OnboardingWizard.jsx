@@ -16,6 +16,7 @@ import StepSelfEmployed from "@/components/wizard/StepSelfEmployed";
 import StepSelfEmployedSummary from "@/components/wizard/StepSelfEmployedSummary";
 import StepCongratulations from "@/components/wizard/StepCongratulations";
 import StepCoreDataPrefilled from "@/components/wizard/StepCoreDataPrefilled";
+import AlreadySubmitted from "@/pages/AlreadySubmitted";
 
 import AbandonModal from "@/components/wizard/AbandonModal";
 
@@ -67,6 +68,11 @@ export default function OnboardingWizard() {
           fetchCountries(),
         ]);
         const mappedProfile = mapLegalOnboardingDataToProfile(apiData, countries);
+
+        if (mappedProfile.status && mappedProfile.status !== "draft") {
+          window.location.href = "/already-submitted";
+          return;
+        }
 
         if (Object.keys(mappedProfile).length > 0) {
           setMode("self");
@@ -236,6 +242,10 @@ export default function OnboardingWizard() {
 
   if (!mode) {
     return <ModeSelector onSelect={setMode} />;
+  }
+
+  if (mode === "submitted") {
+    return <AlreadySubmitted />;
   }
 
   const stepProps = {

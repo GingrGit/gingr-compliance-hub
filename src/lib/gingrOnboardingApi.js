@@ -110,7 +110,15 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     NotSure: "unsure",
   };
 
+  const apiStatusMap = {
+    Draft: "draft",
+    Submitted: "submitted",
+    NeedsAction: "needs_action",
+    Approved: "approved",
+  };
+
   const mapped = {
+    status: apiStatusMap[data.status],
     first_name: data.firstName,
     last_name: data.lastName,
     date_of_birth: data.dateOfBirth ? data.dateOfBirth.split("T")[0] : undefined,

@@ -9,6 +9,7 @@ import { I18nProvider } from '@/lib/i18n.jsx';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import { initializeEnv, initializeToken } from '@/lib/env';
 import InvalidToken from './pages/InvalidToken';
+import AlreadySubmitted from './pages/AlreadySubmitted';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -65,6 +66,14 @@ const AuthenticatedApp = () => {
         element={
           <LayoutWrapper currentPageName="InvalidToken">
             <InvalidToken />
+          </LayoutWrapper>
+        }
+      />
+      <Route
+        path="/already-submitted"
+        element={
+          <LayoutWrapper currentPageName="AlreadySubmitted">
+            <AlreadySubmitted />
           </LayoutWrapper>
         }
       />
