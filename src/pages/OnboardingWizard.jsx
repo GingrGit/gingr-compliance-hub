@@ -181,12 +181,15 @@ export default function OnboardingWizard() {
     return savedId;
   };
 
-  const goNext = async (stepData = {}, afterSaveCallback = null) => {
+  const goNext = async (stepData = {}, afterSaveCallback = null, options = {}) => {
     const nextStepIndex = Math.min(steps.length - 1, currentStep + 1);
     const updates = { ...stepData, current_step: nextStepIndex };
     updateProfile(updates);
 
-    const savedId = await saveToDb(updates);
+    let savedId = profileId;
+    if (!options.skipDbSave) {
+      savedId = await saveToDb(updates);
+    }
     if (afterSaveCallback) {
       await afterSaveCallback(savedId || profileId);
     }

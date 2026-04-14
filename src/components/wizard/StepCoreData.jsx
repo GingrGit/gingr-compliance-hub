@@ -141,7 +141,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     };
 
     await savePersonalDataProgress(nextData);
-    onNext(nextData);
+    onNext(nextData, null, { skipDbSave: true });
   };
 
   const checkPhone = async () => {
