@@ -171,6 +171,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   };
 
   const isSwiss = profile.citizenship_group === "CH";
+  const showRejectedIdAsEmpty = profile.id_document_status === "rejected";
 
   const fe = fieldErrors;
 
@@ -338,7 +339,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           </div>
           <DocumentUpload
             label=""
-            value={profile.id_document_url || ""}
+            value={showRejectedIdAsEmpty ? "" : (profile.id_document_url || "")}
             onChange={(url) => { updateProfile({ id_document_url: url, id_document_status: url ? null : profile.id_document_status }); setFieldErrors(p => ({...p, id_document_url: null})); }}
             hint={true}
             profileId={profileId}
