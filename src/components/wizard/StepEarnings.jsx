@@ -53,7 +53,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
 
   const handleNext = async () => {
     await saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax });
-    onNext({ hourly_rate: hourlyRate, hours_per_month: hoursPerMonth, source_tax: sourceTax });
+    onNext({ hourly_rate: hourlyRate, hours_per_month: hoursPerMonth, source_tax: sourceTax }, null, { skipDbSave: true });
   };
 
   return (
