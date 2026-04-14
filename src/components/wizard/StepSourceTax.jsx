@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { Input } from "@/components/ui/input";
@@ -50,6 +50,24 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
 
   const requiresPartnerDetails = d.marital_status === "married" || d.marital_status === "partnership";
   const showPartner = requiresPartnerDetails;
+
+  useEffect(() => {
+    setErrors((prev) => {
+      const next = { ...prev };
+
+      if (!requiresPartnerDetails) {
+        delete next.partner_in_household;
+        delete next.partner_income_ch;
+      }
+
+      if (d.has_children !== "yes") {
+        delete next.children_in_household;
+        delete next.receives_child_allowance;
+      }
+
+      return next;
+    });
+  }, [requiresPartnerDetails, d.has_children]);
 
   const handleNext = async () => {
     if (!validate()) return;
