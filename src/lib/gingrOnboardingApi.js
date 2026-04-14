@@ -348,8 +348,11 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to save residence permit progress");
+    return false;
   }
+
+  const result = await parseJsonResponse(response);
+  return result !== false;
 }
 
 export async function saveWorkModelSelection(workModel) {

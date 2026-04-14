@@ -16,6 +16,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
   const [permitType, setPermitType] = useState(profile.permit_type || "");
   const [permitUrl, setPermitUrl] = useState(profile.permit_url || "");
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState(null);
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
   const showRejectedPermitAsEmpty = profile.permit_status === "rejected";
@@ -33,6 +34,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
     setErrors(e);
 
     if (Object.keys(e).length > 0) {
+      setSubmitError(t("step_residency.error_all_fields"));
       setTimeout(() => {
         const firstRef = e.permitType ? permitTypeRef : permitUploadRef;
         firstRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -40,10 +42,17 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
       return;
     }
 
-    await saveResidencePermitProgress({
+    setSubmitError(null);
+
+    const saveResult = await saveResidencePermitProgress({
       permitFile: permitUrl,
       permitType,
     });
+
+    if (saveResult === false || !saveResult) {
+      setSubmitError("Saving your residence permit failed. Please try again.");
+      return;
+    }
 
     onNext({
       permit_type: permitType,
@@ -60,7 +69,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
-      validationError={Object.keys(errors).length > 0 ? t("step_residency.error_all_fields") : null}
+      validationError={submitError}
     >
       <div ref={permitTypeRef}>
         <p className="text-sm font-medium text-gray-700 mb-3">{t("step_residency.label_permit_type")}</p>
