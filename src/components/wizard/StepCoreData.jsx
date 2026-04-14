@@ -149,6 +149,11 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       return;
     }
 
+    if (!saveResult) {
+      setSubmitError("Saving your personal data failed. Please try again.");
+      return;
+    }
+
     onNext(nextData, null, { skipDbSave: true });
   };
 

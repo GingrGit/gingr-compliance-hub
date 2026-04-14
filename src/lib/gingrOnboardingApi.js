@@ -295,7 +295,8 @@ export async function savePersonalDataProgress(profile) {
     return false;
   }
 
-  return true;
+  const result = await parseJsonResponse(response);
+  return result !== false;
 }
 
 export async function saveWorkModelProgress(workModel) {
