@@ -32,8 +32,8 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
     if (!d.canton) e.canton = t("step_source_tax.error_canton");
     if (!d.marital_status) e.marital_status = t("step_source_tax.error_marital_status");
     if (!d.has_children) e.has_children = t("step_source_tax.error_all_fields");
-    if (showPartner && !d.partner_in_household) e.partner_in_household = t("step_source_tax.error_all_fields");
-    if (showPartner && !d.partner_income_ch) e.partner_income_ch = t("step_source_tax.error_all_fields");
+    if (requiresPartnerDetails && !d.partner_in_household) e.partner_in_household = t("step_source_tax.error_all_fields");
+    if (requiresPartnerDetails && !d.partner_income_ch) e.partner_income_ch = t("step_source_tax.error_all_fields");
     if (d.has_children === "yes" && !d.children_in_household) e.children_in_household = t("step_source_tax.error_all_fields");
     if (d.has_children === "yes" && !d.receives_child_allowance) e.receives_child_allowance = t("step_source_tax.error_all_fields");
     setErrors(e);
@@ -48,7 +48,8 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
     return true;
   };
 
-  const showPartner = d.marital_status === "married" || d.marital_status === "partnership";
+  const requiresPartnerDetails = d.marital_status === "married" || d.marital_status === "partnership";
+  const showPartner = requiresPartnerDetails;
 
   const handleNext = async () => {
     if (!validate()) return;
