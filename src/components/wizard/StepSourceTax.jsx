@@ -67,6 +67,13 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
     });
   }, [requiresPartnerDetails, d.has_children]);
 
+  const hasVisibleRequiredErrors = Boolean(
+    errors.canton ||
+    errors.marital_status ||
+    errors.has_children ||
+    (requiresPartnerDetails && (errors.partner_in_household || errors.partner_income_ch))
+  );
+
   const handleNext = async () => {
     if (!validate()) return;
     await saveTaxInfoProgress(d);
@@ -81,7 +88,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving}
-      validationError={Object.keys(errors).length > 0 ? t("step_source_tax.error_all_fields") : null}
+      validationError={hasVisibleRequiredErrors ? t("step_source_tax.error_all_fields") : null}
     >
       <InfoAccordion title={t("step_source_tax.accordion_title")}>
         {t("step_source_tax.accordion_body")}
