@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
+import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/lib/i18n";
 import { saveResidencePermitProgress } from "@/lib/gingrOnboardingApi";
 
@@ -17,6 +18,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
   const [errors, setErrors] = useState({});
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
+  const showRejectedPermitAsEmpty = profile.permit_status === "rejected";
 
   useEffect(() => {
     setPermitType(profile.permit_type || "");
@@ -27,7 +29,7 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
   const handleNext = async () => {
     const e = {};
     if (!permitType) e.permitType = t("step_residency.error_permit_type");
-    if (!permitUrl) e.permitUrl = t("step_residency.error_upload");
+    if (!permitUrl || profile.permit_status === "rejected") e.permitUrl = "Please upload a new residence permit";
     setErrors(e);
 
     if (Object.keys(e).length > 0) {
@@ -79,9 +81,17 @@ export default function StepResidency({ profile, onNext, onBack, onSaveAndExit, 
       </div>
 
       <div ref={permitUploadRef}>
+        <div className="flex items-center gap-2 mb-2 flex-wrap">
+          <p className="text-sm font-medium text-gray-900">{t("step_residency.label_upload")}</p>
+          {profile.permit_status === "rejected" && (
+            <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
+              Rejected
+            </Badge>
+          )}
+        </div>
         <DocumentUpload
-          label={t("step_residency.label_upload")}
-          value={permitUrl}
+          label=""
+          value={showRejectedPermitAsEmpty ? "" : permitUrl}
           onChange={(url) => { setPermitUrl(url); setErrors(prev => ({ ...prev, permitUrl: null })); }}
           hint={t("step_residency.upload_hint")}
           profileId={profileId}

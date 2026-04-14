@@ -179,6 +179,10 @@ export function getLastIncompleteStepId(profile) {
     return "core_data";
   }
 
+  if (profile.permit_status === "rejected") {
+    return "residency";
+  }
+
   const checks = [
     { stepId: "work_model", requiredFields: [profile.work_model] },
     {
