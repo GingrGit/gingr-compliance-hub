@@ -81,6 +81,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [identityModified, setIdentityModified] = useState(false);
   const formRef = React.useRef(null);
 
   const calcAge = (dob) => {
@@ -99,6 +100,10 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   useEffect(() => {
     fetchCountries().then(setCountries);
   }, []);
+
+  useEffect(() => {
+    setIdentityModified(false);
+  }, [profile.id_document_url]);
 
   const validateAndNext = async () => {
     const errors = {};
@@ -140,7 +145,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       citizenship_group: profile.citizenship_group,
       nationality: profile.nationality,
       country_code: profile.country_code,
-      id_document_url: profile.id_document_url,
+      id_document_url: identityModified ? profile.id_document_url : null,
       permit_type: isSwiss ? "none" : profile.permit_type,
       permit_status: isSwiss ? "not_required" : profile.permit_status,
     };
@@ -355,7 +360,11 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           <DocumentUpload
             label=""
             value={showRejectedIdAsEmpty ? "" : (profile.id_document_url || "")}
-            onChange={(url) => { updateProfile({ id_document_url: url, id_document_status: url ? null : profile.id_document_status }); setFieldErrors(p => ({...p, id_document_url: null})); }}
+            onChange={(url) => {
+              setIdentityModified(true);
+              updateProfile({ id_document_url: url, id_document_status: url ? null : profile.id_document_status });
+              setFieldErrors(p => ({...p, id_document_url: null}));
+            }}
             hint={true}
             profileId={profileId}
             documentType="id"
