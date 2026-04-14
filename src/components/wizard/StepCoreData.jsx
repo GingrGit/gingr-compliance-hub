@@ -108,7 +108,9 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     if (!profile.escort_email?.trim()) errors.escort_email = "E-Mail-Adresse ist erforderlich";
     if (!profile.phone?.trim()) errors.phone = "Handynummer ist erforderlich";
     if (!profile.citizenship_group) errors.citizenship_group = "Bitte wähle deine Staatsangehörigkeit";
-    if (!profile.id_document_url) errors.id_document_url = "Bitte lade dein Ausweisdokument hoch";
+    if (!profile.id_document_url || profile.id_document_status === "rejected") {
+      errors.id_document_url = "Please upload a new identity document";
+    }
 
     setFieldErrors(errors);
 
@@ -337,7 +339,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           <DocumentUpload
             label=""
             value={profile.id_document_url || ""}
-            onChange={(url) => { updateProfile({ id_document_url: url, id_document_status: url ? undefined : profile.id_document_status }); setFieldErrors(p => ({...p, id_document_url: null})); }}
+            onChange={(url) => { updateProfile({ id_document_url: url, id_document_status: url ? null : profile.id_document_status }); setFieldErrors(p => ({...p, id_document_url: null})); }}
             hint={true}
             profileId={profileId}
             documentType="id"
