@@ -6,6 +6,7 @@ import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ChevronDown } from "lucide-react";
 
 function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
@@ -323,10 +324,20 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="id_document_url">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            <p className="text-sm font-medium text-gray-900">
+              {isSwiss ? "Schweizer Pass oder Identitätskarte" : "Reisepass oder Personalausweis"} hochladen *
+            </p>
+            {profile.id_document_status === "rejected" && (
+              <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
+                Rejected
+              </Badge>
+            )}
+          </div>
           <DocumentUpload
-            label={`${isSwiss ? "Schweizer Pass oder Identitätskarte" : "Reisepass oder Personalausweis"} hochladen *`}
+            label=""
             value={profile.id_document_url || ""}
-            onChange={(url) => { updateProfile({ id_document_url: url }); setFieldErrors(p => ({...p, id_document_url: null})); }}
+            onChange={(url) => { updateProfile({ id_document_url: url, id_document_status: url ? undefined : profile.id_document_status }); setFieldErrors(p => ({...p, id_document_url: null})); }}
             hint={true}
             profileId={profileId}
             documentType="id"

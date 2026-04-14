@@ -175,6 +175,10 @@ export function getLastIncompleteStepId(profile) {
   const isSelfEmployed = profile.work_model === "self_employed";
   const needsSourceTaxStep = profile.source_tax === "yes" || profile.source_tax === "unsure";
 
+  if (profile.id_document_status === "rejected") {
+    return "core_data";
+  }
+
   const checks = [
     { stepId: "work_model", requiredFields: [profile.work_model] },
     {
