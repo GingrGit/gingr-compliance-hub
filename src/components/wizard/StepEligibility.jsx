@@ -43,7 +43,7 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
     }
     setShowError(false);
     await saveWorkModelProgress(selected);
-    onNext({ work_model: selected });
+    onNext({ work_model: selected }, null, { skipDbSave: true });
   };
 
   return (
