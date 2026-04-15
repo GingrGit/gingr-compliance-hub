@@ -444,7 +444,7 @@ export async function submitLegalOnboarding(startDate) {
   const url = new URL(`${getLegalOnboardingBaseUrl()}/submit`);
 
   if (startDate) {
-    url.searchParams.set("start", String(new Date(startDate).getTime()));
+    url.searchParams.set("start", String(Math.floor(new Date(startDate).getTime() / 1000)));
   }
 
   const response = await fetch(url.toString(), {
