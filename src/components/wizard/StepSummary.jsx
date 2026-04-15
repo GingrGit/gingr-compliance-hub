@@ -54,12 +54,18 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
   const [startDateTouched, setStartDateTouched] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const isStartDateMissing = !startDate;
 
   const handleNext = async () => {
     setStartDateTouched(true);
+    setSubmitError(null);
     if (isStartDateMissing || saving) return;
-    if (onSubmit) await onSubmit(startDate || undefined);
+    const submitResult = onSubmit ? await onSubmit(startDate || undefined) : true;
+    if (submitResult === false) {
+      setSubmitError("Submitting your application failed. Please try again.");
+      return;
+    }
     onNext({ employment_start_date: startDate });
   };
 
@@ -165,6 +171,10 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           Ich habe alle Angaben sorgfältig geprüft und bin mit der dargestellten Berechnungsmethode sowie den Konditionen des Arbeitsverhältnisses einverstanden.
         </p>
       </label>
+
+      {submitError && (
+        <p className="text-sm text-red-600">{submitError}</p>
+      )}
     </StepCard>
   );
 }

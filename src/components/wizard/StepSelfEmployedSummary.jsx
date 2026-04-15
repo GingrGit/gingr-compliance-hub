@@ -43,9 +43,15 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
   const { t } = useI18n();
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
+  const [submitError, setSubmitError] = useState(null);
 
   const handleNext = async () => {
-    if (onSubmit) await onSubmit();
+    setSubmitError(null);
+    const submitResult = onSubmit ? await onSubmit() : true;
+    if (submitResult === false) {
+      setSubmitError("Submitting your application failed. Please try again.");
+      return;
+    }
     onNext({ employment_start_date: startDate });
   };
 
@@ -139,6 +145,10 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
           {t("step_self_employed_summary.consent_text")}
         </p>
       </label>
+
+      {submitError && (
+        <p className="text-sm text-red-600">{submitError}</p>
+      )}
     </StepCard>
   );
 }
