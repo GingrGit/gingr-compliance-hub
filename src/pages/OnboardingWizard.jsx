@@ -215,7 +215,12 @@ export default function OnboardingWizard() {
 
   const handleSubmit = async (startDate) => {
     setSaving(true);
-    await submitLegalOnboarding(startDate);
+    const submitResult = await submitLegalOnboarding(startDate);
+
+    if (submitResult === false) {
+      setSaving(false);
+      return false;
+    }
 
     const updates = {
       status: "submitted",

@@ -504,7 +504,7 @@ export async function submitLegalOnboarding(startDate) {
   const token = tokenState?.token;
 
   if (!token) {
-    return;
+    return false;
   }
 
   const url = new URL(`${getLegalOnboardingBaseUrl()}/submit`);
@@ -521,6 +521,9 @@ export async function submitLegalOnboarding(startDate) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to submit legal onboarding");
+    return false;
   }
+
+  const result = await parseJsonResponse(response);
+  return result !== false;
 }
