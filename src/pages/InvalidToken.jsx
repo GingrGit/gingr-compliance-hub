@@ -51,16 +51,16 @@ export default function InvalidToken() {
           <ShieldAlert className="w-8 h-8 text-[#FF3CAC]" />
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">{t("invalid_token.title") !== "title" ? t("invalid_token.title") : "Invalid or expired link"}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">{t("invalid_token.title")}</h1>
         <p className="text-sm text-gray-500 leading-6 mb-8">
-          {t("invalid_token.description") !== "description" ? t("invalid_token.description") : "This access link is no longer valid. Please request a new link or go back and try again."}
+          {t("invalid_token.description")}
         </p>
 
         <a
           href={getGingrBaseUrl()}
           className="w-full inline-flex items-center justify-center bg-[#FF3CAC] hover:bg-[#e0309a] text-white text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
         >
-          {t("invalid_token.button") !== "button" ? t("invalid_token.button") : "Back to Gingr"}
+          {t("invalid_token.button")}
         </a>
       </div>
     </div>
