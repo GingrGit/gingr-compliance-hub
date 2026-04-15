@@ -62,6 +62,18 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     return true;
   };
 
+  const hasValidationError = (() => {
+    if (!businessType) return false;
+    if (businessType === "freelancer") {
+      const hasProfileUrl = activityUrls.some((url) => url.trim());
+      return !ahvUrl || !hasProfileUrl || !confirmed;
+    }
+    if (businessType === "company") {
+      return !commercialRegisterUrl || !invoiceProofType || !invoiceProofUrl || !confirmed;
+    }
+    return false;
+  })();
+
   const handleNext = async () => {
     if (!validate()) return;
 
@@ -103,7 +115,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving || isSubmitting}
-      validationError={submitError || (Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null)}
+      validationError={submitError || (hasValidationError ? "Bitte fülle alle markierten Felder aus." : null)}
     >
       <div className="space-y-5" ref={formRef}>
 
