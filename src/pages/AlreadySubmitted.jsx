@@ -51,16 +51,16 @@ export default function AlreadySubmitted() {
           <FileCheck2 className="w-8 h-8 text-[#FF3CAC]" />
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">{t("already_submitted.title")}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">{t("already_submitted.title") !== "title" ? t("already_submitted.title") : "Form already submitted"}</h1>
         <p className="text-sm text-gray-500 leading-6 mb-8">
-          {t("already_submitted.description")}
+          {t("already_submitted.description") !== "description" ? t("already_submitted.description") : "This onboarding form has already been submitted and can no longer be edited here."}
         </p>
 
         <a
           href={getGingrBaseUrl()}
           className="w-full inline-flex items-center justify-center bg-[#FF3CAC] hover:bg-[#e0309a] text-white text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
         >
-          {t("already_submitted.button")}
+          {t("already_submitted.button") !== "button" ? t("already_submitted.button") : "Back to Gingr"}
         </a>
       </div>
     </div>
