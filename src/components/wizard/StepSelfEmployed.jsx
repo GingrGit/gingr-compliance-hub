@@ -3,6 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { CheckCircle2, User, Building2, Plus, X, Link } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { saveFreelancerProgress } from "@/lib/gingrOnboardingApi";
 
 const BUSINESS_TYPES = [
   {
@@ -31,6 +32,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
   const [invoiceProofType, setInvoiceProofType] = useState(profile.invoice_proof_type || null);
   const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
 
   const validate = () => {
@@ -59,18 +62,37 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!validate()) return;
+
+    const cleanedActivityUrls = activityUrls.filter((u) => u.trim());
+    setSubmitError(null);
+
+    if (businessType === "freelancer") {
+      setIsSubmitting(true);
+      const saveResult = await saveFreelancerProgress({
+        selfEmploymentConfirmation: ahvUrl,
+        profileUrls: cleanedActivityUrls,
+      });
+
+      if (saveResult === false || !saveResult) {
+        setSubmitError("Saving your freelancer information failed. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+      setIsSubmitting(false);
+    }
+
     onNext({
       business_type: businessType,
       ahv_confirmation_url: ahvUrl,
-      activity_proof_urls: activityUrls.filter(u => u.trim()),
-      activity_proof_url: activityUrls.filter(u => u.trim()).join(", "),
+      activity_proof_urls: cleanedActivityUrls,
+      activity_proof_url: cleanedActivityUrls.join(", "),
       commercial_register_url: commercialRegisterUrl,
       invoice_proof_url: invoiceProofUrl,
       invoice_proof_type: invoiceProofType,
       self_employed_confirmed: confirmed,
-    });
+    }, null, { skipDbSave: businessType === "freelancer" });
   };
 
   return (
@@ -80,8 +102,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
-      validationError={Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null}
+      saving={saving || isSubmitting}
+      validationError={submitError || (Object.keys(errors).length > 0 ? "Bitte fülle alle markierten Felder aus." : null)}
     >
       <div className="space-y-5" ref={formRef}>
 

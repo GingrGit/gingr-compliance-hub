@@ -378,6 +378,36 @@ export async function saveWorkModelSelection(workModel) {
   }
 }
 
+export async function saveFreelancerProgress({ selfEmploymentConfirmation, profileUrls }) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token || !selfEmploymentConfirmation || !Array.isArray(profileUrls) || profileUrls.length === 0) {
+    return false;
+  }
+
+  const formData = new FormData();
+  formData.append("selfEmploymentConfirmation", selfEmploymentConfirmation);
+  profileUrls.forEach((url) => {
+    formData.append("profileUrls", url);
+  });
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/freelancer`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    return false;
+  }
+
+  const result = await parseJsonResponse(response);
+  return result !== false;
+}
+
 export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
