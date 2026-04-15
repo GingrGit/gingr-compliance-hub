@@ -185,11 +185,12 @@ export default function OnboardingWizard() {
 
   const goNext = async (stepData = {}, afterSaveCallback = null, options = {}) => {
     const nextStepIndex = Math.min(steps.length - 1, currentStep + 1);
+    const shouldSkipDbSave = options.skipDbSave || currentStepId === "self_employed";
     const updates = { ...stepData, current_step: nextStepIndex };
     updateProfile(updates);
 
     let savedId = profileId;
-    if (!options.skipDbSave) {
+    if (!shouldSkipDbSave) {
       savedId = await saveToDb(updates);
     }
     if (afterSaveCallback) {
