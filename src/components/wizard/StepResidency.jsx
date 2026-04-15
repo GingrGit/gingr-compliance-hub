@@ -78,9 +78,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
       validationError={submitError}
     >
       <div ref={permitTypeRef}>
-        <p className="text-sm font-medium text-gray-700 mb-3">
-          {t("step_residency.label_permit_type")} <span className="text-red-500">*</span>
-        </p>
+        <p className="text-sm font-medium text-gray-700 mb-3">{t("step_residency.label_permit_type")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {PERMIT_TYPES.map((p) => (
             <button
@@ -94,7 +92,6 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
             </button>
           ))}
         </div>
-        {errors.permitType && <p className="text-xs text-red-500 mt-2">{errors.permitType}</p>}
       </div>
 
       <div ref={permitUploadRef}>
@@ -121,8 +118,14 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
           profileId={profileId}
           documentType="permit"
         />
-        {errors.permitUrl && <p className="text-xs text-red-500 mt-1">{errors.permitUrl}</p>}
       </div>
+
+      {(errors.permitType || errors.permitUrl) && (
+        <div className="space-y-1">
+          {errors.permitType && <p className="text-xs text-red-500">{errors.permitType}</p>}
+          {errors.permitUrl && <p className="text-xs text-red-500">{errors.permitUrl}</p>}
+        </div>
+      )}
 
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-3">
         <p className="text-xs text-[#6B0064]">
