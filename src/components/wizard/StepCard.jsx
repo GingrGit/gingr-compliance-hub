@@ -17,7 +17,19 @@ export default function StepCard({
   validationError = null,
 }) {
   const { t } = useI18n();
+  const [isProcessingNext, setIsProcessingNext] = React.useState(false);
   const resolvedNextLabel = nextLabel ?? t("step_card.btn_next");
+
+  const handleNextClick = async () => {
+    if (saving || nextDisabled || isProcessingNext) return;
+    setIsProcessingNext(true);
+    try {
+      await onNext?.();
+    } finally {
+      setIsProcessingNext(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
       <div className="mb-6">
@@ -47,11 +59,11 @@ export default function StepCard({
             </Button>
           </div>
           <Button
-            onClick={onNext}
-            disabled={saving || nextDisabled}
+            onClick={handleNextClick}
+            disabled={saving || nextDisabled || isProcessingNext}
             className="bg-[#FF3CAC] hover:bg-[#e030a0] text-white rounded-full px-5 sm:px-8 font-semibold shadow-md flex-shrink-0 text-sm"
           >
-            {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+            {(saving || isProcessingNext) ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
             {resolvedNextLabel}
           </Button>
         </div>
