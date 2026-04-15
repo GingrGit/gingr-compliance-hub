@@ -18,7 +18,6 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [permitModified, setPermitModified] = useState(false);
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
   const showRejectedPermitAsEmpty = profile.permit_status === "rejected";
@@ -27,7 +26,6 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
     setPermitType(profile.permit_type || "");
     setPermitUrl(profile.permit_url || "");
     setErrors({});
-    setPermitModified(false);
   }, [profile.permit_type, profile.permit_url]);
 
   const handleNext = async () => {
@@ -49,7 +47,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
     setIsSubmitting(true);
 
     const saveResult = await saveResidencePermitProgress({
-      permitFile: permitModified ? permitUrl : null,
+      permitFile: permitUrl,
       permitType,
     });
 
@@ -107,7 +105,6 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
           label=""
           value={showRejectedPermitAsEmpty ? "" : permitUrl}
           onChange={(url) => {
-            setPermitModified(true);
             setPermitUrl(url);
             setErrors(prev => ({ ...prev, permitUrl: null }));
             if (url) {

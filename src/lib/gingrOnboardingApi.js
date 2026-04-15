@@ -326,8 +326,8 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
 
-  if (!token || !permitType) {
-    return;
+  if (!token || !permitType || !permitFile) {
+    return false;
   }
 
   const permitTypeMap = {
@@ -338,7 +338,7 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
   };
 
   const formData = new FormData();
-  formData.append("ResidencePermit", permitFile ?? null);
+  formData.append("ResidencePermit", permitFile);
   formData.append("PermitType", permitTypeMap[permitType] || permitType);
 
   const response = await fetch(`${getLegalOnboardingBaseUrl()}/residence-permit`, {
