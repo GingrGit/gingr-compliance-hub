@@ -47,17 +47,17 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
             <CheckCircle2 className="w-5 h-5 text-green-500" />
             <span className="text-sm font-medium text-green-800">{fileName || value?.name || t("document_upload.uploaded_label")}</span>
           </div>
-          <button
-            onClick={() => {
-              if (disableDelete) return;
-              onChange("");
-              setFileName("");
-            }}
-            disabled={disableDelete}
-            className={`transition-colors ${disableDelete ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-red-500"}`}
-          >
-            <X className="w-4 h-4" />
-          </button>
+          {!disableDelete && (
+            <button
+              onClick={() => {
+                onChange("");
+                setFileName("");
+              }}
+              className="text-gray-400 hover:text-red-500 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
       )}
 
