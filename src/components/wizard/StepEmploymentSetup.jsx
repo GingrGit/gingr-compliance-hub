@@ -23,10 +23,9 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
         if (res.data?.slug) {
           setSlug(res.data.slug);
         } else {
-          setSlugError("Vertrag konnte nicht geladen werden.");
-        }
-      })
-      .catch(() => setSlugError("Vertrag konnte nicht geladen werden."))
+          setSlugError(t("step_employment_setup.contract_load_error"));
+...
+      .catch(() => setSlugError(t("step_employment_setup.contract_load_error")))
       .finally(() => setLoadingSlug(false));
   }, []);
 

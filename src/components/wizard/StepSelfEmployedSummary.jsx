@@ -63,31 +63,31 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
       saving={saving}
     >
       {/* Persönliche Angaben */}
-      <SectionBlock icon={User} title="Persönliche Angaben">
-        <DataRow label="Name" value={`${profile.first_name || ""} ${profile.last_name || ""}`.trim()} />
-        <DataRow label="Geburtsdatum" value={profile.date_of_birth} />
-        <DataRow label="Adresse" value={profile.address ? `${profile.address}, ${profile.postal_code || ""} ${profile.city || ""}`.trim() : null} />
-        <DataRow label="Telefon" value={profile.phone} />
-        <DataRow label="Nationalität" value={profile.nationality} />
+      <SectionBlock icon={User} title={t("step_self_employed_summary.section_personal")}>
+        <DataRow label={t("step_self_employed_summary.label_name")} value={`${profile.first_name || ""} ${profile.last_name || ""}`.trim()} />
+        <DataRow label={t("step_self_employed_summary.label_birth_date")} value={profile.date_of_birth} />
+        <DataRow label={t("step_self_employed_summary.label_address")} value={profile.address ? `${profile.address}, ${profile.postal_code || ""} ${profile.city || ""}`.trim() : null} />
+        <DataRow label={t("step_self_employed_summary.label_phone")} value={profile.phone} />
+        <DataRow label={t("step_self_employed_summary.label_nationality")} value={profile.nationality} />
       </SectionBlock>
 
       {/* Unternehmensangaben */}
-      <SectionBlock icon={Building2} title="Unternehmensangaben">
-        <DataRow label="Unternehmensform" value={BUSINESS_TYPE_LABELS[profile.business_type]} />
-        {profile.business_name && <DataRow label="Firmenname" value={profile.business_name} />}
-        {profile.uid_number && <DataRow label="UID-Nummer" value={profile.uid_number} />}
+      <SectionBlock icon={Building2} title={t("step_self_employed_summary.section_company")}>
+        <DataRow label={t("step_self_employed_summary.label_business_type")} value={BUSINESS_TYPE_LABELS[profile.business_type]} />
+        {profile.business_name && <DataRow label={t("step_self_employed_summary.label_company_name")} value={profile.business_name} />}
+        {profile.uid_number && <DataRow label={t("step_self_employed_summary.label_uid")} value={profile.uid_number} />}
       </SectionBlock>
 
       {/* Dokumente */}
-      <SectionBlock icon={FileText} title="Eingereichte Dokumente">
+      <SectionBlock icon={FileText} title={t("step_self_employed_summary.section_documents")}>
         {isFreelancer && (
           <>
-            <DataRow label="AHV-Bestätigung" value={profile.ahv_confirmation_url ? "✓ Hochgeladen" : null} />
+            <DataRow label={t("step_self_employed_summary.label_ahv_confirmation")} value={profile.ahv_confirmation_url ? t("step_self_employed_summary.uploaded") : null} />
             <DataRow
-              label="Nachweis Markttätigkeit"
+              label={t("step_self_employed_summary.label_activity_proof")}
               value={
                 profile.activity_proof_urls?.length > 0
-                  ? `${profile.activity_proof_urls.length} URL(s) angegeben`
+                  ? t("step_self_employed_summary.activity_proof_count", { count: profile.activity_proof_urls.length })
                   : null
               }
             />
@@ -95,9 +95,9 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
         )}
         {!isFreelancer && (
           <>
-            <DataRow label="Handelsregisterauszug" value={profile.commercial_register_url ? "✓ Hochgeladen" : null} />
+            <DataRow label={t("step_self_employed_summary.label_commercial_register")} value={profile.commercial_register_url ? t("step_self_employed_summary.uploaded") : null} />
             <DataRow
-              label="Vertretungsnachweis"
+              label={t("step_self_employed_summary.label_representation_proof")}
               value={
                 profile.invoice_proof_type
                   ? `${INVOICE_PROOF_LABELS[profile.invoice_proof_type]} – ✓ Hochgeladen`
@@ -109,8 +109,8 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
       </SectionBlock>
 
       {/* Startdatum */}
-      <SectionBlock icon={Briefcase} title="Beginn der Zusammenarbeit">
-        <p className="text-xs text-gray-500 mb-2">Ab wann möchtest du deine Tätigkeit bei gingr.ch beginnen?</p>
+      <SectionBlock icon={Briefcase} title={t("step_self_employed_summary.section_start_date")}>
+        <p className="text-xs text-gray-500 mb-2">{t("step_self_employed_summary.start_date_help")}</p>
         <input
           type="date"
           value={startDate}
@@ -121,9 +121,9 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
 
       {/* Hinweis Vertrag */}
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-4 text-sm text-[#6B0064]">
-        <p className="font-semibold mb-1">Vertragsunterzeichnung im Nachgang</p>
+        <p className="font-semibold mb-1">{t("step_self_employed_summary.contract_notice_title")}</p>
         <p className="text-xs text-gray-600 leading-relaxed">
-          Der Kooperationsvertrag wird dir nach Prüfung deiner Unterlagen separat zugestellt. Du wirst per E-Mail benachrichtigt, sobald alles bereit ist.
+          {t("step_self_employed_summary.contract_notice_text")}
         </p>
       </div>
 
@@ -136,7 +136,7 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
           {consent && <CheckCircle2 className="w-3 h-3 text-white" />}
         </div>
         <p className="text-sm text-gray-700">
-          Ich habe alle Angaben sorgfältig geprüft und bestätige die Richtigkeit meiner eingereichten Unterlagen.
+          {t("step_self_employed_summary.consent_text")}
         </p>
       </label>
     </StepCard>

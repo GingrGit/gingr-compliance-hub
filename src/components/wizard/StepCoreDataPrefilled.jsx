@@ -83,22 +83,22 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
         <div className="flex items-center gap-2.5 px-3 py-2.5 bg-pink-50 border border-pink-200 rounded-xl">
           <Link2 className="w-4 h-4 text-pink-500 flex-shrink-0" />
           <div>
-            <p className="text-xs font-semibold text-pink-700">Von gingr.ch übernommen</p>
-            <p className="text-xs text-pink-500">Diese Daten stammen aus deinem Gingr-Profil und können hier nicht geändert werden.</p>
+            <p className="text-xs font-semibold text-pink-700">{t("step_core_data_prefilled.banner_title")}</p>
+            <p className="text-xs text-pink-500">{t("step_core_data_prefilled.banner_desc")}</p>
           </div>
         </div>
 
         {/* Pre-filled read-only fields */}
         <div className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <ReadOnlyField label="Vorname" value={profile.first_name} />
-            <ReadOnlyField label="Nachname" value={profile.last_name} />
-          </div>
-          <ReadOnlyField label="Geburtsdatum" value={formatDate(profile.date_of_birth)} />
-          <ReadOnlyField label="E-Mail-Adresse" value={profile.escort_email} />
-          <ReadOnlyField label="Handynummer" value={profile.phone} />
+            <ReadOnlyField label={t("step_core_data_prefilled.label_first_name")} value={profile.first_name} />
+            <ReadOnlyField label={t("step_core_data_prefilled.label_last_name")} value={profile.last_name} />
+...
+          <ReadOnlyField label={t("step_core_data_prefilled.label_birth_date")} value={formatDate(profile.date_of_birth)} />
+          <ReadOnlyField label={t("step_core_data_prefilled.label_email")} value={profile.escort_email} />
+          <ReadOnlyField label={t("step_core_data_prefilled.label_phone")} value={profile.phone} />
           <ReadOnlyField
-            label="Staatsangehörigkeit"
+            label={t("step_core_data_prefilled.label_nationality")}
             value={profile.nationality}
             icon={getFlag(profile.nationality)}
           />
@@ -108,35 +108,35 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
         <div className="relative">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200" /></div>
           <div className="relative flex justify-center">
-            <span className="bg-white px-3 text-xs text-gray-400">Bitte ergänzen</span>
+            <span className="bg-white px-3 text-xs text-gray-400">{t("step_core_data_prefilled.divider_text")}</span>
           </div>
         </div>
 
         {/* Address fields (editable) */}
         <div className="space-y-3">
           <div>
-            <Label className="text-xs text-gray-600 mb-1">Strasse und Hausnummer *</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data_prefilled.label_address")}</Label>
             <Input
               value={profile.address || ""}
               onChange={(e) => updateProfile({ address: e.target.value })}
-              placeholder="Musterstrasse 1"
+              placeholder={t("step_core_data_prefilled.placeholder_address")}
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label className="text-xs text-gray-600 mb-1">PLZ *</Label>
+              <Label className="text-xs text-gray-600 mb-1">{t("step_core_data_prefilled.label_postal_code")}</Label>
               <Input
                 value={profile.postal_code || ""}
                 onChange={(e) => updateProfile({ postal_code: e.target.value })}
-                placeholder="8001"
+                placeholder={t("step_core_data_prefilled.placeholder_postal_code")}
               />
             </div>
             <div>
-              <Label className="text-xs text-gray-600 mb-1">Ort *</Label>
+              <Label className="text-xs text-gray-600 mb-1">{t("step_core_data_prefilled.label_city")}</Label>
               <Input
                 value={profile.city || ""}
                 onChange={(e) => updateProfile({ city: e.target.value })}
-                placeholder="Zürich"
+                placeholder={t("step_core_data_prefilled.placeholder_city")}
               />
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
             {confirmed && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
           </div>
           <span className="text-xs text-gray-700 leading-relaxed">
-            Ich bestätige, dass die oben angezeigten Daten aus meinem Gingr-Profil korrekt und aktuell sind.
+            {t("step_core_data_prefilled.confirmation_text")}
           </span>
         </label>
 

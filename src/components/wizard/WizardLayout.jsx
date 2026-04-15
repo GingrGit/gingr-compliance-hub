@@ -136,7 +136,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
         {/* Step indicators — Mobile compact */}
         <div className="sm:hidden max-w-5xl mx-auto px-4 pb-2.5 flex items-center justify-between">
           <span className="text-sm font-semibold text-[#6B0064]">{FIXED_PHASES[currentPhase]?.label}</span>
-          <span className="text-xs text-gray-400">Phase {currentPhase + 1} / {FIXED_PHASES.length}</span>
+          <span className="text-xs text-gray-400">{t("wizard_layout.phase_counter", { current: currentPhase + 1, total: FIXED_PHASES.length })}</span>
         </div>
       </div>
 
