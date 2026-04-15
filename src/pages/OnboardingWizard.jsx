@@ -223,7 +223,6 @@ export default function OnboardingWizard() {
       employment_start_date: startDate || profile.employment_start_date,
     };
     updateProfile(updates);
-    await saveToDb(updates);
 
     // Send summary email (fire and forget)
     try {
@@ -235,6 +234,7 @@ export default function OnboardingWizard() {
       });
     } catch (_) {}
     setSaving(false);
+    return true;
   };
 
   if (checkingToken || loadingProfile) {
