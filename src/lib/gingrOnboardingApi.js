@@ -281,7 +281,9 @@ export async function savePersonalDataProgress(profile) {
   formData.append("PostalCode", profile.postal_code || "");
   formData.append("City", profile.city || "");
   formData.append("CountryCode", profile.country_code || profile.nationality || "");
-  formData.append("Identity", profile.id_document_url ?? null);
+  if (profile.id_document_url instanceof File) {
+    formData.append("Identity", profile.id_document_url);
+  }
 
   const response = await fetch(`${getLegalOnboardingBaseUrl()}/personal-data`, {
     method: "POST",

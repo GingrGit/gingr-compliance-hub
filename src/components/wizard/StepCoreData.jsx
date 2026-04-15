@@ -101,9 +101,6 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     fetchCountries().then(setCountries);
   }, []);
 
-  useEffect(() => {
-    setIdentityModified(false);
-  }, [profile.id_document_url]);
 
   const validateAndNext = async () => {
     const errors = {};
