@@ -334,7 +334,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   <button
                     key={opt.id}
                     type="button"
-                    onClick={() => { setInvoiceProofType(opt.id); setInvoiceProofUrl(""); setSubmitError(null); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
+                    onClick={() => { setInvoiceProofType(opt.id); setSubmitError(null); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
                     className={`text-left rounded-xl border-2 p-3 transition-all ${
                       invoiceProofType === opt.id
                         ? "border-[#FF3CAC] bg-pink-50"
