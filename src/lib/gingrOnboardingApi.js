@@ -150,9 +150,15 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     commercial_register_url: data.commercialRegisterExtractUrl,
     invoice_proof_url: data.authorizationProofUrl,
     prostitution_permit_url: data.authorizationProofUrl,
-    self_employment_confirmation_status: data.selfEmploymentConfirmationStatus ? String(data.selfEmploymentConfirmationStatus).toLowerCase() : undefined,
-    commercial_register_status: data.commercialRegisterExtractStatus ? String(data.commercialRegisterExtractStatus).toLowerCase() : undefined,
-    authorization_proof_status: data.authorizationProofStatus ? String(data.authorizationProofStatus).toLowerCase() : undefined,
+    self_employment_confirmation_status: data.selfEmploymentConfirmationStatus === "Rejected"
+      ? "rejected"
+      : data.selfEmploymentConfirmationStatus ? String(data.selfEmploymentConfirmationStatus).toLowerCase() : undefined,
+    commercial_register_status: data.commercialRegisterExtractStatus === "Rejected"
+      ? "rejected"
+      : data.commercialRegisterExtractStatus ? String(data.commercialRegisterExtractStatus).toLowerCase() : undefined,
+    authorization_proof_status: data.authorizationProofStatus === "Rejected"
+      ? "rejected"
+      : data.authorizationProofStatus ? String(data.authorizationProofStatus).toLowerCase() : undefined,
     id_document_status: data.identityDocumentStatus ? String(data.identityDocumentStatus).toLowerCase() : undefined,
     has_children: typeof data.children === "boolean" ? (data.children ? "yes" : "no") : undefined,
     marital_status: maritalStatusMap[data.maritalStatus],

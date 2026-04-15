@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { CheckCircle2, User, Building2, Plus, X, Link } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { saveCompanyProgress, saveFreelancerProgress } from "@/lib/gingrOnboardingApi";
 
@@ -42,6 +43,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
+  const showRejectedCommercialRegisterAsEmpty = profile.commercial_register_status === "rejected" && !(commercialRegisterUrl instanceof File);
+  const showRejectedAuthorizationProofAsEmpty = profile.authorization_proof_status === "rejected" && !(invoiceProofUrl instanceof File);
 
   const validate = () => {
     const e = {};
@@ -53,8 +56,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       if (validUrls.length === 0) e.activityUrls = "Bitte gib mindestens eine Profil-URL an.";
     }
     if (businessType === "company") {
-      if (!commercialRegisterUrl) e.commercialRegisterUrl = "Bitte lade den Handelsregisterauszug hoch.";
-      if (!invoiceProofType || !invoiceProofUrl) e.invoiceProofUrl = "Bitte wähle einen Dokumenttyp und lade das Dokument hoch.";
+      if (!commercialRegisterUrl || showRejectedCommercialRegisterAsEmpty) e.commercialRegisterUrl = "Bitte lade den Handelsregisterauszug hoch.";
+      if (!invoiceProofType || !invoiceProofUrl || showRejectedAuthorizationProofAsEmpty) e.invoiceProofUrl = "Bitte wähle einen Dokumenttyp und lade das Dokument hoch.";
     }
     if (businessType && !confirmed) e.confirmed = "Bitte bestätige die Erklärung, um fortzufahren.";
 
@@ -76,7 +79,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       return !ahvUrl || !hasProfileUrl || !confirmed;
     }
     if (businessType === "company") {
-      return !commercialRegisterUrl || !invoiceProofType || !invoiceProofUrl || !confirmed;
+      return !commercialRegisterUrl || showRejectedCommercialRegisterAsEmpty || !invoiceProofType || !invoiceProofUrl || showRejectedAuthorizationProofAsEmpty || !confirmed;
     }
     return false;
   })();
@@ -277,10 +280,22 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
         {businessType === "company" && (
           <div className="space-y-4 pt-2 border-t border-gray-100">
             <div data-error={errors.commercialRegisterUrl ? "true" : undefined}>
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <p className="text-sm font-medium text-gray-900">Handelsregisterauszug *</p>
+                {profile.commercial_register_status === "rejected" && (
+                  <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
+                    Rejected
+                  </Badge>
+                )}
+              </div>
               <DocumentUpload
-                label="Handelsregisterauszug *"
-                value={commercialRegisterUrl}
-                onChange={(url) => { setCommercialRegisterUrl(url); setErrors((p) => ({ ...p, commercialRegisterUrl: null })); }}
+                label=""
+                value={showRejectedCommercialRegisterAsEmpty ? "" : commercialRegisterUrl}
+                onChange={(url) => {
+                  setCommercialRegisterUrl(url);
+                  setSubmitError(null);
+                  setErrors((p) => ({ ...p, commercialRegisterUrl: null }));
+                }}
                 hint="Aktueller Auszug aus dem Handelsregister (nicht älter als 12 Monate)"
                 profileId={profileId}
                 documentType="commercial_register"
@@ -301,7 +316,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   <button
                     key={opt.id}
                     type="button"
-                    onClick={() => { setInvoiceProofType(opt.id); setInvoiceProofUrl(""); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
+                    onClick={() => { setInvoiceProofType(opt.id); setInvoiceProofUrl(""); setSubmitError(null); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
                     className={`text-left rounded-xl border-2 p-3 transition-all ${
                       invoiceProofType === opt.id
                         ? "border-[#FF3CAC] bg-pink-50"
@@ -316,13 +331,27 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 ))}
               </div>
               {invoiceProofType && (
-                <DocumentUpload
-                  label="Dokument hochladen *"
-                  value={invoiceProofUrl}
-                  onChange={(url) => { setInvoiceProofUrl(url); setErrors((p) => ({ ...p, invoiceProofUrl: null })); }}
-                  profileId={profileId}
-                  documentType={`invoice_proof_${invoiceProofType}`}
-                />
+                <>
+                  <div className="flex items-center gap-2 mb-2 flex-wrap">
+                    <p className="text-sm font-medium text-gray-900">Dokument hochladen *</p>
+                    {profile.authorization_proof_status === "rejected" && (
+                      <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
+                        Rejected
+                      </Badge>
+                    )}
+                  </div>
+                  <DocumentUpload
+                    label=""
+                    value={showRejectedAuthorizationProofAsEmpty ? "" : invoiceProofUrl}
+                    onChange={(url) => {
+                      setInvoiceProofUrl(url);
+                      setSubmitError(null);
+                      setErrors((p) => ({ ...p, invoiceProofUrl: null }));
+                    }}
+                    profileId={profileId}
+                    documentType={`invoice_proof_${invoiceProofType}`}
+                  />
+                </>
               )}
               {errors.invoiceProofUrl && <p className="text-xs text-red-500 mt-1">{errors.invoiceProofUrl}</p>}
             </div>
