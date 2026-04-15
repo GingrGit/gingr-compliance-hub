@@ -69,6 +69,7 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
   const { t } = useI18n();
   const currentPhase = STEP_TO_PHASE[currentStepId] ?? 0;
   const FIXED_PHASES = PHASE_KEYS.map(key => ({ label: t(key) }));
+  const localizedSteps = steps.map((step) => ({ ...step, label: t(step.label) }));
 
   return (
     <div className="min-h-screen bg-[#F0F0F0]">

@@ -19,8 +19,10 @@ import StepCoreDataPrefilled from "@/components/wizard/StepCoreDataPrefilled";
 import AlreadySubmitted from "@/pages/AlreadySubmitted";
 
 import AbandonModal from "@/components/wizard/AbandonModal";
+import { useI18n } from "@/lib/i18n";
 
 export default function OnboardingWizard() {
+  const { t } = useI18n();
   const urlParams = new URLSearchParams(window.location.search);
   const prefillMode = urlParams.get("prefill") === "true";
 
@@ -132,29 +134,29 @@ export default function OnboardingWizard() {
   const buildSteps = () => {
     const needsSourceTaxStep = profile.source_tax === "yes" || profile.source_tax === "unsure";
     const steps = [
-      { id: "welcome", label: "Willkommen" },
-      { id: "work_model", label: "Arbeitsmodell" },
-      { id: "core_data", label: "Deine Daten" },
+      { id: "welcome", label: "onboarding.steps.welcome" },
+      { id: "work_model", label: "onboarding.steps.work_model" },
+      { id: "core_data", label: "onboarding.steps.core_data" },
     ];
 
     if (!isSwiss) {
-      steps.push({ id: "residency", label: "Aufenthalt" });
+      steps.push({ id: "residency", label: "onboarding.steps.residency" });
     }
 
-    steps.push({ id: "eligibility", label: "Berechtigung" });
+    steps.push({ id: "eligibility", label: "onboarding.steps.eligibility" });
 
     if (profile.work_model === "self_employed") {
-      steps.push({ id: "self_employed", label: "Geschäft" });
-      steps.push({ id: "self_employed_summary", label: "Abschluss" });
+      steps.push({ id: "self_employed", label: "onboarding.steps.self_employed" });
+      steps.push({ id: "self_employed_summary", label: "onboarding.steps.self_employed_summary" });
     } else {
-      steps.push({ id: "earnings", label: "Verdienst" });
+      steps.push({ id: "earnings", label: "onboarding.steps.earnings" });
       if (needsSourceTaxStep) {
-        steps.push({ id: "source_tax", label: "Quellensteuer" });
+        steps.push({ id: "source_tax", label: "onboarding.steps.source_tax" });
       }
-      steps.push({ id: "summary", label: "Abschluss" });
+      steps.push({ id: "summary", label: "onboarding.steps.summary" });
     }
 
-    steps.push({ id: "congratulations", label: "Fertig" });
+    steps.push({ id: "congratulations", label: "onboarding.steps.congratulations" });
     return steps;
   };
 
@@ -239,7 +241,7 @@ export default function OnboardingWizard() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-50">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-purple-300 border-t-purple-600 rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-gray-500 text-sm">Daten werden geladen…</p>
+          <p className="text-gray-500 text-sm">{t("onboarding.loading")}</p>
         </div>
       </div>
     );
