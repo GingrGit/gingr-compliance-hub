@@ -3,6 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckCircle2, Link2 } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 const ALL_COUNTRIES = [
   { name: "Schweiz", flag: "🇨🇭", group: "CH" },
@@ -31,6 +32,7 @@ const getFlag = (nationality) => {
 };
 
 export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
+  const { t } = useI18n();
   const [confirmed, setConfirmed] = useState(false);
 
   const isSwiss = profile.citizenship_group === "CH";
@@ -67,8 +69,8 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
 
   return (
     <StepCard
-      title="Deine persönlichen Daten"
-      subtitle="Deine Basisdaten wurden direkt von gingr.ch übernommen. Bitte ergänze deine Adresse und bestätige die Angaben."
+      title={t("step_core_data_prefilled.title")}
+      subtitle={t("step_core_data_prefilled.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}

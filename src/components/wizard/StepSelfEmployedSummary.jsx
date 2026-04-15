@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StepCard from "@/components/wizard/StepCard";
 import { CheckCircle2, User, Briefcase, Building2, FileText } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 const BUSINESS_TYPE_LABELS = {
   freelancer: "Freelancer / Einzelunternehmen",
@@ -39,6 +40,7 @@ function SectionBlock({ icon: Icon, title, children }) {
 }
 
 export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSaveAndExit, onSubmit, saving }) {
+  const { t } = useI18n();
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
 
@@ -51,13 +53,13 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
 
   return (
     <StepCard
-      title="Zusammenfassung & Antrag"
-      subtitle="Bitte überprüfe deine Angaben und reiche deinen Antrag ein."
+      title={t("step_self_employed_summary.title")}
+      subtitle={t("step_self_employed_summary.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       nextDisabled={!consent || !startDate}
-      nextLabel="Antrag einreichen"
+      nextLabel={t("step_self_employed_summary.submit_button")}
       saving={saving}
     >
       {/* Persönliche Angaben */}

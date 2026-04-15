@@ -3,6 +3,7 @@ import { createPageUrl } from "@/utils";
 import StepCard from "@/components/wizard/StepCard";
 import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, User, Briefcase, Calendar, Info } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 const WORK_MODEL_LABELS = {
   employee_unlimited: "Angestelltenverhältnis (unbefristet)",
@@ -49,6 +50,7 @@ function getDashboardUrl(profile, profileId) {
 }
 
 export default function StepSummary({ profile, updateProfile, onNext, onBack, onSaveAndExit, onSubmit, saving }) {
+  const { t } = useI18n();
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
   const [startDateTouched, setStartDateTouched] = useState(false);
@@ -63,13 +65,13 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
 
   return (
     <StepCard
-      title="Zusammenfassung & Antrag"
-      subtitle="Bitte überprüfe deine Angaben und bestätige die Konditionen."
+      title={t("step_summary.title")}
+      subtitle={t("step_summary.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       nextDisabled={saving || !consent || isStartDateMissing}
-      nextLabel="Antrag einreichen"
+      nextLabel={t("step_summary.submit_button")}
       saving={saving}
     >
       {/* Persönliche Angaben */}
