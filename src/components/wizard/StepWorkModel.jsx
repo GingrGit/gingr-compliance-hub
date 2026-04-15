@@ -9,6 +9,7 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
   const { t } = useI18n();
   const [selected, setSelected] = useState(profile.work_model || null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const models = [
     {
@@ -44,8 +45,14 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
   const handleNext = async () => {
     if (!selected || isSubmitting) { setShowError(!selected); return; }
     setShowError(false);
+    setSubmitError(null);
     setIsSubmitting(true);
-    await saveWorkModelSelection(selected);
+    const saveResult = await saveWorkModelSelection(selected);
+    if (saveResult === false) {
+      setSubmitError("Saving your work model failed. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
     await onNext({ work_model: selected });
     setIsSubmitting(false);
   };
@@ -58,7 +65,7 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving || isSubmitting}
-      validationError={showError ? t("step_work_model.error_select") : null}
+      validationError={submitError || (showError ? t("step_work_model.error_select") : null)}
     >
       <div className="space-y-3">
         {models.map((m) => (

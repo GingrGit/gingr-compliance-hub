@@ -10,6 +10,8 @@ const CANTONS = ["AG","AI","AR","BE","BL","BS","FR","GE","GL","GR","JU","LU","NE
 
 export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const { t } = useI18n();
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [d, setD] = useState({
     canton: profile.canton || "",
     municipality: profile.municipality || "",
@@ -76,8 +78,16 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
 
   const handleNext = async () => {
     if (!validate()) return;
-    await saveTaxInfoProgress(d);
+    setSubmitError(null);
+    setIsSubmitting(true);
+    const saveResult = await saveTaxInfoProgress(d);
+    if (saveResult === false) {
+      setSubmitError("Saving your tax information failed. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
     onNext(d, null, { skipDbSave: true });
+    setIsSubmitting(false);
   };
 
   return (
@@ -87,8 +97,8 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
-      validationError={hasVisibleRequiredErrors ? t("step_source_tax.error_all_fields") : null}
+      saving={saving || isSubmitting}
+      validationError={submitError || (hasVisibleRequiredErrors ? t("step_source_tax.error_all_fields") : null)}
     >
       <InfoAccordion title={t("step_source_tax.accordion_title")}>
         {t("step_source_tax.accordion_body")}

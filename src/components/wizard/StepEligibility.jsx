@@ -29,6 +29,8 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
   const options = computeEligibility(profile, t);
   const [selected, setSelected] = useState(profile.work_model || null);
   const [showError, setShowError] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const availableOptions = options.filter((o) => o.available);
   const hasAvailableOptions = availableOptions.length > 0;
 
@@ -42,8 +44,16 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
       return;
     }
     setShowError(false);
-    await saveWorkModelProgress(selected);
+    setSubmitError(null);
+    setIsSubmitting(true);
+    const saveResult = await saveWorkModelProgress(selected);
+    if (saveResult === false) {
+      setSubmitError("Saving your eligibility selection failed. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
     onNext({ work_model: selected }, null, { skipDbSave: true });
+    setIsSubmitting(false);
   };
 
   return (
@@ -53,8 +63,8 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
-      validationError={showError ? t("step_eligibility.error_select") : null}
+      saving={saving || isSubmitting}
+      validationError={submitError || (showError ? t("step_eligibility.error_select") : null)}
     >
       <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2">
         <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />

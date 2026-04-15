@@ -38,6 +38,8 @@ function fmt(n) {
 
 export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const { t } = useI18n();
+  const [submitError, setSubmitError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const defaultST = computeDefaultSourceTax(profile);
   const normalizedSourceTax = typeof profile.source_tax === "string"
     ? profile.source_tax.toLowerCase()
@@ -52,8 +54,16 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
   const applySourceTax = sourceTax === "yes" || sourceTax === "unsure";
 
   const handleNext = async () => {
-    await saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax });
+    setSubmitError(null);
+    setIsSubmitting(true);
+    const saveResult = await saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax });
+    if (saveResult === false) {
+      setSubmitError("Saving your earnings failed. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
     onNext({ hourly_rate: hourlyRate, hours_per_month: hoursPerMonth, source_tax: sourceTax }, null, { skipDbSave: true });
+    setIsSubmitting(false);
   };
 
   return (
@@ -63,7 +73,8 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
+      saving={saving || isSubmitting}
+      validationError={submitError}
     >
       {/* Inputs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
