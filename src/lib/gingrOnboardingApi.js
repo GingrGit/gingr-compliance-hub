@@ -326,7 +326,7 @@ export async function saveResidencePermitProgress({ permitFile, permitType }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
 
-  if (!token || !permitType || !permitFile) {
+  if (!token || !permitType || permitType === "none" || !permitFile) {
     return false;
   }
 

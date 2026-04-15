@@ -21,6 +21,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
   const permitTypeRef = useRef(null);
   const permitUploadRef = useRef(null);
   const showRejectedPermitAsEmpty = profile.permit_status === "rejected";
+  const hasValidPermitType = permitType && permitType !== "none";
 
   useEffect(() => {
     setPermitType(profile.permit_type || "");
@@ -30,7 +31,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
 
   const handleNext = async () => {
     const e = {};
-    if (!permitType) e.permitType = t("step_residency.error_permit_type");
+    if (!hasValidPermitType) e.permitType = t("step_residency.error_permit_type");
     if (!permitUrl || profile.permit_status === "rejected") e.permitUrl = "Please upload a new residence permit";
     setErrors(e);
 
@@ -48,7 +49,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
 
     const saveResult = await saveResidencePermitProgress({
       permitFile: permitUrl,
-      permitType,
+      permitType: hasValidPermitType ? permitType : null,
     });
 
     if (saveResult === false || !saveResult) {
