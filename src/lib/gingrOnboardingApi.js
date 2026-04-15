@@ -388,9 +388,7 @@ export async function saveFreelancerProgress({ selfEmploymentConfirmation, profi
 
   const formData = new FormData();
   formData.append("selfEmploymentConfirmation", selfEmploymentConfirmation);
-  profileUrls.forEach((url) => {
-    formData.append("profileUrls", url);
-  });
+  formData.append("profileUrls", JSON.stringify(profileUrls));
 
   const response = await fetch(`${getLegalOnboardingBaseUrl()}/freelancer`, {
     method: "POST",
