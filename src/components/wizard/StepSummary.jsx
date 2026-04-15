@@ -56,7 +56,7 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
 
   const handleNext = async () => {
     setStartDateTouched(true);
-    if (isStartDateMissing) return;
+    if (isStartDateMissing || saving) return;
     if (onSubmit) await onSubmit(startDate || undefined);
     onNext({ employment_start_date: startDate });
   };
@@ -68,7 +68,7 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!consent || isStartDateMissing}
+      nextDisabled={saving || !consent || isStartDateMissing}
       nextLabel="Antrag einreichen"
       saving={saving}
     >

@@ -211,6 +211,7 @@ export default function OnboardingWizard() {
   };
 
   const handleSubmit = async (startDate) => {
+    setSaving(true);
     await submitLegalOnboarding(startDate);
 
     const updates = {
@@ -230,6 +231,7 @@ export default function OnboardingWizard() {
         body: `Ein neues Onboarding wurde eingereicht.\n\nName: ${profile.first_name} ${profile.last_name}\nEmail: ${profile.escort_email || user?.email}\nArbeitsmodell: ${profile.work_model}\nStatus: submitted\n\nBitte im Dashboard prüfen.`,
       });
     } catch (_) {}
+    setSaving(false);
   };
 
   if (checkingToken || loadingProfile) {
