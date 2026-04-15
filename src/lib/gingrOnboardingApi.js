@@ -381,9 +381,9 @@ export async function saveWorkModelSelection(workModel) {
 export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
-  const taxEstimate = TAX_ESTIMATE_MAP[sourceTax];
+  const taxEstimate = TAX_ESTIMATE_MAP[sourceTax] || null;
 
-  if (!token || !hasValue(hourlyRate) || !hasValue(hoursPerMonth) || !taxEstimate) {
+  if (!token) {
     return;
   }
 
@@ -394,8 +394,8 @@ export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTa
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      hourlyRate: Number(hourlyRate),
-      hoursPerMonth: Number(hoursPerMonth),
+      hourlyRate: hasValue(hourlyRate) ? Number(hourlyRate) : null,
+      hoursPerMonth: hasValue(hoursPerMonth) ? Number(hoursPerMonth) : null,
       taxEstimate,
     }),
   });
