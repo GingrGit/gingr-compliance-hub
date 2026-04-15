@@ -28,6 +28,13 @@ const COMPANY_AUTHORIZATION_TYPE_MAP = {
   declaration: "SignedCompanyDeclaration",
 };
 
+const COMPANY_AUTHORIZATION_TYPE_REVERSE_MAP = {
+  SignatureAuthorization: "signatory",
+  CompanyBankAccount: "bank",
+  InvoiceCompanyName: "invoice",
+  SignedCompanyDeclaration: "declaration",
+};
+
 export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [businessType, setBusinessType] = useState(profile.business_type || null);
   const [ahvUrl, setAhvUrl] = useState(profile.ahv_confirmation_url || "");
@@ -37,7 +44,9 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
   const [newActivityUrl, setNewActivityUrl] = useState("");
   const [commercialRegisterUrl, setCommercialRegisterUrl] = useState(profile.commercial_register_url || "");
   const [invoiceProofUrl, setInvoiceProofUrl] = useState(profile.invoice_proof_url || "");
-  const [invoiceProofType, setInvoiceProofType] = useState(profile.invoice_proof_type || null);
+  const [invoiceProofType, setInvoiceProofType] = useState(
+    profile.invoice_proof_type || COMPANY_AUTHORIZATION_TYPE_REVERSE_MAP[profile.authorization_type] || null
+  );
   const [confirmed, setConfirmed] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);

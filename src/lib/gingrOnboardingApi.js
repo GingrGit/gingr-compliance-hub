@@ -149,6 +149,7 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     ahv_confirmation_url: data.selfEmploymentConfirmationUrl,
     commercial_register_url: data.commercialRegisterExtractUrl,
     invoice_proof_url: data.authorizationProofUrl,
+    authorization_type: data.authorizationType,
     prostitution_permit_url: data.authorizationProofUrl,
     self_employment_confirmation_status: data.selfEmploymentConfirmationStatus === "Rejected"
       ? "rejected"
