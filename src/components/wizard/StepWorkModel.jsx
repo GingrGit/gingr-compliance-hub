@@ -8,6 +8,7 @@ import { saveWorkModelSelection } from "@/lib/gingrOnboardingApi";
 export default function StepWorkModel({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
   const { t } = useI18n();
   const [selected, setSelected] = useState(profile.work_model || null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const models = [
     {
@@ -41,10 +42,12 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
   const [showError, setShowError] = useState(false);
 
   const handleNext = async () => {
-    if (!selected) { setShowError(true); return; }
+    if (!selected || isSubmitting) { setShowError(!selected); return; }
     setShowError(false);
+    setIsSubmitting(true);
     await saveWorkModelSelection(selected);
-    onNext({ work_model: selected });
+    await onNext({ work_model: selected });
+    setIsSubmitting(false);
   };
 
   return (
@@ -54,7 +57,7 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      saving={saving}
+      saving={saving || isSubmitting}
       validationError={showError ? t("step_work_model.error_select") : null}
     >
       <div className="space-y-3">
