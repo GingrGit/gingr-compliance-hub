@@ -51,8 +51,12 @@ function getDashboardUrl(profile, profileId) {
 export default function StepSummary({ profile, updateProfile, onNext, onBack, onSaveAndExit, onSubmit, saving }) {
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
+  const [startDateTouched, setStartDateTouched] = useState(false);
+  const isStartDateMissing = !startDate;
 
   const handleNext = async () => {
+    setStartDateTouched(true);
+    if (isStartDateMissing) return;
     if (onSubmit) await onSubmit(startDate || undefined);
     onNext({ employment_start_date: startDate });
   };
@@ -64,7 +68,7 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!consent}
+      nextDisabled={!consent || isStartDateMissing}
       nextLabel="Antrag einreichen"
       saving={saving}
     >
@@ -94,8 +98,12 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-300"
+          onBlur={() => setStartDateTouched(true)}
+          className={`w-full border rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-300 ${startDateTouched && isStartDateMissing ? "border-red-300" : "border-gray-200"}`}
         />
+        {startDateTouched && isStartDateMissing && (
+          <p className="text-xs text-red-500 mt-2">Bitte wähle ein Startdatum aus.</p>
+        )}
       </SectionBlock>
 
       {/* Lohnberechnung */}
