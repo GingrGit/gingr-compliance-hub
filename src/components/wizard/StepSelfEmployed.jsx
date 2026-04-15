@@ -212,6 +212,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 hint="Offizielle Bestätigung der AHV-Ausgleichskasse"
                 profileId={profileId}
                 documentType="ahv_confirmation"
+                disableDelete={profile.self_employment_confirmation_status === "approved"}
               />
               {errors.ahvUrl && <p className="text-xs text-red-500 mt-1">{errors.ahvUrl}</p>}
             </div>
@@ -317,6 +318,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 hint="Aktueller Auszug aus dem Handelsregister (nicht älter als 12 Monate)"
                 profileId={profileId}
                 documentType="commercial_register"
+                disableDelete={profile.commercial_register_status === "approved"}
               />
               {errors.commercialRegisterUrl && <p className="text-xs text-red-500 mt-1">{errors.commercialRegisterUrl}</p>}
             </div>
@@ -368,6 +370,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                     }}
                     profileId={profileId}
                     documentType={`invoice_proof_${invoiceProofType}`}
+                    disableDelete={profile.authorization_proof_status === "approved"}
                   />
                 </>
               )}

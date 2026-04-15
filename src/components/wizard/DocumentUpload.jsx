@@ -3,7 +3,7 @@ import { Upload, CheckCircle2, X, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { useI18n } from "@/lib/i18n";
 
-export default function DocumentUpload({ label, value, onChange, hint, profileId, documentType }) {
+export default function DocumentUpload({ label, value, onChange, hint, profileId, documentType, disableDelete = false }) {
   const { t } = useI18n();
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState("");
@@ -48,8 +48,13 @@ export default function DocumentUpload({ label, value, onChange, hint, profileId
             <span className="text-sm font-medium text-green-800">{fileName || value?.name || t("document_upload.uploaded_label")}</span>
           </div>
           <button
-            onClick={() => { onChange(""); setFileName(""); }}
-            className="text-gray-400 hover:text-red-500 transition-colors"
+            onClick={() => {
+              if (disableDelete) return;
+              onChange("");
+              setFileName("");
+            }}
+            disabled={disableDelete}
+            className={`transition-colors ${disableDelete ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-red-500"}`}
           >
             <X className="w-4 h-4" />
           </button>

@@ -115,6 +115,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
           hint={t("step_residency.upload_hint")}
           profileId={profileId}
           documentType="permit"
+          disableDelete={profile.permit_status === "approved"}
         />
       </div>
 

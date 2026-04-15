@@ -365,6 +365,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             hint={true}
             profileId={profileId}
             documentType="id"
+            disableDelete={profile.id_document_status === "approved"}
           />
           {fe.id_document_url && <p className="text-xs text-red-500 mt-1">{fe.id_document_url}</p>}
         </div>
