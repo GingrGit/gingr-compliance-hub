@@ -78,7 +78,9 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
       validationError={submitError}
     >
       <div ref={permitTypeRef}>
-        <p className="text-sm font-medium text-gray-700 mb-3">{t("step_residency.label_permit_type")}</p>
+        <p className="text-sm font-medium text-gray-700 mb-3">
+          {t("step_residency.label_permit_type")} <span className="text-red-500">*</span>
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {PERMIT_TYPES.map((p) => (
             <button
