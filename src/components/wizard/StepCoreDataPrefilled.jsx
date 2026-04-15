@@ -37,11 +37,7 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
 
   const isSwiss = profile.citizenship_group === "CH";
 
-  const canProceed =
-    confirmed &&
-    profile.address &&
-    profile.postal_code &&
-    profile.city;
+  const canProceed = confirmed && profile.address && profile.postal_code && profile.city;
 
   const handleNext = () => {
     onNext({
@@ -78,8 +74,6 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
       saving={saving}
     >
       <div className="space-y-5">
-
-        {/* Gingr source banner */}
         <div className="flex items-center gap-2.5 px-3 py-2.5 bg-pink-50 border border-pink-200 rounded-xl">
           <Link2 className="w-4 h-4 text-pink-500 flex-shrink-0" />
           <div>
@@ -88,12 +82,11 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
           </div>
         </div>
 
-        {/* Pre-filled read-only fields */}
         <div className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <ReadOnlyField label={t("step_core_data_prefilled.label_first_name")} value={profile.first_name} />
             <ReadOnlyField label={t("step_core_data_prefilled.label_last_name")} value={profile.last_name} />
-...
+          </div>
           <ReadOnlyField label={t("step_core_data_prefilled.label_birth_date")} value={formatDate(profile.date_of_birth)} />
           <ReadOnlyField label={t("step_core_data_prefilled.label_email")} value={profile.escort_email} />
           <ReadOnlyField label={t("step_core_data_prefilled.label_phone")} value={profile.phone} />
@@ -104,7 +97,6 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
           />
         </div>
 
-        {/* Divider */}
         <div className="relative">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200" /></div>
           <div className="relative flex justify-center">
@@ -112,7 +104,6 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
           </div>
         </div>
 
-        {/* Address fields (editable) */}
         <div className="space-y-3">
           <div>
             <Label className="text-xs text-gray-600 mb-1">{t("step_core_data_prefilled.label_address")}</Label>
@@ -142,9 +133,9 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
           </div>
         </div>
 
-        {/* Confirmation checkbox */}
         <label className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${confirmed ? "bg-green-50 border-green-300" : "bg-gray-50 border-gray-200 hover:border-gray-300"}`}>
-          <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${confirmed ? "bg-green-500 border-green-500" : "border-gray-300 bg-white"}`}
+          <div
+            className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${confirmed ? "bg-green-500 border-green-500" : "border-gray-300 bg-white"}`}
             onClick={() => setConfirmed(!confirmed)}
           >
             {confirmed && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
@@ -153,7 +144,6 @@ export default function StepCoreDataPrefilled({ profile, updateProfile, onNext, 
             {t("step_core_data_prefilled.confirmation_text")}
           </span>
         </label>
-
       </div>
     </StepCard>
   );

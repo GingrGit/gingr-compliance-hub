@@ -13,9 +13,10 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
   const [loadingSlug, setLoadingSlug] = useState(false);
   const [slugError, setSlugError] = useState(null);
 
-  const contractType = profile.work_model === "employee_90days" ? t("step_employment_setup.contract_90days_label") : t("step_employment_setup.contract_unlimited_label");
+  const contractType = profile.work_model === "employee_90days"
+    ? t("step_employment_setup.contract_90days_label")
+    : t("step_employment_setup.contract_unlimited_label");
 
-  // Create a new DocuSeal submission for this escort
   useEffect(() => {
     setLoadingSlug(true);
     base44.functions.invoke("createDocusealSubmission", { profile })
@@ -24,12 +25,12 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
           setSlug(res.data.slug);
         } else {
           setSlugError(t("step_employment_setup.contract_load_error"));
-...
+        }
+      })
       .catch(() => setSlugError(t("step_employment_setup.contract_load_error")))
       .finally(() => setLoadingSlug(false));
   }, []);
 
-  // Inject DocuSeal script once
   useEffect(() => {
     if (document.querySelector('script[src="https://cdn.docuseal.eu/js/form.js"]')) return;
     const script = document.createElement("script");
@@ -38,7 +39,6 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
     document.head.appendChild(script);
   }, []);
 
-  // Listen for DocuSeal completion event
   useEffect(() => {
     const handler = () => setContractSigned(true);
     window.addEventListener("docuseal:completed", handler);
@@ -65,7 +65,6 @@ export default function StepEmploymentSetup({ profile, onNext, onBack, onSaveAnd
         {t("step_employment_setup.accordion_body")}
       </InfoAccordion>
 
-      {/* DocuSeal Embed */}
       <div className="border border-gray-200 rounded-xl overflow-hidden">
         <div className="bg-gray-50 px-4 py-3">
           <p className="text-sm font-medium text-gray-700">{t("step_employment_setup.docuseal_label")}</p>
