@@ -148,7 +148,11 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
               <DocumentUpload
                 label="AHV-Bestätigung der Selbständigkeit *"
                 value={ahvUrl}
-                onChange={(url) => { setAhvUrl(url); setErrors((p) => ({ ...p, ahvUrl: null })); }}
+                onChange={(url) => {
+                  setAhvUrl(url);
+                  setSubmitError(null);
+                  setErrors((p) => ({ ...p, ahvUrl: null }));
+                }}
                 hint="Offizielle Bestätigung der AHV-Ausgleichskasse"
                 profileId={profileId}
                 documentType="ahv_confirmation"
@@ -170,6 +174,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                           const updated = [...activityUrls];
                           updated[idx] = e.target.value;
                           setActivityUrls(updated);
+                          setSubmitError(null);
                           setErrors((p) => ({ ...p, activityUrls: null }));
                         }}
                         placeholder="https://beispiel.com/profil"
@@ -179,7 +184,11 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                     {activityUrls.length > 1 && (
                       <button
                         type="button"
-                        onClick={() => setActivityUrls(activityUrls.filter((_, i) => i !== idx))}
+                        onClick={() => {
+                          setActivityUrls(activityUrls.filter((_, i) => i !== idx));
+                          setSubmitError(null);
+                          setErrors((p) => ({ ...p, activityUrls: null }));
+                        }}
                         className="text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
                       >
                         <X className="w-4 h-4" />
@@ -189,7 +198,11 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 ))}
                 <button
                   type="button"
-                  onClick={() => setActivityUrls([...activityUrls, ""])}
+                  onClick={() => {
+                    setActivityUrls([...activityUrls, ""]);
+                    setSubmitError(null);
+                    setErrors((p) => ({ ...p, activityUrls: null }));
+                  }}
                   className="flex items-center gap-1.5 text-xs text-[#FF3CAC] hover:text-[#e030a0] font-medium mt-1 transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
@@ -209,7 +222,11 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 <input
                   type="checkbox"
                   checked={confirmed}
-                  onChange={(e) => { setConfirmed(e.target.checked); setErrors((p) => ({ ...p, confirmed: null })); }}
+                  onChange={(e) => {
+                    setConfirmed(e.target.checked);
+                    setSubmitError(null);
+                    setErrors((p) => ({ ...p, confirmed: null }));
+                  }}
                   className="mt-0.5 accent-[#FF3CAC] w-4 h-4 flex-shrink-0"
                 />
                 <span className="text-xs font-medium text-gray-700">
@@ -285,7 +302,11 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                 <input
                   type="checkbox"
                   checked={confirmed}
-                  onChange={(e) => { setConfirmed(e.target.checked); setErrors((p) => ({ ...p, confirmed: null })); }}
+                  onChange={(e) => {
+                    setConfirmed(e.target.checked);
+                    setSubmitError(null);
+                    setErrors((p) => ({ ...p, confirmed: null }));
+                  }}
                   className="mt-0.5 accent-[#FF3CAC] w-4 h-4 flex-shrink-0"
                 />
                 <span className="text-xs font-medium text-gray-700">
