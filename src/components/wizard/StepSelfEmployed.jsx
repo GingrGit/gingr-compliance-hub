@@ -43,6 +43,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
+  const showRejectedAhvAsEmpty = profile.self_employment_confirmation_status === "rejected" && !(ahvUrl instanceof File);
   const showRejectedCommercialRegisterAsEmpty = profile.commercial_register_status === "rejected" && !(commercialRegisterUrl instanceof File);
   const showRejectedAuthorizationProofAsEmpty = profile.authorization_proof_status === "rejected" && !(invoiceProofUrl instanceof File);
 
@@ -51,7 +52,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     if (!businessType) e.businessType = "Bitte wähle deine Unternehmensform aus.";
 
     if (businessType === "freelancer") {
-      if (!ahvUrl) e.ahvUrl = "Bitte lade die AHV-Bestätigung hoch.";
+      if (!ahvUrl || showRejectedAhvAsEmpty) e.ahvUrl = "Bitte lade die AHV-Bestätigung hoch.";
       const validUrls = activityUrls.filter(u => u.trim());
       if (validUrls.length === 0) e.activityUrls = "Bitte gib mindestens eine Profil-URL an.";
     }
@@ -76,7 +77,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
     if (!businessType) return false;
     if (businessType === "freelancer") {
       const hasProfileUrl = activityUrls.some((url) => url.trim());
-      return !ahvUrl || !hasProfileUrl || !confirmed;
+      return !ahvUrl || showRejectedAhvAsEmpty || !hasProfileUrl || !confirmed;
     }
     if (businessType === "company") {
       return !commercialRegisterUrl || showRejectedCommercialRegisterAsEmpty || !invoiceProofType || !invoiceProofUrl || showRejectedAuthorizationProofAsEmpty || !confirmed;
@@ -183,9 +184,17 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
         {businessType === "freelancer" && (
           <div className="space-y-4 pt-2 border-t border-gray-100">
             <div data-error={errors.ahvUrl ? "true" : undefined}>
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <p className="text-sm font-medium text-gray-900">AHV-Bestätigung der Selbständigkeit *</p>
+                {profile.self_employment_confirmation_status === "rejected" && (
+                  <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
+                    Rejected
+                  </Badge>
+                )}
+              </div>
               <DocumentUpload
-                label="AHV-Bestätigung der Selbständigkeit *"
-                value={ahvUrl}
+                label=""
+                value={showRejectedAhvAsEmpty ? "" : ahvUrl}
                 onChange={(url) => {
                   setAhvUrl(url);
                   setSubmitError(null);
