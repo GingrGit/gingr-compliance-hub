@@ -3,7 +3,7 @@ import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
 import { CheckCircle2, User, Building2, Plus, X, Link } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { saveFreelancerProgress } from "@/lib/gingrOnboardingApi";
+import { saveCompanyProgress, saveFreelancerProgress } from "@/lib/gingrOnboardingApi";
 
 const BUSINESS_TYPES = [
   {
@@ -19,6 +19,13 @@ const BUSINESS_TYPES = [
     desc: "Du arbeitest über eine von dir betriebene, im Handelsregister eingetragene Gesellschaft (GmbH oder AG).",
   },
 ];
+
+const COMPANY_AUTHORIZATION_TYPE_MAP = {
+  signatory: "SignatureAuthorization",
+  bank: "CompanyBankAccount",
+  invoice: "InvoiceCompanyName",
+  declaration: "SignedCompanyDeclaration",
+};
 
 export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const [businessType, setBusinessType] = useState(profile.business_type || null);
@@ -89,6 +96,22 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
 
       if (saveResult === false || !saveResult) {
         setSubmitError("Saving your freelancer information failed. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+      setIsSubmitting(false);
+    }
+
+    if (businessType === "company") {
+      setIsSubmitting(true);
+      const saveResult = await saveCompanyProgress({
+        authorizationType: COMPANY_AUTHORIZATION_TYPE_MAP[invoiceProofType],
+        commercialRegisterExtract: commercialRegisterUrl,
+        proofAuthorization: invoiceProofUrl,
+      });
+
+      if (saveResult === false || !saveResult) {
+        setSubmitError("Saving your company information failed. Please try again.");
         setIsSubmitting(false);
         return;
       }

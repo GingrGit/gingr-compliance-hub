@@ -406,6 +406,35 @@ export async function saveFreelancerProgress({ selfEmploymentConfirmation, profi
   return result !== false;
 }
 
+export async function saveCompanyProgress({ authorizationType, commercialRegisterExtract, proofAuthorization }) {
+  const tokenState = initializeToken();
+  const token = tokenState?.token;
+
+  if (!token || !authorizationType || !commercialRegisterExtract || !proofAuthorization) {
+    return false;
+  }
+
+  const formData = new FormData();
+  formData.append("authorizationType", authorizationType);
+  formData.append("commercialRegisterExtract", commercialRegisterExtract);
+  formData.append("proofAuthorization", proofAuthorization);
+
+  const response = await fetch(`${getLegalOnboardingBaseUrl()}/company`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    return false;
+  }
+
+  const result = await parseJsonResponse(response);
+  return result !== false;
+}
+
 export async function saveEarningsProgress({ hourlyRate, hoursPerMonth, sourceTax }) {
   const tokenState = initializeToken();
   const token = tokenState?.token;
