@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { base44 } from "@/api/base44Client";
+
 import { validateStoredToken } from "@/lib/env";
 import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, submitLegalOnboarding } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
@@ -168,33 +168,17 @@ export default function OnboardingWizard() {
     setProfile((prev) => ({ ...prev, ...updates }));
   };
 
-  const saveToDb = async (data) => {
-    setSaving(true);
-    const payload = { ...profile, ...data, current_step: profile.current_step };
-    let savedId = profileId;
-    if (profileId) {
-      await base44.entities.OnboardingProfile.update(profileId, payload);
-    } else {
-      const created = await base44.entities.OnboardingProfile.create(payload);
-      savedId = created.id;
-      setProfileId(created.id);
-    }
-    setSaving(false);
-    return savedId;
+  const saveToDb = async () => {
+    return profileId;
   };
 
-  const goNext = async (stepData = {}, afterSaveCallback = null, options = {}) => {
+  const goNext = async (stepData = {}, afterSaveCallback = null) => {
     const nextStepIndex = Math.min(steps.length - 1, currentStep + 1);
-    const shouldSkipDbSave = options.skipDbSave || currentStepId === "self_employed";
     const updates = { ...stepData, current_step: nextStepIndex };
     updateProfile(updates);
 
-    let savedId = profileId;
-    if (!shouldSkipDbSave) {
-      savedId = await saveToDb(updates);
-    }
     if (afterSaveCallback) {
-      await afterSaveCallback(savedId || profileId);
+      await afterSaveCallback(profileId);
     }
   };
 
@@ -209,7 +193,6 @@ export default function OnboardingWizard() {
   };
 
   const handleSaveAndExit = async () => {
-    await saveToDb({});
     setShowAbandonModal(true);
   };
 
