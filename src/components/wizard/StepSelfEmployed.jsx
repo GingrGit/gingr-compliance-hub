@@ -5,19 +5,20 @@ import { CheckCircle2, User, Building2, Plus, X, Link } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { saveCompanyProgress, saveFreelancerProgress } from "@/lib/gingrOnboardingApi";
+import { useI18n } from "@/lib/i18n";
 
 const BUSINESS_TYPES = [
   {
     id: "freelancer",
-    title: "Freelancer / Einzelunternehmen",
+    titleKey: "step_self_employed.business_type_freelancer_title",
     Icon: User,
-    desc: "Du arbeitest auf eigene Rechnung und unter deinem eigenen Namen oder als Einzelfirma — ohne separate Gesellschaft.",
+    descKey: "step_self_employed.business_type_freelancer_desc",
   },
   {
     id: "company",
-    title: "GmbH / AG",
+    titleKey: "step_self_employed.business_type_company_title",
     Icon: Building2,
-    desc: "Du arbeitest über eine von dir betriebene, im Handelsregister eingetragene Gesellschaft (GmbH oder AG).",
+    descKey: "step_self_employed.business_type_company_desc",
   },
 ];
 
@@ -36,6 +37,7 @@ const COMPANY_AUTHORIZATION_TYPE_REVERSE_MAP = {
 };
 
 export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+  const { t } = useI18n();
   const [businessType, setBusinessType] = useState(profile.business_type || null);
   const [ahvUrl, setAhvUrl] = useState(profile.ahv_confirmation_url || "");
   const [activityUrls, setActivityUrls] = useState(
@@ -58,18 +60,18 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
 
   const validate = () => {
     const e = {};
-    if (!businessType) e.businessType = "Bitte wähle deine Unternehmensform aus.";
+    if (!businessType) e.businessType = t("step_self_employed.error_business_type_required");
 
     if (businessType === "freelancer") {
-      if (!ahvUrl || showRejectedAhvAsEmpty) e.ahvUrl = "Bitte lade die AHV-Bestätigung hoch.";
+      if (!ahvUrl || showRejectedAhvAsEmpty) e.ahvUrl = t("step_self_employed.error_ahv_required");
       const validUrls = activityUrls.filter(u => u.trim());
-      if (validUrls.length === 0) e.activityUrls = "Bitte gib mindestens eine Profil-URL an.";
+      if (validUrls.length === 0) e.activityUrls = t("step_self_employed.error_activity_urls_required");
     }
     if (businessType === "company") {
-      if (!commercialRegisterUrl || showRejectedCommercialRegisterAsEmpty) e.commercialRegisterUrl = "Bitte lade den Handelsregisterauszug hoch.";
-      if (!invoiceProofType || !invoiceProofUrl || showRejectedAuthorizationProofAsEmpty) e.invoiceProofUrl = "Bitte wähle einen Dokumenttyp und lade das Dokument hoch.";
+      if (!commercialRegisterUrl || showRejectedCommercialRegisterAsEmpty) e.commercialRegisterUrl = t("step_self_employed.error_commercial_register_required");
+      if (!invoiceProofType || !invoiceProofUrl || showRejectedAuthorizationProofAsEmpty) e.invoiceProofUrl = t("step_self_employed.error_invoice_proof_required");
     }
-    if (businessType && !confirmed) e.confirmed = "Bitte bestätige die Erklärung, um fortzufahren.";
+    if (businessType && !confirmed) e.confirmed = t("step_self_employed.error_confirmation_required");
 
     setErrors(e);
     if (Object.keys(e).length > 0) {
@@ -108,7 +110,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       });
 
       if (saveResult === false || !saveResult) {
-        setSubmitError("Saving your freelancer information failed. Please try again.");
+        setSubmitError(t("step_self_employed.error_save_freelancer_failed"));
         setIsSubmitting(false);
         return;
       }
@@ -124,7 +126,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
       });
 
       if (saveResult === false || !saveResult) {
-        setSubmitError("Saving your company information failed. Please try again.");
+        setSubmitError(t("step_self_employed.error_save_company_failed"));
         setIsSubmitting(false);
         return;
       }
@@ -145,13 +147,13 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
 
   return (
     <StepCard
-      title="Deine rechtliche Unternehmensform"
-      subtitle="Wähle aus, über welche Struktur du mit gingr zusammenarbeiten möchtest."
+      title={t("step_self_employed.title")}
+      subtitle={t("step_self_employed.subtitle")}
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving || isSubmitting}
-      validationError={submitError || (hasValidationError ? "Bitte fülle alle markierten Felder aus." : null)}
+      validationError={submitError || (hasValidationError ? t("step_self_employed.error_fill_required_fields") : null)}
     >
       <div className="space-y-5" ref={formRef}>
 
@@ -176,8 +178,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${businessType === bt.id ? "bg-pink-100" : "bg-gray-100"}`}>
                       <bt.Icon className={`w-5 h-5 ${businessType === bt.id ? "text-[#FF3CAC]" : "text-gray-400"}`} />
                     </div>
-                    <p className={`font-semibold text-sm ${businessType === bt.id ? "text-[#6B0064]" : "text-gray-900"}`}>{bt.title}</p>
-                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{bt.desc}</p>
+                    <p className={`font-semibold text-sm ${businessType === bt.id ? "text-[#6B0064]" : "text-gray-900"}`}>{t(bt.titleKey)}</p>
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{t(bt.descKey)}</p>
                   </div>
                   {businessType === bt.id && (
                     <CheckCircle2 className="w-5 h-5 text-[#FF3CAC] flex-shrink-0 mt-1" />
@@ -194,10 +196,10 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
           <div className="space-y-4 pt-2 border-t border-gray-100">
             <div data-error={errors.ahvUrl ? "true" : undefined}>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <p className="text-sm font-medium text-gray-900">AHV-Bestätigung der Selbständigkeit *</p>
+                <p className="text-sm font-medium text-gray-900">{t("step_self_employed.freelancer_ahv_label")}</p>
                 {profile.self_employment_confirmation_status === "rejected" && (
                   <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
-                    Rejected
+                    {t("step_self_employed.status_rejected")}
                   </Badge>
                 )}
               </div>
@@ -209,7 +211,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   setSubmitError(null);
                   setErrors((p) => ({ ...p, ahvUrl: null }));
                 }}
-                hint="Offizielle Bestätigung der AHV-Ausgleichskasse"
+                hint={t("step_self_employed.freelancer_ahv_hint")}
                 profileId={profileId}
                 documentType="ahv_confirmation"
                 disableDelete={profile.self_employment_confirmation_status === "approved"}
@@ -218,8 +220,8 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
             </div>
 
             <div data-error={errors.activityUrls ? "true" : undefined}>
-              <p className="text-sm font-medium text-gray-700 mb-2">Nachweis selbständiger Markttätigkeit *</p>
-              <p className="text-xs text-gray-500 mb-3">Gib die URL(s) deines Profils auf einer Plattform an (z.B. eine Escort-Plattform, eigene Website o.ä.).</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">{t("step_self_employed.freelancer_activity_urls_label")}</p>
+              <p className="text-xs text-gray-500 mb-3">{t("step_self_employed.freelancer_activity_urls_description")}</p>
               <div className="space-y-2">
                 {activityUrls.map((url, idx) => (
                   <div key={idx} className="flex items-center gap-2">
@@ -234,7 +236,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                           setSubmitError(null);
                           setErrors((p) => ({ ...p, activityUrls: null }));
                         }}
-                        placeholder="https://beispiel.com/profil"
+                        placeholder={t("step_self_employed.freelancer_activity_urls_placeholder")}
                         className={`pl-9 text-sm ${errors.activityUrls && !url.trim() ? "border-red-400" : ""}`}
                       />
                     </div>
@@ -263,7 +265,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   className="flex items-center gap-1.5 text-xs text-[#FF3CAC] hover:text-[#e030a0] font-medium mt-1 transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  Weitere URL hinzufügen
+                  {t("step_self_employed.freelancer_activity_urls_add")}
                 </button>
               </div>
               {errors.activityUrls && <p className="text-xs text-red-500 mt-1">{errors.activityUrls}</p>}
@@ -271,9 +273,9 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
 
             {/* Freelancer declaration */}
             <div className={`rounded-xl border p-4 ${errors.confirmed ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"}`} data-error={errors.confirmed ? "true" : undefined}>
-              <p className="text-sm font-semibold text-gray-800 mb-2">Selbstdeklaration</p>
+              <p className="text-sm font-semibold text-gray-800 mb-2">{t("step_self_employed.freelancer_declaration_title")}</p>
               <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                Ich bestätige hiermit, dass ich auf eigene Rechnung und auf eigenes Risiko tätig bin, selbst entscheide, ob ich Buchungen annehme, meine Arbeit eigenständig organisiere und für meine Steuern sowie meine Sozialversicherungen selbst verantwortlich bin.
+                {t("step_self_employed.freelancer_declaration_text")}
               </p>
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
@@ -287,7 +289,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   className="mt-0.5 accent-[#FF3CAC] w-4 h-4 flex-shrink-0"
                 />
                 <span className="text-xs font-medium text-gray-700">
-                  Ich bestätige diese Selbstdeklaration *
+                  {t("step_self_employed.declaration_checkbox")}
                 </span>
               </label>
               {errors.confirmed && <p className="text-xs text-red-500 mt-2">{errors.confirmed}</p>}
@@ -300,10 +302,10 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
           <div className="space-y-4 pt-2 border-t border-gray-100">
             <div data-error={errors.commercialRegisterUrl ? "true" : undefined}>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <p className="text-sm font-medium text-gray-900">Handelsregisterauszug *</p>
+                <p className="text-sm font-medium text-gray-900">{t("step_self_employed.company_register_label")}</p>
                 {profile.commercial_register_status === "rejected" && (
                   <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
-                    Rejected
+                    {t("step_self_employed.status_rejected")}
                   </Badge>
                 )}
               </div>
@@ -315,7 +317,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   setSubmitError(null);
                   setErrors((p) => ({ ...p, commercialRegisterUrl: null }));
                 }}
-                hint="Aktueller Auszug aus dem Handelsregister (nicht älter als 12 Monate)"
+                hint={t("step_self_employed.company_register_hint")}
                 profileId={profileId}
                 documentType="commercial_register"
                 disableDelete={profile.commercial_register_status === "approved"}
@@ -324,14 +326,14 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
             </div>
 
             <div data-error={errors.invoiceProofUrl ? "true" : undefined}>
-              <p className="text-sm font-medium text-gray-700 mb-1">Nachweis der Vertretungsberechtigung / Abrechnung *</p>
-              <p className="text-xs text-gray-500 mb-3">Bitte lade eines der folgenden Dokumente hoch:</p>
+              <p className="text-sm font-medium text-gray-700 mb-1">{t("step_self_employed.company_proof_label")}</p>
+              <p className="text-xs text-gray-500 mb-3">{t("step_self_employed.company_proof_description")}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                 {[
-                  { id: "signatory", label: "Unterschriftsberechtigung", desc: "Nachweis der Zeichnungsberechtigung" },
-                  { id: "bank", label: "Firmen-Bankkonto", desc: "Kontoauszug oder Bankbestätigung auf den Firmennamen" },
-                  { id: "invoice", label: "Rechnung im Firmennamen", desc: "Muster- oder effektive Rechnung der Gesellschaft" },
-                  { id: "declaration", label: "Unterzeichnete Gesellschaftserklärung", desc: "Offizielle Erklärung mit Unterschrift" },
+                  { id: "signatory", label: t("step_self_employed.company_option_signatory_label"), desc: t("step_self_employed.company_option_signatory_desc") },
+                  { id: "bank", label: t("step_self_employed.company_option_bank_label"), desc: t("step_self_employed.company_option_bank_desc") },
+                  { id: "invoice", label: t("step_self_employed.company_option_invoice_label"), desc: t("step_self_employed.company_option_invoice_desc") },
+                  { id: "declaration", label: t("step_self_employed.company_option_declaration_label"), desc: t("step_self_employed.company_option_declaration_desc") },
                 ].map((opt) => (
                   <button
                     key={opt.id}
@@ -353,10 +355,10 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
               {invoiceProofType && (
                 <>
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <p className="text-sm font-medium text-gray-900">Dokument hochladen *</p>
+                    <p className="text-sm font-medium text-gray-900">{t("step_self_employed.company_upload_label")}</p>
                     {profile.authorization_proof_status === "rejected" && (
                       <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
-                        Rejected
+                        {t("step_self_employed.status_rejected")}
                       </Badge>
                     )}
                   </div>
@@ -379,9 +381,9 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
 
             {/* Company declaration */}
             <div className={`rounded-xl border p-4 ${errors.confirmed ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"}`} data-error={errors.confirmed ? "true" : undefined}>
-              <p className="text-sm font-semibold text-gray-800 mb-2">Selbstdeklaration</p>
+              <p className="text-sm font-semibold text-gray-800 mb-2">{t("step_self_employed.company_declaration_title")}</p>
               <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                Ich bestätige hiermit, dass die Gesellschaft der Vertragspartner von gingr ist, ich berechtigt bin, für die Gesellschaft zu handeln, und die Gesellschaft für sämtliche steuerlichen, versicherungsrechtlichen und sozialversicherungsrechtlichen Verpflichtungen verantwortlich ist.
+                {t("step_self_employed.company_declaration_text")}
               </p>
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
@@ -395,7 +397,7 @@ export default function StepSelfEmployed({ profile, onNext, onBack, onSaveAndExi
                   className="mt-0.5 accent-[#FF3CAC] w-4 h-4 flex-shrink-0"
                 />
                 <span className="text-xs font-medium text-gray-700">
-                  Ich bestätige diese Selbstdeklaration *
+                  {t("step_self_employed.declaration_checkbox")}
                 </span>
               </label>
               {errors.confirmed && <p className="text-xs text-red-500 mt-2">{errors.confirmed}</p>}
