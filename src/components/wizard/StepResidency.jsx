@@ -109,7 +109,7 @@ export default function StepResidency({ profile, updateProfile, onNext, onBack, 
             setPermitUrl(url);
             setErrors(prev => ({ ...prev, permitUrl: null }));
             if (url) {
-              updateProfile({ permit_url: url, permit_status: null });
+              updateProfile({ permit_type: permitType, permit_url: url, permit_status: null });
             }
           }}
           hint={t("step_residency.upload_hint")}
