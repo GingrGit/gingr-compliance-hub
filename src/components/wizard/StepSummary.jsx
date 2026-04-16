@@ -138,8 +138,8 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           ))}
         </div>
 
-        <InfoAccordion title={t("step_summary.salary_accordion_title")}>
-          {t("step_summary.salary_accordion_text")}
+        <InfoAccordion title={t("step_summary.salary_info_title")}>
+          {t("step_summary.salary_info_text")}
         </InfoAccordion>
       </div>
 
