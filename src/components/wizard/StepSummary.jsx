@@ -118,15 +118,15 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-4 space-y-3">
         <div className="flex items-center gap-2 mb-1">
           <Info className="w-4 h-4 text-[#FF3CAC]" />
-          <span className="text-sm font-semibold text-[#6B0064]">{t("step_summary.salary_calc.title")}</span>
+          <span className="text-sm font-semibold text-[#6B0064]">{t("step_summary.salary_calculation_title")}</span>
         </div>
 
         <div className="space-y-2">
           {[
-            { step: "1", label: t("step_summary.salary_calc.step1_label"), text: t("step_summary.salary_calc.step1_text") },
-            { step: "2", label: t("step_summary.salary_calc.step2_label"), text: t("step_summary.salary_calc.step2_text") },
-            { step: "3", label: t("step_summary.salary_calc.step3_label"), text: t("step_summary.salary_calc.step3_text") },
-            { step: "4", label: t("step_summary.salary_calc.step4_label"), text: t("step_summary.salary_calc.step4_text") },
+            { step: "1", label: t("step_summary.salary_step_1_label"), text: t("step_summary.salary_step_1_text") },
+            { step: "2", label: t("step_summary.salary_step_2_label"), text: t("step_summary.salary_step_2_text") },
+            { step: "3", label: t("step_summary.salary_step_3_label"), text: t("step_summary.salary_step_3_text") },
+            { step: "4", label: t("step_summary.salary_step_4_label"), text: t("step_summary.salary_step_4_text") },
           ].map(({ step, label, text }) => (
             <div key={step} className="flex items-start gap-3">
               <div className="w-5 h-5 rounded-full bg-[#FF3CAC] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{step}</div>
@@ -138,8 +138,8 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           ))}
         </div>
 
-        <InfoAccordion title={t("step_summary.salary_calc.accordion_title")}>
-          {t("step_summary.salary_calc.accordion_text")}
+        <InfoAccordion title={t("step_summary.salary_accordion_title")}>
+          {t("step_summary.salary_accordion_text")}
         </InfoAccordion>
       </div>
 
