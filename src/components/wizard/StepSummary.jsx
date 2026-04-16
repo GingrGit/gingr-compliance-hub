@@ -5,18 +5,18 @@ import InfoAccordion from "@/components/wizard/InfoAccordion";
 import { CheckCircle2, User, Briefcase, Calendar, Info } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
-const WORK_MODEL_LABELS = {
-  employee_unlimited: "Angestelltenverhältnis (unbefristet)",
-  employee_90days: "Angestelltenverhältnis (max. 90 Tage)",
-  self_employed: "Selbstständig",
+const WORK_MODEL_KEYS = {
+  employee_unlimited: "step_summary.work_model.employee_unlimited",
+  employee_90days: "step_summary.work_model.employee_90days",
+  self_employed: "step_summary.work_model.self_employed",
 };
 
-const PERMIT_LABELS = {
-  none: "Kein Permit",
-  B: "Aufenthaltsbewilligung B",
-  C: "Niederlassungsbewilligung C",
-  L: "Kurzaufenthaltsbewilligung L",
-  other: "Anderes",
+const PERMIT_KEYS = {
+  none: "step_summary.permit.none",
+  B: "step_summary.permit.B",
+  C: "step_summary.permit.C",
+  L: "step_summary.permit.L",
+  other: "step_summary.permit.other",
 };
 
 function DataRow({ label, value }) {
@@ -63,7 +63,7 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
     if (isStartDateMissing || saving) return;
     const submitResult = onSubmit ? await onSubmit(startDate || undefined) : true;
     if (submitResult === false) {
-      setSubmitError("Submitting your application failed. Please try again.");
+      setSubmitError(t("step_summary.error.submit_failed"));
       return;
     }
     onNext({ employment_start_date: startDate });
@@ -81,27 +81,27 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
       saving={saving}
     >
       {/* Persönliche Angaben */}
-      <SectionBlock icon={User} title="Persönliche Angaben">
-        <DataRow label="Name" value={`${profile.first_name || ""} ${profile.last_name || ""}`.trim()} />
-        <DataRow label="Geburtsdatum" value={profile.date_of_birth} />
-        <DataRow label="Adresse" value={profile.address ? `${profile.address}, ${profile.postal_code || ""} ${profile.city || ""}`.trim() : null} />
-        <DataRow label="Telefon" value={profile.phone} />
-        <DataRow label="Nationalität" value={profile.nationality} />
+      <SectionBlock icon={User} title={t("step_summary.section.personal_details")}>
+        <DataRow label={t("step_summary.label.name")} value={`${profile.first_name || ""} ${profile.last_name || ""}`.trim()} />
+        <DataRow label={t("step_summary.label.date_of_birth")} value={profile.date_of_birth} />
+        <DataRow label={t("step_summary.label.address")} value={profile.address ? `${profile.address}, ${profile.postal_code || ""} ${profile.city || ""}`.trim() : null} />
+        <DataRow label={t("step_summary.label.phone")} value={profile.phone} />
+        <DataRow label={t("step_summary.label.nationality")} value={profile.nationality} />
       </SectionBlock>
 
       {/* Arbeits-Details */}
-      <SectionBlock icon={Briefcase} title="Arbeits-Details">
-        <DataRow label="Arbeitsmodell" value={WORK_MODEL_LABELS[profile.work_model]} />
-        <DataRow label="Quellensteuer" value={profile.source_tax === "yes" ? "Ja" : profile.source_tax === "no" ? "Nein" : profile.source_tax === "unsure" ? "Unsicher" : null} />
+      <SectionBlock icon={Briefcase} title={t("step_summary.section.work_details")}>
+        <DataRow label={t("step_summary.label.work_model")} value={profile.work_model ? t(WORK_MODEL_KEYS[profile.work_model]) : null} />
+        <DataRow label={t("step_summary.label.source_tax")} value={profile.source_tax === "yes" ? t("step_earnings.source_tax_yes") : profile.source_tax === "no" ? t("step_earnings.source_tax_no") : profile.source_tax === "unsure" ? t("step_earnings.source_tax_unsure") : null} />
         {profile.permit_type && profile.permit_type !== "none" && (
-          <DataRow label="Aufenthaltsbewilligung" value={PERMIT_LABELS[profile.permit_type]} />
+          <DataRow label={t("step_summary.label.permit_type")} value={t(PERMIT_KEYS[profile.permit_type])} />
         )}
-        {profile.canton && <DataRow label="Kanton" value={profile.canton} />}
+        {profile.canton && <DataRow label={t("step_summary.label.canton")} value={profile.canton} />}
       </SectionBlock>
 
       {/* Startdatum */}
-      <SectionBlock icon={Calendar} title="Beginn des Arbeitsverhältnisses">
-        <p className="text-xs text-gray-500 mb-2">Ab wann möchtest du deine Tätigkeit bei gingr.ch beginnen?</p>
+      <SectionBlock icon={Calendar} title={t("step_summary.section.employment_start") }>
+        <p className="text-xs text-gray-500 mb-2">{t("step_summary.start_date_description")}</p>
         <input
           type="date"
           value={startDate}
@@ -110,7 +110,7 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           className={`w-full border rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-300 ${startDateTouched && isStartDateMissing ? "border-red-300" : "border-gray-200"}`}
         />
         {startDateTouched && isStartDateMissing && (
-          <p className="text-xs text-red-500 mt-2">Bitte wähle ein Startdatum aus.</p>
+          <p className="text-xs text-red-500 mt-2">{t("step_summary.error.start_date_required")}</p>
         )}
       </SectionBlock>
 
@@ -118,15 +118,15 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
       <div className="bg-pink-50 border border-pink-100 rounded-xl p-4 space-y-3">
         <div className="flex items-center gap-2 mb-1">
           <Info className="w-4 h-4 text-[#FF3CAC]" />
-          <span className="text-sm font-semibold text-[#6B0064]">So wird dein Lohn berechnet</span>
+          <span className="text-sm font-semibold text-[#6B0064]">{t("step_summary.salary_calc.title")}</span>
         </div>
 
         <div className="space-y-2">
           {[
-            { step: "1", label: "Einkommen von gingr.ch", text: "Dein Einkommen wird durch den standardisierten Stundensatz von CHF 200 dividiert. Das Resultat sind deine Arbeitsstunden." },
-            { step: "2", label: "Zusatzservices", text: "Zusatzleistungen werden arbeitsrechtlich als «Bonus» verbucht und zu deinen Arbeitsstunden addiert." },
-            { step: "3", label: "Fahr- & Reisespesen", text: "Spesen werden separat abgerechnet und fliessen nicht in die Lohnberechnung ein." },
-            { step: "4", label: "Abzüge", text: "Vom Bruttolohn werden die gesetzlichen Sozialversicherungsbeiträge, die monatliche QUITT-Gebühr von CHF 50 sowie die Gingr Service Fee abgezogen." },
+            { step: "1", label: t("step_summary.salary_calc.step1_label"), text: t("step_summary.salary_calc.step1_text") },
+            { step: "2", label: t("step_summary.salary_calc.step2_label"), text: t("step_summary.salary_calc.step2_text") },
+            { step: "3", label: t("step_summary.salary_calc.step3_label"), text: t("step_summary.salary_calc.step3_text") },
+            { step: "4", label: t("step_summary.salary_calc.step4_label"), text: t("step_summary.salary_calc.step4_text") },
           ].map(({ step, label, text }) => (
             <div key={step} className="flex items-start gap-3">
               <div className="w-5 h-5 rounded-full bg-[#FF3CAC] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{step}</div>
@@ -138,24 +138,24 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           ))}
         </div>
 
-        <InfoAccordion title="Warum CHF 200 Stundensatz?">
-          Der standardisierte Stundensatz von CHF 200 wird verwendet, um dein auf gingr.ch generiertes Einkommen in Arbeitsstunden umzurechnen. Dies ermöglicht eine rechtskonforme Lohnabrechnung, unabhängig von deinen individuellen Preismodellen auf der Plattform.
+        <InfoAccordion title={t("step_summary.salary_calc.accordion_title")}>
+          {t("step_summary.salary_calc.accordion_text")}
         </InfoAccordion>
       </div>
 
       {/* Ergebnis Box */}
       <div className="bg-white border-2 border-pink-200 rounded-xl p-4 text-center">
-        <p className="text-xs text-gray-500 mb-1">Dein Nettolohn ergibt sich aus:</p>
+        <p className="text-xs text-gray-500 mb-1">{t("step_summary.net_salary.title")}</p>
         <div className="flex items-center justify-center gap-2 flex-wrap text-xs text-gray-700 font-medium">
-          <span className="bg-pink-50 px-2 py-1 rounded-full">Einkommen gingr.ch</span>
+          <span className="bg-pink-50 px-2 py-1 rounded-full">{t("step_summary.net_salary.income")}</span>
           <span className="text-gray-400">+</span>
-          <span className="bg-pink-50 px-2 py-1 rounded-full">Zusatzservices</span>
+          <span className="bg-pink-50 px-2 py-1 rounded-full">{t("step_summary.net_salary.extra_services")}</span>
           <span className="text-gray-400">+</span>
-          <span className="bg-pink-50 px-2 py-1 rounded-full">Spesen</span>
+          <span className="bg-pink-50 px-2 py-1 rounded-full">{t("step_summary.net_salary.expenses")}</span>
           <span className="text-gray-400">−</span>
-          <span className="bg-red-50 text-red-700 px-2 py-1 rounded-full">Abzüge & Gebühren</span>
+          <span className="bg-red-50 text-red-700 px-2 py-1 rounded-full">{t("step_summary.net_salary.deductions")}</span>
           <span className="text-gray-400">=</span>
-          <span className="bg-green-50 text-green-700 px-2 py-1 rounded-full font-bold">Nettolohn</span>
+          <span className="bg-green-50 text-green-700 px-2 py-1 rounded-full font-bold">{t("step_summary.net_salary.result")}</span>
         </div>
       </div>
 
@@ -168,7 +168,7 @@ export default function StepSummary({ profile, updateProfile, onNext, onBack, on
           {consent && <CheckCircle2 className="w-3 h-3 text-white" />}
         </div>
         <p className="text-sm text-gray-700">
-          Ich habe alle Angaben sorgfältig geprüft und bin mit der dargestellten Berechnungsmethode sowie den Konditionen des Arbeitsverhältnisses einverstanden.
+          {t("step_summary.consent_text")}
         </p>
       </label>
 
