@@ -8,8 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronDown } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
-function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
+function NationalityDropdown({ value, onChange, citizenshipGroup, countries, t }) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -34,7 +35,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
         className="w-full flex items-center justify-between px-3 py-2 border border-gray-200 rounded-lg bg-white text-sm hover:border-rose-300 transition-colors"
       >
         <span className={selected ? "text-gray-900" : "text-gray-400"}>
-          {selected ? selected.name : "Land auswählen…"}
+          {selected ? selected.name : t("step_core_data.dropdown.select_country")}
         </span>
         <ChevronDown className="w-4 h-4 text-gray-400" />
       </button>
@@ -45,13 +46,13 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
               autoFocus
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Suchen…"
+              placeholder={t("step_core_data.dropdown.search_placeholder")}
               className="h-8 text-sm"
             />
           </div>
           <div className="max-h-52 overflow-y-auto">
             {filtered.length === 0 && (
-              <p className="text-sm text-gray-400 text-center py-4">Keine Ergebnisse</p>
+              <p className="text-sm text-gray-400 text-center py-4">{t("step_core_data.dropdown.no_results")}</p>
             )}
             {filtered.map((c) => (
               <button
@@ -62,7 +63,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
               >
                 <span>{c.name}</span>
                 <span className="ml-auto text-xs text-gray-400">
-                  {c.group === "CH" ? "CH" : c.group === "EU_EFTA" ? "EU/EFTA" : "Drittstaat"}
+                  {c.group === "CH" ? "CH" : c.group === "EU_EFTA" ? "EU/EFTA" : t("step_core_data.dropdown.group_third_country")}
                 </span>
               </button>
             ))}
@@ -74,6 +75,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries }) {
 }
 
 export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+  const { t } = useI18n();
   const [countries, setCountries] = useState([]);
   const [phoneWarning, setPhoneWarning] = useState(null);
   const [sendingLink, setSendingLink] = useState(false);
@@ -104,15 +106,15 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
   const validateAndNext = async () => {
     const errors = {};
-    if (!profile.first_name?.trim()) errors.first_name = "Vorname ist erforderlich";
-    if (!profile.last_name?.trim()) errors.last_name = "Nachname ist erforderlich";
-    if (!profile.date_of_birth) errors.date_of_birth = "Geburtsdatum ist erforderlich";
-    else if (ageError) errors.date_of_birth = "Du musst mindestens 18 Jahre alt sein";
-    if (!profile.escort_email?.trim()) errors.escort_email = "E-Mail-Adresse ist erforderlich";
-    if (!profile.phone?.trim()) errors.phone = "Handynummer ist erforderlich";
-    if (!profile.citizenship_group) errors.citizenship_group = "Bitte wähle deine Staatsangehörigkeit";
+    if (!profile.first_name?.trim()) errors.first_name = t("step_core_data.error.first_name_required");
+    if (!profile.last_name?.trim()) errors.last_name = t("step_core_data.error.last_name_required");
+    if (!profile.date_of_birth) errors.date_of_birth = t("step_core_data.error.birth_date_required");
+    else if (ageError) errors.date_of_birth = t("step_core_data.error.must_be_adult");
+    if (!profile.escort_email?.trim()) errors.escort_email = t("step_core_data.error.email_required");
+    if (!profile.phone?.trim()) errors.phone = t("step_core_data.error.phone_required");
+    if (!profile.citizenship_group) errors.citizenship_group = t("step_core_data.error.citizenship_required");
     if (!profile.id_document_url || profile.id_document_status === "rejected") {
-      errors.id_document_url = "Please upload a new identity document";
+      errors.id_document_url = t("step_core_data.error.upload_new_identity_document");
     }
 
     setFieldErrors(errors);
@@ -123,7 +125,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         const el = formRef.current?.querySelector(`[data-field="${firstKey}"]`);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 50);
-      setSubmitError("Bitte fülle alle markierten Felder aus.");
+      setSubmitError(t("step_core_data.error.complete_marked_fields"));
       return;
     }
 
@@ -149,13 +151,13 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
     const saveResult = await savePersonalDataProgress(nextData);
     if (saveResult === false) {
-      setSubmitError("Saving your personal data failed. Please try again.");
+      setSubmitError(t("step_core_data.error.save_failed"));
       setIsSubmitting(false);
       return;
     }
 
     if (!saveResult) {
-      setSubmitError("Saving your personal data failed. Please try again.");
+      setSubmitError(t("step_core_data.error.save_failed"));
       setIsSubmitting(false);
       return;
     }
@@ -194,8 +196,8 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
   return (
     <StepCard
-      title="Deine persönlichen Daten"
-      subtitle="Diese Angaben werden für deinen Vertrag und die Lohnabrechnung benötigt."
+      title={t("step_core_data.title")}
+      subtitle={t("step_core_data.subtitle")}
       onNext={validateAndNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
@@ -205,7 +207,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       <div className="space-y-4" ref={formRef}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div data-field="first_name">
-            <Label className="text-xs text-gray-600 mb-1">Vorname *</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.first_name")}</Label>
             <Input
               value={profile.first_name || ""}
               onChange={(e) => { updateProfile({ first_name: e.target.value }); setFieldErrors(p => ({...p, first_name: null})); }}
@@ -215,7 +217,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             {fe.first_name && <p className="text-xs text-red-500 mt-1">{fe.first_name}</p>}
           </div>
           <div data-field="last_name">
-            <Label className="text-xs text-gray-600 mb-1">Nachname *</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.last_name")}</Label>
             <Input
               value={profile.last_name || ""}
               onChange={(e) => { updateProfile({ last_name: e.target.value }); setFieldErrors(p => ({...p, last_name: null})); }}
@@ -227,7 +229,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="date_of_birth">
-          <Label className="text-xs text-gray-600 mb-1">Geburtsdatum *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.date_of_birth")}</Label>
           <Input
             type="date"
             value={profile.date_of_birth || ""}
@@ -238,7 +240,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="escort_email">
-          <Label className="text-xs text-gray-600 mb-1">E-Mail-Adresse *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.email")}</Label>
           <Input
             type="email"
             value={profile.escort_email || ""}
@@ -250,7 +252,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="phone">
-          <Label className="text-xs text-gray-600 mb-1">Handynummer *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.phone")}</Label>
           <Input
             type="tel"
             value={profile.phone || ""}
@@ -262,17 +264,17 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           {fe.phone && <p className="text-xs text-red-500 mt-1">{fe.phone}</p>}
           {phoneWarning && !linkSent && (
             <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
-              <p className="font-medium mb-1">Diese Telefonnummer ist bereits registriert.</p>
-              <p className="mb-2">Möchtest du einen Anmelde-Link per SMS senden?</p>
+              <p className="font-medium mb-1">{t("step_core_data.phone_warning.registered_title")}</p>
+              <p className="mb-2">{t("step_core_data.phone_warning.registered_text")}</p>
               <Button size="sm" variant="outline" className="text-yellow-700 border-yellow-400 hover:bg-yellow-100" onClick={() => sendMagicLink({ profile_id: phoneWarning.profile_id, phone: phoneWarning.phone })} disabled={sendingLink}>
-                {sendingLink ? "Wird gesendet…" : "Login-Link per SMS senden"}
+                {sendingLink ? t("step_core_data.phone_warning.sending") : t("step_core_data.phone_warning.send_sms_link")}
               </Button>
             </div>
           )}
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">Adresse</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.address")}</Label>
           <Input
             value={profile.address || ""}
             onChange={(e) => updateProfile({ address: e.target.value })}
@@ -282,7 +284,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-gray-600 mb-1">PLZ</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.postal_code")}</Label>
             <Input
               value={profile.postal_code || ""}
               onChange={(e) => updateProfile({ postal_code: e.target.value })}
@@ -290,7 +292,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             />
           </div>
           <div>
-            <Label className="text-xs text-gray-600 mb-1">Ort</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.city")}</Label>
             <Input
               value={profile.city || ""}
               onChange={(e) => updateProfile({ city: e.target.value })}
@@ -300,13 +302,13 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="citizenship_group">
-          <Label className="text-xs text-gray-600 mb-1">Staatsangehörigkeit *</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.citizenship_group")}</Label>
           {fe.citizenship_group && <p className="text-xs text-red-500 mb-1">{fe.citizenship_group}</p>}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
             {[
-              { value: "CH", label: "🇨🇭 Schweiz" },
-              { value: "EU_EFTA", label: "🇪🇺 EU / EFTA" },
-              { value: "NON_EU", label: "🌍 Drittstaaten" },
+              { value: "CH", label: t("step_core_data.option.switzerland") },
+              { value: "EU_EFTA", label: t("step_core_data.option.eu_efta") },
+              { value: "NON_EU", label: t("step_core_data.option.third_countries") },
             ].map((opt) => (
               <button
                 key={opt.value}
@@ -329,7 +331,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             ))}
           </div>
           {profile.citizenship_group === "CH" && (
-            <p className="text-xs text-gray-500 mt-2">🇨🇭 Schweizer Bürger/in – kein Aufenthaltsausweis erforderlich</p>
+            <p className="text-xs text-gray-500 mt-2">{t("step_core_data.notice.swiss_no_permit_required")}</p>
           )}
           {profile.citizenship_group && profile.citizenship_group !== "CH" && (
             <div className="mt-2">
@@ -338,6 +340,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
                 onChange={(country) => updateProfile({ nationality: country.code, country_code: country.code })}
                 citizenshipGroup={profile.citizenship_group}
                 countries={countries}
+                t={t}
               />
             </div>
           )}
@@ -346,11 +349,11 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         <div data-field="id_document_url">
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             <p className="text-sm font-medium text-gray-900">
-              {isSwiss ? "Schweizer Pass oder Identitätskarte" : "Reisepass oder Personalausweis"} hochladen *
+              {isSwiss ? t("step_core_data.label.swiss_id_upload") : t("step_core_data.label.foreign_id_upload")}
             </p>
             {profile.id_document_status === "rejected" && (
               <Badge className="bg-red-100 text-red-700 border border-red-200 hover:bg-red-100">
-                Rejected
+                {t("step_core_data.status.rejected")}
               </Badge>
             )}
           </div>
@@ -375,7 +378,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             href="?prefill=true"
             className="text-xs text-pink-400 hover:text-pink-600 underline underline-offset-2"
           >
-            🔗 Demo: Version mit Gingr-Daten anzeigen
+            {t("step_core_data.demo_link")}
           </a>
         </div>
       </div>

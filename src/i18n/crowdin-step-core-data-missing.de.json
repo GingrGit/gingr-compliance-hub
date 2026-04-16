@@ -1,0 +1,150 @@
+[
+  {
+    "identifier": "step_core_data.title",
+    "source_string": "Deine persönlichen Daten"
+  },
+  {
+    "identifier": "step_core_data.subtitle",
+    "source_string": "Diese Angaben werden für deinen Vertrag und die Lohnabrechnung benötigt."
+  },
+  {
+    "identifier": "step_core_data.dropdown.select_country",
+    "source_string": "Land auswählen…"
+  },
+  {
+    "identifier": "step_core_data.dropdown.search_placeholder",
+    "source_string": "Suchen…"
+  },
+  {
+    "identifier": "step_core_data.dropdown.no_results",
+    "source_string": "Keine Ergebnisse"
+  },
+  {
+    "identifier": "step_core_data.dropdown.group_third_country",
+    "source_string": "Drittstaat"
+  },
+  {
+    "identifier": "step_core_data.error.first_name_required",
+    "source_string": "Vorname ist erforderlich"
+  },
+  {
+    "identifier": "step_core_data.error.last_name_required",
+    "source_string": "Nachname ist erforderlich"
+  },
+  {
+    "identifier": "step_core_data.error.birth_date_required",
+    "source_string": "Geburtsdatum ist erforderlich"
+  },
+  {
+    "identifier": "step_core_data.error.must_be_adult",
+    "source_string": "Du musst mindestens 18 Jahre alt sein"
+  },
+  {
+    "identifier": "step_core_data.error.email_required",
+    "source_string": "E-Mail-Adresse ist erforderlich"
+  },
+  {
+    "identifier": "step_core_data.error.phone_required",
+    "source_string": "Handynummer ist erforderlich"
+  },
+  {
+    "identifier": "step_core_data.error.citizenship_required",
+    "source_string": "Bitte wähle deine Staatsangehörigkeit"
+  },
+  {
+    "identifier": "step_core_data.error.upload_new_identity_document",
+    "source_string": "Please upload a new identity document"
+  },
+  {
+    "identifier": "step_core_data.error.complete_marked_fields",
+    "source_string": "Bitte fülle alle markierten Felder aus."
+  },
+  {
+    "identifier": "step_core_data.error.save_failed",
+    "source_string": "Saving your personal data failed. Please try again."
+  },
+  {
+    "identifier": "step_core_data.label.first_name",
+    "source_string": "Vorname *"
+  },
+  {
+    "identifier": "step_core_data.label.last_name",
+    "source_string": "Nachname *"
+  },
+  {
+    "identifier": "step_core_data.label.date_of_birth",
+    "source_string": "Geburtsdatum *"
+  },
+  {
+    "identifier": "step_core_data.label.email",
+    "source_string": "E-Mail-Adresse *"
+  },
+  {
+    "identifier": "step_core_data.label.phone",
+    "source_string": "Handynummer *"
+  },
+  {
+    "identifier": "step_core_data.label.address",
+    "source_string": "Adresse"
+  },
+  {
+    "identifier": "step_core_data.label.postal_code",
+    "source_string": "PLZ"
+  },
+  {
+    "identifier": "step_core_data.label.city",
+    "source_string": "Ort"
+  },
+  {
+    "identifier": "step_core_data.label.citizenship_group",
+    "source_string": "Staatsangehörigkeit *"
+  },
+  {
+    "identifier": "step_core_data.option.switzerland",
+    "source_string": "🇨🇭 Schweiz"
+  },
+  {
+    "identifier": "step_core_data.option.eu_efta",
+    "source_string": "🇪🇺 EU / EFTA"
+  },
+  {
+    "identifier": "step_core_data.option.third_countries",
+    "source_string": "🌍 Drittstaaten"
+  },
+  {
+    "identifier": "step_core_data.notice.swiss_no_permit_required",
+    "source_string": "🇨🇭 Schweizer Bürger/in – kein Aufenthaltsausweis erforderlich"
+  },
+  {
+    "identifier": "step_core_data.label.swiss_id_upload",
+    "source_string": "Schweizer Pass oder Identitätskarte hochladen *"
+  },
+  {
+    "identifier": "step_core_data.label.foreign_id_upload",
+    "source_string": "Reisepass oder Personalausweis hochladen *"
+  },
+  {
+    "identifier": "step_core_data.status.rejected",
+    "source_string": "Rejected"
+  },
+  {
+    "identifier": "step_core_data.phone_warning.registered_title",
+    "source_string": "Diese Telefonnummer ist bereits registriert."
+  },
+  {
+    "identifier": "step_core_data.phone_warning.registered_text",
+    "source_string": "Möchtest du einen Anmelde-Link per SMS senden?"
+  },
+  {
+    "identifier": "step_core_data.phone_warning.sending",
+    "source_string": "Wird gesendet…"
+  },
+  {
+    "identifier": "step_core_data.phone_warning.send_sms_link",
+    "source_string": "Login-Link per SMS senden"
+  },
+  {
+    "identifier": "step_core_data.demo_link",
+    "source_string": "🔗 Demo: Version mit Gingr-Daten anzeigen"
+  }
+]
