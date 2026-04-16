@@ -49,6 +49,12 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
   const [sourceTax, setSourceTax] = useState(normalizedSourceTax || defaultST);
   const [expanded, setExpanded] = useState(false);
 
+  const sourceTaxLabels = {
+    yes: t("step_earnings.source_tax_yes"),
+    no: t("step_earnings.source_tax_no"),
+    unsure: t("step_earnings.source_tax_unsure"),
+  };
+
   const hasRate = parseFloat(hourlyRate) > 0;
   const c = calcEarnings(hourlyRate, hoursPerMonth, sourceTax);
   const applySourceTax = sourceTax === "yes" || sourceTax === "unsure";
@@ -128,7 +134,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
         </div>
         {defaultST !== sourceTax && (
           <p className="text-xs text-[#6B0064] opacity-70 mt-2">
-            💡 Aufgrund deiner Situation empfehlen wir: „{defaultST === "yes" ? "Ja" : defaultST === "no" ? "Nein" : "Nicht sicher"}"
+            💡 {t("step_earnings.source_tax_recommendation", { recommended: sourceTaxLabels[defaultST] })}
           </p>
         )}
       </div>
