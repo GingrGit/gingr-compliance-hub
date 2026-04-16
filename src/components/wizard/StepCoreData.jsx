@@ -207,7 +207,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
       <div className="space-y-4" ref={formRef}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div data-field="first_name">
-            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.first_name")}</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.first_name").charAt(0).toUpperCase() + t("step_core_data.label.first_name").slice(1)}</Label>
             <Input
               value={profile.first_name || ""}
               onChange={(e) => { updateProfile({ first_name: e.target.value }); setFieldErrors(p => ({...p, first_name: null})); }}
@@ -217,7 +217,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             {fe.first_name && <p className="text-xs text-red-500 mt-1">{fe.first_name}</p>}
           </div>
           <div data-field="last_name">
-            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.last_name")}</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.last_name").charAt(0).toUpperCase() + t("step_core_data.label.last_name").slice(1)}</Label>
             <Input
               value={profile.last_name || ""}
               onChange={(e) => { updateProfile({ last_name: e.target.value }); setFieldErrors(p => ({...p, last_name: null})); }}
@@ -229,7 +229,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="date_of_birth">
-          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.date_of_birth")}</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.date_of_birth").charAt(0).toUpperCase() + t("step_core_data.label.date_of_birth").slice(1)}</Label>
           <Input
             type="date"
             value={profile.date_of_birth || ""}
@@ -240,7 +240,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="escort_email">
-          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.email")}</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.email").charAt(0).toUpperCase() + t("step_core_data.label.email").slice(1)}</Label>
           <Input
             type="email"
             value={profile.escort_email || ""}
@@ -252,7 +252,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="phone">
-          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.phone")}</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.phone").charAt(0).toUpperCase() + t("step_core_data.label.phone").slice(1)}</Label>
           <Input
             type="tel"
             value={profile.phone || ""}
@@ -274,7 +274,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div>
-          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.address")}</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.address").charAt(0).toUpperCase() + t("step_core_data.label.address").slice(1)}</Label>
           <Input
             value={profile.address || ""}
             onChange={(e) => updateProfile({ address: e.target.value })}
@@ -284,7 +284,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.postal_code")}</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.postal_code").charAt(0).toUpperCase() + t("step_core_data.label.postal_code").slice(1)}</Label>
             <Input
               value={profile.postal_code || ""}
               onChange={(e) => updateProfile({ postal_code: e.target.value })}
@@ -292,7 +292,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
             />
           </div>
           <div>
-            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.city")}</Label>
+            <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.city").charAt(0).toUpperCase() + t("step_core_data.label.city").slice(1)}</Label>
             <Input
               value={profile.city || ""}
               onChange={(e) => updateProfile({ city: e.target.value })}
@@ -302,7 +302,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
         </div>
 
         <div data-field="citizenship_group">
-          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.citizenship_group")}</Label>
+          <Label className="text-xs text-gray-600 mb-1">{t("step_core_data.label.citizenship_group").charAt(0).toUpperCase() + t("step_core_data.label.citizenship_group").slice(1)}</Label>
           {fe.citizenship_group && <p className="text-xs text-red-500 mb-1">{fe.citizenship_group}</p>}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
             {[
