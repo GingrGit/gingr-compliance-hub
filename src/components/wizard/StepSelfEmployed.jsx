@@ -10,15 +10,15 @@ import { useI18n } from "@/lib/i18n";
 const BUSINESS_TYPES = [
   {
     id: "freelancer",
-    titleKey: "step_self_employed.business_type_freelancer_title",
+    titleKey: "step_self_employed.type_freelancer_label",
     Icon: User,
-    descKey: "step_self_employed.business_type_freelancer_desc",
+    descKey: "step_self_employed.type_freelancer_desc",
   },
   {
     id: "company",
-    titleKey: "step_self_employed.business_type_company_title",
+    titleKey: "step_self_employed.type_company_label",
     Icon: Building2,
-    descKey: "step_self_employed.business_type_company_desc",
+    descKey: "step_self_employed.type_company_desc",
   },
 ];
 
