@@ -134,7 +134,7 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
         </div>
         {defaultST !== sourceTax && (
           <p className="text-xs text-[#6B0064] opacity-70 mt-2">
-            💡 {t("step_earnings.source_tax_recommendation", { recommended: sourceTaxLabels[defaultST] })}
+            {t("step_earnings.source_tax_recommendation", { recommended: sourceTaxLabels[defaultST] })}
           </p>
         )}
       </div>
