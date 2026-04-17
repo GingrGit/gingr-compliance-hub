@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { base44 } from "@/api/base44Client";
 import { fetchCountries, savePersonalDataProgress } from "@/lib/gingrOnboardingApi";
 import StepCard from "@/components/wizard/StepCard";
 import DocumentUpload from "@/components/wizard/DocumentUpload";
@@ -77,9 +76,6 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries, t }
 export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const { t } = useI18n();
   const [countries, setCountries] = useState([]);
-  const [phoneWarning, setPhoneWarning] = useState(null);
-  const [sendingLink, setSendingLink] = useState(false);
-  const [linkSent, setLinkSent] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -166,28 +162,6 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     onNext(nextData, null, { skipDbSave: true });
   };
 
-  const checkPhone = async () => {
-    const phone = profile.phone?.trim();
-    if (!phone) return;
-    const results = await base44.entities.OnboardingProfile.filter({ phone });
-    const existing = results.filter((r) => r.id !== profileId);
-    if (existing.length > 0) {
-      setPhoneWarning({ profile_id: existing[0].id, phone });
-    } else {
-      setPhoneWarning(null);
-    }
-  };
-
-  const sendMagicLink = async ({ profile_id, phone }) => {
-    setSendingLink(true);
-    await base44.functions.invoke("sendMagicLink", {
-      profile_id,
-      phone: phone || undefined,
-      app_url: window.location.origin,
-    });
-    setSendingLink(false);
-    setLinkSent(true);
-  };
 
   const isSwiss = profile.citizenship_group === "CH";
   const showRejectedIdAsEmpty = profile.id_document_status === "rejected";
@@ -244,7 +218,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           <Input
             type="email"
             value={profile.escort_email || ""}
-            onChange={(e) => { updateProfile({ escort_email: e.target.value }); setLinkSent(false); setFieldErrors(p => ({...p, escort_email: null})); }}
+            onChange={(e) => { updateProfile({ escort_email: e.target.value }); setFieldErrors(p => ({...p, escort_email: null})); }}
             placeholder="anna@beispiel.ch"
             className={fe.escort_email ? "border-red-400 focus-visible:ring-red-300" : ""}
           />
@@ -256,21 +230,11 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           <Input
             type="tel"
             value={profile.phone || ""}
-            onChange={(e) => { updateProfile({ phone: e.target.value }); setPhoneWarning(null); setLinkSent(false); setFieldErrors(p => ({...p, phone: null})); }}
-            onBlur={checkPhone}
+            onChange={(e) => { updateProfile({ phone: e.target.value }); setFieldErrors(p => ({...p, phone: null})); }}
             placeholder="+41 79 123 45 67"
             className={fe.phone ? "border-red-400 focus-visible:ring-red-300" : ""}
           />
           {fe.phone && <p className="text-xs text-red-500 mt-1">{fe.phone}</p>}
-          {phoneWarning && !linkSent && (
-            <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-lg text-xs text-yellow-800">
-              <p className="font-medium mb-1">{t("step_core_data.phone_warning.registered_title")}</p>
-              <p className="mb-2">{t("step_core_data.phone_warning.registered_text")}</p>
-              <Button size="sm" variant="outline" className="text-yellow-700 border-yellow-400 hover:bg-yellow-100" onClick={() => sendMagicLink({ profile_id: phoneWarning.profile_id, phone: phoneWarning.phone })} disabled={sendingLink}>
-                {sendingLink ? t("step_core_data.phone_warning.sending") : t("step_core_data.phone_warning.send_sms_link")}
-              </Button>
-            </div>
-          )}
         </div>
 
         <div>

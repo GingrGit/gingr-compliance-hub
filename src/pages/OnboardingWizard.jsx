@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { base44 } from "@/api/base44Client";
 
 import { validateStoredToken } from "@/lib/env";
 import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, submitLegalOnboarding } from "@/lib/gingrOnboardingApi";
@@ -111,22 +110,6 @@ export default function OnboardingWizard() {
   }, []);
 
   // Load profile from magic link if present
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const magicProfileId = urlParams.get("profile_id");
-    if (magicProfileId && !profileId) {
-      setLoadingProfile(true);
-      base44.entities.OnboardingProfile.filter({ id: magicProfileId }).then((results) => {
-        if (results && results.length > 0) {
-          const p = results[0];
-          setProfile(p);
-          setProfileId(p.id);
-          setMode(p.mode || "self");
-        }
-        setLoadingProfile(false);
-      }).catch(() => setLoadingProfile(false));
-    }
-  }, []);
 
   const isSwiss = profile.citizenship_group === "CH";
   const isSelfEmployed = profile.work_model === "self_employed";
