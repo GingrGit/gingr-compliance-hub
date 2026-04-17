@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 
 import { validateStoredToken } from "@/lib/env";
 import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, submitLegalOnboarding } from "@/lib/gingrOnboardingApi";
