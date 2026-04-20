@@ -371,7 +371,7 @@ function GuidancePanel({ mode, stepId, profile }) {
       {!mode || mode !== "guided" ? (
         content.accordions?.map((acc, i) => (
           <AccordionItem key={i} title={acc.title}>
-            {acc.content.split('\n').map((line, j) => <p key={j} className="mb-1">{line}</p>)}
+            {(acc.content || "").split('\n').map((line, j) => <p key={j} className="mb-1">{line}</p>)}
           </AccordionItem>
         ))
       ) : null}
