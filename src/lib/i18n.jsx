@@ -56,6 +56,14 @@ export function I18nProvider({ children }) {
     setLoading(true);
     fetchTranslations(lang)
       .then(setTranslations)
+      .catch(async () => {
+        if (lang === DEFAULT_LANG) {
+          setTranslations({});
+          return;
+        }
+        const fallback = await fetchTranslations(DEFAULT_LANG).catch(() => ({}));
+        setTranslations(fallback);
+      })
       .finally(() => setLoading(false));
   }, [lang]);
 
