@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
-import { ChevronLeft, LogOut, Loader2, AlertCircle } from "lucide-react";
+import { ChevronLeft, Loader2, AlertCircle } from "lucide-react";
 
 export default function StepCard({
   title,
@@ -47,16 +47,18 @@ export default function StepCard({
       )}
 
       <div className="mt-6 pt-5 border-t border-gray-100">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex gap-1 sm:gap-2 min-w-0">
-            {!hideBack && (
-              <Button variant="outline" size="sm" onClick={onBack} className="rounded-full px-3 sm:px-5 text-gray-700 border-gray-300 bg-white hover:bg-gray-50 flex-shrink-0">
-                <ChevronLeft className="w-4 h-4" /><span className="hidden sm:inline ml-1">{t("step_card.btn_back")}</span>
-              </Button>
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            {!hideBack ? (
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" onClick={onBack} className="rounded-full px-3 sm:px-5 text-gray-700 border-gray-300 bg-white hover:bg-gray-50 flex-shrink-0">
+                  <ChevronLeft className="w-4 h-4" /><span className="hidden sm:inline ml-1">{t("step_card.btn_back")}</span>
+                </Button>
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{t("step_card.auto_save_notice")}</p>
+              </div>
+            ) : (
+              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{t("step_card.auto_save_notice")}</p>
             )}
-            <Button variant="ghost" size="sm" onClick={onSaveAndExit} className="text-gray-400 text-xs rounded-full px-2 sm:px-3 flex-shrink-0">
-              <LogOut className="w-3 h-3" /><span className="hidden sm:inline ml-1">{t("step_card.btn_save_exit")}</span>
-            </Button>
           </div>
           <Button
             onClick={handleNextClick}
