@@ -18,7 +18,7 @@ const cache = {};
 function getStoredLang() {
   try {
     const code = localStorage.getItem("gingr_lang");
-    return SUPPORTED_LANGS.includes(code) ? code : DEFAULT_LANG;
+    return typeof code === "string" && SUPPORTED_LANGS.includes(code) ? code : DEFAULT_LANG;
   } catch {
     return DEFAULT_LANG;
   }
@@ -73,9 +73,10 @@ export function I18nProvider({ children }) {
   };
 
   const t = (key, vars) => {
-    let str = translations[key];
+    const raw = translations[key];
+    let str = typeof raw === "string" ? raw : null;
     if (!str) {
-      return key.split(".").pop().replace(/_/g, " ");
+      return String(key).split(".").pop().replace(/_/g, " ");
     }
     if (vars) {
       Object.entries(vars).forEach(([k, v]) => {

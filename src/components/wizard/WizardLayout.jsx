@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle2, Save, ShieldCheck, Info, Sparkles, Briefcase, Calendar, Lightbulb, Lock, Home, CircleDollarSign, BarChart2, FileText, Building2, PenLine, Trophy, User, Globe } from "lucide-react";
+import { CheckCircle2, Save, ShieldCheck, Info, Sparkles, Briefcase, Calendar, Lightbulb, Lock, Home, CircleDollarSign, BarChart2, Building2, PenLine, Trophy, User, Globe } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { LANGUAGES } from "@/components/language";
 
@@ -69,7 +69,6 @@ export default function WizardLayout({ steps, currentStep, onStepClick, mode, sa
   const { t } = useI18n();
   const currentPhase = STEP_TO_PHASE[currentStepId] ?? 0;
   const FIXED_PHASES = PHASE_KEYS.map(key => ({ label: t(key) }));
-  const localizedSteps = steps.map((step) => ({ ...step, label: t(step.label) }));
 
   return (
     <div className="min-h-screen bg-[#F0F0F0]">
