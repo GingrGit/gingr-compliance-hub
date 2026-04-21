@@ -76,6 +76,9 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries, t }
 export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
   const { t } = useI18n();
   const [countries, setCountries] = useState([]);
+
+  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+  const isValidPhone = (value) => /^[+]?[-\d\s()]{7,}$/.test(String(value || "").trim());
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -107,7 +110,9 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     if (!profile.date_of_birth) errors.date_of_birth = t("step_core_data.error.birth_date_required");
     else if (ageError) errors.date_of_birth = t("step_core_data.error.must_be_adult");
     if (!profile.escort_email?.trim()) errors.escort_email = t("step_core_data.error.email_required");
+    else if (!isValidEmail(profile.escort_email)) errors.escort_email = "Please enter a valid email address";
     if (!profile.phone?.trim()) errors.phone = t("step_core_data.error.phone_required");
+    else if (!isValidPhone(profile.phone)) errors.phone = "Please enter a valid phone number";
     if (!profile.citizenship_group) errors.citizenship_group = t("step_core_data.error.citizenship_required");
     if (!profile.id_document_url || profile.id_document_status === "rejected") {
       errors.id_document_url = t("step_core_data.error.upload_new_identity_document");
