@@ -337,14 +337,7 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
           {fe.id_document_url && <p className="text-xs text-red-500 mt-1">{fe.id_document_url}</p>}
         </div>
 
-        <div className="pt-2 border-t border-gray-100 text-center">
-          <a
-            href="?prefill=true"
-            className="text-xs text-pink-400 hover:text-pink-600 underline underline-offset-2"
-          >
-            {t("step_core_data.demo_link")}
-          </a>
-        </div>
+
       </div>
     </StepCard>
   );
