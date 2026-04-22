@@ -73,7 +73,7 @@ function NationalityDropdown({ value, onChange, citizenshipGroup, countries, t }
   );
 }
 
-export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId }) {
+export default function StepCoreData({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, profileId, refreshProfileFromApi }) {
   const { t } = useI18n();
   const [countries, setCountries] = useState([]);
 
@@ -101,6 +101,10 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
   useEffect(() => {
     fetchCountries().then(setCountries);
   }, []);
+
+  useEffect(() => {
+    refreshProfileFromApi?.();
+  }, [refreshProfileFromApi]);
 
 
   const validateAndNext = async () => {

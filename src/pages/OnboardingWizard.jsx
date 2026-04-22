@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 
 import { validateStoredToken } from "@/lib/env";
-import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, submitLegalOnboarding } from "@/lib/gingrOnboardingApi";
+import { fetchCountries, fetchLegalOnboardingData, getLastIncompleteStepId, mapLegalOnboardingDataToProfile, refreshProfileFromLegalOnboarding, submitLegalOnboarding } from "@/lib/gingrOnboardingApi";
 import WizardLayout from "@/components/wizard/WizardLayout";
 import ModeSelector from "@/components/wizard/ModeSelector";
 import StepWelcome from "@/components/wizard/StepWelcome";
@@ -62,6 +62,27 @@ export default function OnboardingWizard() {
   const [saving, setSaving] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [checkingToken, setCheckingToken] = useState(true);
+
+  const applyMappedProfile = (mappedProfile, preserveStep = true) => {
+    if (!mappedProfile || Object.keys(mappedProfile).length === 0) return;
+
+    setProfile((prev) => {
+      const nextProfile = { ...prev, ...mappedProfile };
+      return preserveStep ? { ...nextProfile, current_step: prev.current_step } : nextProfile;
+    });
+  };
+
+  const refreshFromApi = async () => {
+    const mappedProfile = await refreshProfileFromLegalOnboarding();
+
+    if (mappedProfile.status && mappedProfile.status !== "draft") {
+      window.location.href = "/already-submitted";
+      return mappedProfile;
+    }
+
+    applyMappedProfile(mappedProfile, true);
+    return mappedProfile;
+  };
 
   useEffect(() => {
     validateStoredToken()
@@ -238,6 +259,7 @@ export default function OnboardingWizard() {
     onSubmit: handleSubmit,
     saving,
     mode,
+    refreshProfileFromApi: refreshFromApi,
   };
 
   const renderStep = () => {

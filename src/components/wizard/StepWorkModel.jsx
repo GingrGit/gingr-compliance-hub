@@ -5,7 +5,7 @@ import { CheckCircle2, ShieldCheck, Calendar, Briefcase } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { saveWorkModelSelection } from "@/lib/gingrOnboardingApi";
 
-export default function StepWorkModel({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving }) {
+export default function StepWorkModel({ profile, updateProfile, onNext, onBack, onSaveAndExit, saving, refreshProfileFromApi }) {
   const { t } = useI18n();
   const [selected, setSelected] = useState(profile.work_model || null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,6 +53,7 @@ export default function StepWorkModel({ profile, updateProfile, onNext, onBack, 
       setIsSubmitting(false);
       return;
     }
+    await refreshProfileFromApi?.();
     await onNext({ work_model: selected });
     setIsSubmitting(false);
   };

@@ -83,6 +83,15 @@ export async function fetchLegalOnboardingData() {
   return parseJsonResponse(response);
 }
 
+export async function refreshProfileFromLegalOnboarding(countries = []) {
+  const [apiData, resolvedCountries] = await Promise.all([
+    fetchLegalOnboardingData(),
+    countries.length ? Promise.resolve(countries) : fetchCountries(),
+  ]);
+
+  return mapLegalOnboardingDataToProfile(apiData, resolvedCountries);
+}
+
 export function mapLegalOnboardingDataToProfile(data, countries = []) {
   if (!data) {
     return {};
