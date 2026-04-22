@@ -21,7 +21,8 @@ const STEP_TO_PHASE = {
   earnings: 4,
   source_tax: 4,
   self_employed: 4,
-  summary: 4,
+  summary: 5,
+  self_employed_summary: 5,
   self_employed_agreement: 4,
   congratulations: 5,
 };
