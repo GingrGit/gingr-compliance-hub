@@ -43,11 +43,19 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
   const { t } = useI18n();
   const [consent, setConsent] = useState(false);
   const [startDate, setStartDate] = useState(profile.employment_start_date || "");
+  const [startDateTouched, setStartDateTouched] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const isStartDateMissing = !startDate;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const selectedStartDate = startDate ? new Date(`${startDate}T00:00:00`) : null;
+  const isStartDateInPastOrToday = selectedStartDate ? selectedStartDate <= today : false;
 
   const handleNext = async () => {
+    setStartDateTouched(true);
     setSubmitError(null);
-    const submitResult = onSubmit ? await onSubmit() : true;
+    if (isStartDateMissing || isStartDateInPastOrToday || saving) return;
+    const submitResult = onSubmit ? await onSubmit(startDate || undefined) : true;
     if (submitResult === false) {
       setSubmitError("Submitting your application failed. Please try again.");
       return;
@@ -64,7 +72,7 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
       onNext={handleNext}
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
-      nextDisabled={!consent || !startDate}
+      nextDisabled={saving || !consent || isStartDateMissing || isStartDateInPastOrToday}
       nextLabel={t("step_self_employed_summary.submit_button")}
       saving={saving}
     >
@@ -120,9 +128,17 @@ export default function StepSelfEmployedSummary({ profile, onNext, onBack, onSav
         <input
           type="date"
           value={startDate}
+          min={new Date(Date.now() + 86400000).toISOString().split("T")[0]}
           onChange={(e) => setStartDate(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-300"
+          onBlur={() => setStartDateTouched(true)}
+          className={`w-full border rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-300 ${(startDateTouched && (isStartDateMissing || isStartDateInPastOrToday)) ? "border-red-300" : "border-gray-200"}`}
         />
+        {startDateTouched && isStartDateMissing && (
+          <p className="text-xs text-red-500 mt-2">{t("step_summary.error.start_date_required")}</p>
+        )}
+        {startDateTouched && !isStartDateMissing && isStartDateInPastOrToday && (
+          <p className="text-xs text-red-500 mt-2">{t("step_summary.error.start_date_future_only")}</p>
+        )}
       </SectionBlock>
 
       {/* Hinweis Vertrag */}
