@@ -102,9 +102,6 @@ export default function StepCoreData({ profile, updateProfile, onNext, onBack, o
     fetchCountries().then(setCountries);
   }, []);
 
-  useEffect(() => {
-    refreshProfileFromApi?.();
-  }, [refreshProfileFromApi]);
 
 
   const validateAndNext = async () => {
