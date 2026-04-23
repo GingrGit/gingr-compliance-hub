@@ -190,7 +190,7 @@ export default function StepSourceTax({ profile, onNext, onBack, onSaveAndExit, 
           <div data-field="children_in_household" className="p-4 bg-gray-50 rounded-xl space-y-3">
             <div>
               <Label className="text-xs text-gray-600">{t("step_source_tax.label_children_count")}</Label>
-              <Input type="number" value={d.children_count} onChange={(e) => setD((p) => ({ ...p, children_count: parseInt(e.target.value) || 0 }))} className="mt-1 w-24" placeholder="1" />
+              <Input type="number" min="0" value={d.children_count} onChange={(e) => setD((p) => ({ ...p, children_count: Math.max(0, parseInt(e.target.value) || 0) }))} className="mt-1 w-24" placeholder="1" />
             </div>
             <div>
               <Label className="text-xs text-gray-600">{t("step_source_tax.label_children_in_household")}</Label>
