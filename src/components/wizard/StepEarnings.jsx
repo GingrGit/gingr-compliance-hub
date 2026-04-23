@@ -36,6 +36,12 @@ function fmt(n) {
   return n.toLocaleString("de-CH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+function sanitizePositiveNumber(value, maxLength) {
+  if (!value) return "";
+  const sanitizedValue = value.replace(/[^\d.]/g, "").replace(/(\..*)\./g, "$1");
+  return sanitizedValue.slice(0, maxLength);
+}
+
 export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, saving }) {
   const { t } = useI18n();
   const [submitError, setSubmitError] = useState(null);
@@ -90,8 +96,9 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">CHF</span>
             <Input
               type="number"
+              min="0"
               value={hourlyRate}
-              onChange={(e) => setHourlyRate(e.target.value)}
+              onChange={(e) => setHourlyRate(sanitizePositiveNumber(e.target.value, 6))}
               className="pl-12"
               placeholder={t("step_earnings.placeholder_rate")}
             />
@@ -103,8 +110,9 @@ export default function StepEarnings({ profile, onNext, onBack, onSaveAndExit, s
           <div className="relative mt-1">
             <Input
               type="number"
+              min="0"
               value={hoursPerMonth}
-              onChange={(e) => setHoursPerMonth(e.target.value)}
+              onChange={(e) => setHoursPerMonth(sanitizePositiveNumber(e.target.value, 3))}
               placeholder={t("step_earnings.placeholder_hours")}
             />
           </div>
