@@ -75,12 +75,15 @@ export default function OnboardingWizard() {
   const canContinueEditing = ["draft", "needsaction", "rejected"].includes(
     String(profile.status || "").replace(/[^a-z]/g, "").toLowerCase()
   );
+  const shouldRedirectSubmitted = (status) => {
+    const normalizedStatus = String(status || "").replace(/[^a-z]/g, "").toLowerCase();
+    return normalizedStatus && !["draft", "needsaction", "rejected"].includes(normalizedStatus);
+  };
 
   const refreshFromApi = async () => {
     const mappedProfile = await refreshProfileFromLegalOnboarding();
-    const normalizedStatus = String(mappedProfile.status || "").replace(/[^a-z]/g, "").toLowerCase();
 
-    if (mappedProfile.status && !["draft", "needsaction", "rejected"].includes(normalizedStatus)) {
+    if (shouldRedirectSubmitted(mappedProfile.status)) {
       window.location.href = "/already-submitted";
       return mappedProfile;
     }
@@ -97,9 +100,8 @@ export default function OnboardingWizard() {
           fetchCountries(),
         ]);
         const mappedProfile = mapLegalOnboardingDataToProfile(apiData, countries);
-        const normalizedStatus = String(mappedProfile.status || "").replace(/[^a-z]/g, "").toLowerCase();
 
-        if (mappedProfile.status && !["draft", "needsaction", "rejected"].includes(normalizedStatus)) {
+        if (shouldRedirectSubmitted(mappedProfile.status)) {
           window.location.href = "/already-submitted";
           return;
         }

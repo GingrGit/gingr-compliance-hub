@@ -124,6 +124,9 @@ export function mapLegalOnboardingDataToProfile(data, countries = []) {
     Submitted: "submitted",
     NeedsAction: "needs_action",
     Approved: "approved",
+    Rejected: "rejected",
+    ContractSent: "contract_sent",
+    ContractSigned: "contract_signed",
   };
 
   const mapped = {
