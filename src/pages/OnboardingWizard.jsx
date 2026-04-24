@@ -72,10 +72,15 @@ export default function OnboardingWizard() {
     });
   };
 
+  const canContinueEditing = ["draft", "needsaction", "rejected"].includes(
+    String(profile.status || "").replace(/[^a-z]/g, "").toLowerCase()
+  );
+
   const refreshFromApi = async () => {
     const mappedProfile = await refreshProfileFromLegalOnboarding();
+    const normalizedStatus = String(mappedProfile.status || "").replace(/[^a-z]/g, "").toLowerCase();
 
-    if (mappedProfile.status && mappedProfile.status !== "draft") {
+    if (mappedProfile.status && !["draft", "needsaction", "rejected"].includes(normalizedStatus)) {
       window.location.href = "/already-submitted";
       return mappedProfile;
     }
@@ -92,8 +97,9 @@ export default function OnboardingWizard() {
           fetchCountries(),
         ]);
         const mappedProfile = mapLegalOnboardingDataToProfile(apiData, countries);
+        const normalizedStatus = String(mappedProfile.status || "").replace(/[^a-z]/g, "").toLowerCase();
 
-        if (mappedProfile.status && mappedProfile.status !== "draft") {
+        if (mappedProfile.status && !["draft", "needsaction", "rejected"].includes(normalizedStatus)) {
           window.location.href = "/already-submitted";
           return;
         }
@@ -246,7 +252,7 @@ export default function OnboardingWizard() {
     return <ModeSelector onSelect={setMode} />;
   }
 
-  if (mode === "submitted") {
+  if (!canContinueEditing) {
     return <AlreadySubmitted />;
   }
 
