@@ -33,6 +33,7 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
   const [isSubmitting, setIsSubmitting] = useState(false);
   const availableOptions = options.filter((o) => o.available);
   const hasAvailableOptions = availableOptions.length > 0;
+  const isBlockedState = !hasAvailableOptions;
 
   useEffect(() => {
     setSelected(profile.work_model || null);
@@ -64,12 +65,15 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
       onBack={onBack}
       onSaveAndExit={onSaveAndExit}
       saving={saving || isSubmitting}
+      nextDisabled={isBlockedState}
       validationError={submitError || (showError ? t("step_eligibility.error_select") : null)}
     >
-      <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2">
-        <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-        <p className="text-sm text-green-700">{t("step_eligibility.verified_notice")}</p>
-      </div>
+      {!isBlockedState && (
+        <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+          <p className="text-sm text-green-700">{t("step_eligibility.verified_notice")}</p>
+        </div>
+      )}
 
       <div className="space-y-3">
         {!hasAvailableOptions ? (
@@ -103,7 +107,7 @@ export default function StepEligibility({ profile, onNext, onBack, onSaveAndExit
         ))}
       </div>
 
-      {profile.permit_status === "uploaded_review_pending" && (
+      {!isBlockedState && profile.permit_status === "uploaded_review_pending" && (
         <div className="flex items-start gap-2 bg-pink-50 border border-pink-100 rounded-xl p-3">
           <AlertCircle className="w-4 h-4 text-[#FF3CAC] flex-shrink-0 mt-0.5" />
           <p className="text-xs text-[#6B0064]">

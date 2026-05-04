@@ -128,7 +128,15 @@ export default function OnboardingWizard() {
             }
             baseSteps.push({ id: "congratulations" });
             const resumeStepId = getLastIncompleteStepId(nextProfile);
-            const resumeStepIndex = Math.max(0, baseSteps.findIndex((step) => step.id === resumeStepId));
+            const noEligibilityOptions = !(
+              nextProfile.citizenship_group === "CH" ||
+              nextProfile.citizenship_group === "EU_EFTA" ||
+              nextProfile.permit_type === "C" ||
+              nextProfile.permit_type === "B" ||
+              nextProfile.permit_type === "L"
+            );
+            const resolvedResumeStepId = noEligibilityOptions ? "eligibility" : resumeStepId;
+            const resumeStepIndex = Math.max(0, baseSteps.findIndex((step) => step.id === resolvedResumeStepId));
             return {
               ...nextProfile,
               current_step: resumeStepIndex,
@@ -177,6 +185,14 @@ export default function OnboardingWizard() {
   const steps = buildSteps();
   const currentStepId = steps[profile.current_step || 0]?.id || steps[0]?.id;
   const currentStep = Math.max(0, steps.findIndex((step) => step.id === currentStepId));
+
+  useEffect(() => {
+    if (currentStepId !== "eligibility") return;
+    if (hasEligibilityOptions()) return;
+    if ((profile.current_step || 0) !== currentStep) {
+      updateProfile({ current_step: currentStep });
+    }
+  }, [currentStepId, currentStep, profile.current_step, profile.citizenship_group, profile.permit_type]);
 
   const updateProfile = (updates) => {
     setProfile((prev) => ({ ...prev, ...updates }));
@@ -257,6 +273,12 @@ export default function OnboardingWizard() {
   if (!canContinueEditing) {
     return <AlreadySubmitted />;
   }
+
+    const hasEligibilityOptions = () => {
+    if (profile.citizenship_group === "CH" || profile.citizenship_group === "EU_EFTA" || profile.permit_type === "C") return true;
+    if (profile.permit_type === "B" || profile.permit_type === "L" || profile.citizenship_group === "EU_EFTA") return true;
+    return false;
+  };
 
   const stepProps = {
     profile,
