@@ -57,7 +57,7 @@ export default function AlreadySubmitted() {
         </p>
 
         <a
-          href={getGingrBaseUrl()}
+          href={`${getGingrBaseUrl()}/${lang}/account/work-model/start`}
           className="w-full inline-flex items-center justify-center bg-[#FF3CAC] hover:bg-[#e0309a] text-white text-sm font-semibold py-3 px-4 rounded-xl transition-colors"
         >
           {t("already_submitted.button")}
