@@ -72,10 +72,11 @@ export default function OnboardingWizard() {
     });
   };
 
-  const normalizeStatus = (status) => String(status || "").replace(/[^a-z]/g, "").toLowerCase();
-  const canContinueEditing = ["draft", "needsaction", "rejected"].includes(normalizeStatus(profile.status));
+  const canContinueEditing = ["draft", "needsaction", "rejected"].includes(
+    String(profile.status || "").replace(/[^a-z]/g, "").toLowerCase()
+  );
   const shouldRedirectSubmitted = (status) => {
-    const normalizedStatus = normalizeStatus(status);
+    const normalizedStatus = String(status || "").replace(/[^a-z]/g, "").toLowerCase();
     return normalizedStatus && !["draft", "needsaction", "rejected"].includes(normalizedStatus);
   };
 
